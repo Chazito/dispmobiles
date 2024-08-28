@@ -1,0 +1,7 @@
+{
+  "name": "Criticly",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
