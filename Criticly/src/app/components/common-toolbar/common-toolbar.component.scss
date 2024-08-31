@@ -1,6 +1,18 @@
 #logo {
   display: block;
-  margin: 0 50px;
   height: 30px;
   width: auto;
+}
+
+ion-toolbar {
+  --min-height: 61px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ion-searchbar {
+  --border-radius: 20px;
+  --placeholder-color: #686868 !important;
+  --placeholder-font-weight: 400
 }
