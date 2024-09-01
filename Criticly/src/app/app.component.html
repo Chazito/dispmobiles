@@ -1,19 +1,20 @@
 <ion-app>
+  <app-common-toolbar title="Inicio" [style]="mostrarToolbar ?'' : 'display: none' "></app-common-toolbar>
   <ion-menu contentId="main-content">
     <ion-content>
       <div id="listContainer">
         <ion-menu-toggle>
           <ion-list id="listaMenuLateral">
-            <ion-item id="itemUsuario">
+            <ion-item id="itemUsuario" [routerLink]="['/perfil-inicio']" routerLinkActive="active">
               <ion-avatar slot="start">
-                <img src="../assets/icon/user.svg" alt="Profile Picture" height="50">
+                <img src="../assets/icon/user.svg" alt="Profile Picture">
               </ion-avatar>
               <ion-label id="labelUsuario">
                 <p id="nombreUsuario">Nombre de Usuario</p>
                 <p class="email">correo&#64;ejemplo.com</p>
               </ion-label>
             </ion-item>
-            <div style="margin-left: 3.5px;">
+            <div style="margin-left: 5px;">
               <ion-item [routerLink]="['/home']" routerLinkActive="active">
                 <ion-icon slot="start" name="home-outline" size="large"></ion-icon>
                 <ion-label>Inicio</ion-label>
@@ -49,6 +50,5 @@
       </div>
     </ion-content>
   </ion-menu>
-
   <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

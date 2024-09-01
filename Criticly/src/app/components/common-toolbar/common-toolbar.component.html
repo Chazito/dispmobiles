@@ -1,12 +1,15 @@
-<ion-toolbar color="transparent" mode="ios">
-  <ion-buttons slot="start">
-    <ion-menu-button></ion-menu-button>
-  </ion-buttons>
-  <ion-title>
-    <ion-img src="assets/images/logo.svg" alt="logo" id="logo">
-    </ion-img>
-  </ion-title>
-</ion-toolbar>
-<ion-toolbar>
-  <ion-searchbar searchIcon="../../../assets/icon/search.svg" color="primary" placeholder="Buscar..."></ion-searchbar>
-</ion-toolbar>
+<ion-header [translucent]="true" class="ion-no-border" style="z-index: 1;">
+  <ion-toolbar color="tertiary" mode="ios">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-img src="assets/images/logo.svg" alt="logo" id="logo"></ion-img>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/buscar']" routerLinkActive="active">
+        <ion-img id="searchIcon" src="../../../assets/icon/search.svg" alt="Buscar"></ion-img>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

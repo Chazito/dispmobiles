@@ -18,4 +18,4 @@ import { ComponentsModule } from '../components/components.module';
   ],
   declarations: [HomePage]
 })
-export class HomePageModule {}
+export class HomePageModule { }
