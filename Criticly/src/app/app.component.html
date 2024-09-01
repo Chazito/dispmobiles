@@ -1,33 +1,54 @@
-<ion-app style="margin: 0 20px;">
-  <ion-menu-toggle>
-    <ion-menu contentId="main-content">
-      <ion-content>
-        <ion-list>
-          <ion-item>
-            <ion-avatar slot="start">
-              <img src="path/to/profile-pic.jpg" alt="Profile Picture">
-            </ion-avatar>
-            <ion-label>
-              <h6>Nombre de Usuario</h6>
-              <p class="email">correo&#64;ejemplo.com</p>
-            </ion-label>
-          </ion-item>
-          <ion-item [routerDirection]="'root'" [routerLink]="'/home'">
-            <ion-icon name="home-outline"></ion-icon>
-            <ion-label> Inicio</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-icon name="person-circle-outline"></ion-icon>
-            <ion-label> Mi Perfil</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-accordion>
+<ion-app>
+  <ion-menu contentId="main-content">
+    <ion-content>
+      <div id="listContainer">
+        <ion-menu-toggle>
+          <ion-list id="listaMenuLateral">
+            <ion-item id="itemUsuario">
+              <ion-avatar slot="start">
+                <img src="../assets/icon/user.svg" alt="Profile Picture" height="50">
+              </ion-avatar>
+              <ion-label id="labelUsuario">
+                <p id="nombreUsuario">Nombre de Usuario</p>
+                <p class="email">correo&#64;ejemplo.com</p>
+              </ion-label>
+            </ion-item>
+            <div style="margin-left: 3.5px;">
+              <ion-item [routerLink]="['/home']" routerLinkActive="active">
+                <ion-icon slot="start" name="home-outline" size="large"></ion-icon>
+                <ion-label>Inicio</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/peliculas']" routerLinkActive="active">
+                <ion-icon slot="start" name="film-outline" size="large"></ion-icon>
+                <ion-label>Películas</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/series']" routerLinkActive="active">
+                <ion-icon slot="start" name="tv-outline" size="large"></ion-icon>
+                <ion-label>Series</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/noticias']" routerLinkActive="active">
+                <ion-icon slot="start" name="newspaper-outline" size="large"></ion-icon>
+                <ion-label>Noticias</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/configuracion']" routerLinkActive="active">
+                <ion-icon slot="start" name="settings-outline" size="large"></ion-icon>
+                <ion-label>Configuración</ion-label>
+              </ion-item>
+            </div>
+          </ion-list>
 
-            </ion-accordion>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-    </ion-menu>
-  </ion-menu-toggle>
+        </ion-menu-toggle>
+        <ion-button slot="end" id="cerrarSesion" color="danger">
+          <ion-menu-toggle>
+            <div style="display: flex; justify-content: center; align-items: center;">
+              <ion-icon slot="start" name="log-out-outline" size="small"></ion-icon>
+              <ion-label style="margin-left: 5px ;">Cerrar sesión</ion-label>
+            </div>
+          </ion-menu-toggle>
+        </ion-button>
+      </div>
+    </ion-content>
+  </ion-menu>
+
   <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

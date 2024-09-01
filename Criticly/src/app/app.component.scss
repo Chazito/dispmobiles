@@ -1,0 +1,54 @@
+#labelUsuario {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  margin: 0;
+  padding-left: 6px;
+}
+
+#nombreUsuario {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+#itemUsuario {
+  padding: 1rem 0;
+}
+
+.email {
+  font-size: 10pt;
+  color: #989898;
+  margin: 0;
+}
+
+div>ion-item {
+  font-weight: 300;
+}
+
+ion-item>ion-icon {
+  color: #FFFFFF;
+  margin-bottom: 20px;
+  margin-right: 27px;
+}
+
+ion-item.active>* {
+  color: #FFE500;
+}
+
+#cerrarSesion {
+  --background: #D31212;
+  --color: #FFFFFF;
+  --box-shadow: none;
+  border-radius: 12px;
+  margin: 20px 50px;
+}
+
+#listContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
