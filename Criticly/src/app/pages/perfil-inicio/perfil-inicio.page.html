@@ -9,57 +9,59 @@
 
 <ion-content [fullscreen]="true" style="height: 100vh;">
   <div id="container">
-    <h5><strong>Mi cuenta</strong></h5>
-    <form>
-      <ion-item class="input-container">
-        <ion-label position="stacked">Nombre</ion-label>
-        <ion-input placeholder="Introduce tu nombre" class="rounded-input">
-          <ion-icon name="person-outline" slot="start"></ion-icon>
-        </ion-input>
-      </ion-item>
+    <div>
+      <h5><strong>Mi cuenta</strong></h5>
+      <form>
+        <ion-item class="input-container">
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-input placeholder="Nombre" class="rounded-input">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
 
-      <ion-item class="input-container">
-        <ion-label position="stacked">Apellido</ion-label>
-        <ion-input placeholder="Introduce tu apellido" class="rounded-input">
-          <ion-icon name="person-outline" slot="start"></ion-icon>
-        </ion-input>
-      </ion-item>
+        <ion-item class="input-container">
+          <ion-label position="stacked">Apellido</ion-label>
+          <ion-input placeholder="A   pellido" class="rounded-input">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
 
-      <ion-item class="input-container">
-        <ion-label position="stacked">Correo electrónico</ion-label>
-        <ion-input type="email" placeholder="correo@ejemplo.com" class="rounded-input">
-          <ion-icon name="mail-outline" slot="start"></ion-icon>
-        </ion-input>
-      </ion-item>
+        <ion-item class="input-container">
+          <ion-label position="stacked">Correo electrónico</ion-label>
+          <ion-input type="email" placeholder="correo@ejemplo.com" class="rounded-input">
+            <ion-icon name="mail-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
 
-      <strong>Cambiar contraseña</strong>
+        <strong>Cambiar contraseña</strong>
 
-      <ion-item class="input-container">
-        <ion-label position="stacked">Nueva contraseña</ion-label>
-        <ion-input type="password" placeholder="Introduce tu contraseña" class="rounded-input">
-          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-        </ion-input>
-      </ion-item>
+        <ion-item class="input-container">
+          <ion-label position="stacked">Nueva contraseña</ion-label>
+          <ion-input type="password" placeholder="Introduce tu contraseña" class="rounded-input">
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
 
-      <ion-item class="input-container">
-        <ion-label position="stacked">Confirmar contraseña</ion-label>
-        <ion-input type="password" placeholder="Confirma tu contraseña" class="rounded-input">
-          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-        </ion-input>
-      </ion-item>
-
-      <ion-button expand="default" id="guardarContrasena" color="yellow">
-        <ion-icon name="save-outline" slot="start"></ion-icon>
-        Guardar contraseña
-      </ion-button>
-    </form>
+        <ion-item class="input-container">
+          <ion-label position="stacked">Confirmar contraseña</ion-label>
+          <ion-input type="password" placeholder="Confirma tu contraseña" class="rounded-input">
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
+        <div style="display: flex; justify-content: end;">
+          <ion-button expand="default" id="guardarContrasena" color="secondary" shape="round">
+            <ion-icon name="save-outline" slot="start"></ion-icon>
+            <strong>Guardar contraseña</strong>
+          </ion-button>
+        </div>
+      </form>
+    </div>
+    <ion-footer class="ion-no-border">
+      <ion-toolbar class="ion-no-border">
+        <ion-button expand="full" id="guardar" color="primary" shape="round">
+          <strong>Guardar</strong>
+        </ion-button>
+      </ion-toolbar>
+    </ion-footer>
   </div>
-
-  <ion-footer>
-    <ion-toolbar>
-      <ion-button expand="full" id="guardar" color="primary">
-        Guardar
-      </ion-button>
-    </ion-toolbar>
-  </ion-footer>
 </ion-content>

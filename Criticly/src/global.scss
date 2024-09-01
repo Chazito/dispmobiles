@@ -30,6 +30,10 @@ body {
   font-style: normal;
 }
 
+strong {
+  letter-spacing: 0;
+}
+
 ion-searchbar {
   --border: none !important;
   --box-shadow: none !important;
