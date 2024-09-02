@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-series',
@@ -7,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SeriesPage implements OnInit {
 
-  constructor() { }
+  tienePrivilegios: boolean = true;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe((e: any) => {
+      if (e && e.url) {
+        this.tienePrivilegios = e.url.includes('auth=true')
+      }
+    })
+  }
 
   ngOnInit() {
   }

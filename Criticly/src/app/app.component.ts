@@ -10,8 +10,8 @@ register();
 export class AppComponent {
   mostrarToolbar: boolean = true;
 
-  isLoggedIn: boolean = true;
-  tienePrivilegios: boolean = true;
+  isLoggedIn: boolean = false;
+  tienePrivilegios: boolean = false;
 
   constructor(private router: Router) {
     this.router.events.subscribe((e: any) => {
@@ -22,8 +22,12 @@ export class AppComponent {
     })
   }
 
-  //Redirige al login o al perfil dependiendo de si esta loggeado
   urlPerfil(): string {
     return this.isLoggedIn ? '/perfil-inicio' : '/login';
+  }
+
+  toggleAuth() {
+    this.isLoggedIn = !this.isLoggedIn;
+    this.tienePrivilegios = !this.tienePrivilegios;
   }
 }

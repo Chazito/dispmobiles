@@ -10,6 +10,15 @@
         Películas
       </strong>
     </h5>
+    <ion-button *ngIf="tienePrivilegios" class="titleButton ion-no-padding" fill="solid" size="small"
+      color="transparent">
+      <div id="titleContainer">
+        <ion-icon name="add-circle-outline" slot="start" size="large" class="add-icon"></ion-icon>
+        <p>
+          Añadir título
+        </p>
+      </div>
+    </ion-button>
   </div>
   <div>
     <div>

@@ -1,5 +1,5 @@
 p.ion-padding-horizontal {
-  margin: 10px 0 !important;
+  margin-bottom: 10px 0 !important;
 }
 
 swiper-slide {
@@ -14,4 +14,25 @@ swiper-container.margin {
 
 .ion-padding-vertical {
   padding: 20px 0;
+}
+
+#titleContainer {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.titleButton {
+  --box-shadow: none;
+  width: 100%;
+  margin-bottom: 10px;
+  margin-inline: 0;
+  padding-inline: 20px;
+}
+
+
+.add-icon {
+  margin-right: 8px;
+  font-size: 20px;
 }
