@@ -5,13 +5,12 @@
       <div id="listContainer">
         <ion-menu-toggle>
           <ion-list id="listaMenuLateral">
-            <ion-item id="itemUsuario" [routerLink]="['/perfil-inicio']" routerLinkActive="active">
+            <ion-item id="itemUsuario" [routerLink]="getPersonPath()" routerLinkActive="active">
               <ion-avatar slot="start">
                 <img src="../assets/icon/user.svg" alt="Profile Picture">
               </ion-avatar>
               <ion-label id="labelUsuario">
-                <p id="nombreUsuario">Nombre de Usuario</p>
-                <p class="email">correo&#64;ejemplo.com</p>
+                <p id="nombreUsuario">{{getPersonLabel()}}</p>
               </ion-label>
             </ion-item>
             <div style="margin-left: 5px;">
