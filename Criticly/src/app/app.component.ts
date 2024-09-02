@@ -10,23 +10,20 @@ register();
 export class AppComponent {
   mostrarToolbar: boolean = true;
 
-  isLoggedIn: boolean = false;
+  isLoggedIn: boolean = true;
+  tienePrivilegios: boolean = true;
 
   constructor(private router: Router) {
     this.router.events.subscribe((e: any) => {
       if (e && e.url) {
-        this.mostrarToolbar = !(e.url.includes('/buscar') || e.url.includes('/perfil-inicio') || e.url.includes('/login')|| e.url.includes('/perfil-preferencias'))
+        this.mostrarToolbar = !(e.url.includes('/buscar') || e.url.includes('/perfil-inicio') || e.url.includes('/login')
+          || e.url.includes('/perfil-preferencias') || e.url.includes('/peliculas/') || e.url.includes('/usuarios'))
       }
     })
   }
 
   //Redirige al login o al perfil dependiendo de si esta loggeado
-  getPersonPath(): string {
+  urlPerfil(): string {
     return this.isLoggedIn ? '/perfil-inicio' : '/login';
-  }
-
-  //Muestra "Perfil" o "Iniciar sesion"
-  getPersonLabel(): string {
-    return this.isLoggedIn ? 'Perfil' : 'Iniciar Sesión';
   }
 }

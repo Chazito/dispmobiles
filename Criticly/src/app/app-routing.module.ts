@@ -28,10 +28,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/perfil-preferencias/perfil-preferencias.module').then(m => m.PerfilPreferenciasPageModule)
   },
   {
-    path: 'configuracion',
-    loadChildren: () => import('./pages/configuracion/configuracion.module').then(m => m.ConfiguracionPageModule)
-  },
-  {
     path: 'entry',
     loadChildren: () => import('./pages/entry/entry.module').then(m => m.EntryPageModule)
   },
@@ -56,11 +52,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/buscar/buscar.module').then(m => m.BuscarPageModule)
   },
   {
+    path: 'usuarios',
+    loadChildren: () => import('./pages/usuarios/usuarios.module').then(m => m.UsuariosPageModule)
+  }, {
     path: '**',
     redirectTo: 'home'
   },
-
-
 ];
 
 @NgModule({
