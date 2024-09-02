@@ -1,7 +1,25 @@
 #container {
-    margin-inline: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-  }
+  margin-inline: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.h5Container {
+  margin-bottom: 10px;
+}
+
+ion-button {
+  --background: rgba(255, 255, 255, 0.1);
+  --color: #fff;
+  margin: 10px 0;
+  font-weight: 400;
+  width: 100%;
+  --border-radius: 10px
+}
+
+ion-button div {
+  width: 100%;
+  text-align: start;
+  padding: 10px 0;
+}
