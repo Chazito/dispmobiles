@@ -15,7 +15,7 @@ export class AppComponent {
   constructor(private router: Router) {
     this.router.events.subscribe((e: any) => {
       if (e && e.url) {
-        this.mostrarToolbar = !(e.url.includes('/buscar') || e.url.includes('/perfil-inicio') || e.url.includes('/login'))
+        this.mostrarToolbar = !(e.url.includes('/buscar') || e.url.includes('/perfil-inicio') || e.url.includes('/login')|| e.url.includes('/perfil-preferencias'))
       }
     })
   }
