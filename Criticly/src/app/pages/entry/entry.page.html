@@ -1,13 +1,104 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>entry</ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">entry</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid class="movie-container">
+    <!-- Movie Name -->
+    <ion-row>
+      <ion-col size="12">
+        <h1 class="movie-title">Inception (Origen)</h1>
+      </ion-col>
+    </ion-row>
+
+    <!-- Movie Cover -->
+    <ion-row>
+      <ion-col size="12">
+        <img src="https://via.placeholder.com/300x450" alt="Movie Cover" class="movie-cover">
+      </ion-col>
+    </ion-row>
+
+    <!-- Movie Summary -->
+    <ion-row>
+      <ion-col size="12">
+        <p class="movie-summary">
+          Un ladrón que roba secretos corporativos mediante el uso de tecnología de intercambio de sueños recibe la tarea inversa de plantar una idea en la mente de un CEO.
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <!-- Buttons -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" color="primary" href="https://youtube.com/watch?v=YoHD9XEInc0">
+          Ver Trailer
+        </ion-button>
+        <ion-button expand="block" color="secondary">
+          Añadir a mi lista
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <!-- Movie Details -->
+    <ion-row>
+      <ion-col size="12">
+        <h5>Detalles</h5>
+        <p><strong>Dirigida por:</strong> Christopher Nolan</p>
+        <p><strong>Reparto:</strong> Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page</p>
+        <p><strong>Generos:</strong> Acción, Aventura, Sci-Fi</p>
+      </ion-col>
+    </ion-row>
+
+    <!-- Movie Score -->
+    <!-- TODO Cambiar por el icono propio-->
+    <ion-row>
+      <ion-col size="32" class="review-icons">
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star-half"></ion-icon>
+        <ion-icon name="star-outline"></ion-icon>
+        <p>Puntaje 3.4/5</p>
+      </ion-col>
+    </ion-row>
+
+    <!-- Reviews List -->
+    <ion-row>
+      <ion-col size="12">
+        <h2>Reseñas</h2>
+        <ion-card>
+          <ion-card-header>
+            <ion-item lines="none">
+              <ion-label>User123</ion-label>
+              <ion-badge color="warning" slot="end">3/5</ion-badge>
+            </ion-item>
+          </ion-card-header>
+          <ion-card-content>
+            Concepto interesante pero un poco difícil de seguir a veces.
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-header>
+            <ion-item lines="none">
+              <ion-label>FilmBuff89</ion-label>
+              <ion-badge color="warning" slot="end">4/5</ion-badge>
+            </ion-item>
+          </ion-card-header>
+          <ion-card-content>
+            ¡Visuales fantásticas y una trama que desafía la mente!
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <!-- Review Button -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" color="secondary">Añadir Reseña</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
