@@ -1,0 +1,63 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="height: 100vh;">
+  <div id="container">
+    <div>
+      <h5><strong>Añadir título</strong></h5>
+      <form>
+        <ion-item class="input-container">
+          <ion-label position="stacked">Título</ion-label>
+          <ion-input class="rounded-input">
+          </ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Sinopsis</ion-label>
+          <ion-textarea class="rounded-input">
+          </ion-textarea>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Año</ion-label>
+          <ion-input type="email" class="rounded-input">
+          </ion-input>
+        </ion-item>
+        <ion-item class="input-container">
+          <ion-label position="stacked">Director(es)</ion-label>
+          <ion-input type="password" class="rounded-input">
+          </ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Reparto</ion-label>
+          <ion-input type="password" class="rounded-input">
+          </ion-input>
+        </ion-item>
+        <ion-item class="input-container">
+          <ion-label position="stacked">Duración</ion-label>
+          <ion-input type="password" class="rounded-input">
+          </ion-input>
+        </ion-item>
+        <ion-item class="input-container">
+          <ion-label position="stacked">URL del tráiler</ion-label>
+          <ion-input type="password" class="rounded-input">
+          </ion-input>
+        </ion-item>
+      </form>
+    </div>
+    <ion-footer class="ion-no-border">
+      <ion-toolbar class="ion-no-border">
+        <ion-button expand="full" id="guardar" color="secondary" shape="round">
+          <strong>Guardar</strong>
+        </ion-button>
+      </ion-toolbar>
+    </ion-footer>
+  </div>
+</ion-content>

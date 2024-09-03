@@ -55,9 +55,13 @@ const routes: Routes = [
     path: 'usuarios',
     loadChildren: () => import('./pages/usuarios/usuarios.module').then(m => m.UsuariosPageModule)
   }, {
+    path: 'nuevo-editar-titulo',
+    loadChildren: () => import('./pages/nuevo-editar-titulo/nuevo-editar-titulo.module').then(m => m.NuevoEditarTituloPageModule)
+  }, {
     path: '**',
     redirectTo: 'home'
-  },
+  }
+
 ];
 
 @NgModule({

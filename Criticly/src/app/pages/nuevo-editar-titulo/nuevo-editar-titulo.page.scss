@@ -1,0 +1,39 @@
+#container {
+  margin-inline: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+form ion-item {
+  margin-right: -16px !important;
+}
+
+.input-container {
+  margin-bottom: 16px;
+}
+
+ion-label {
+  margin-bottom: 10px !important;
+  font-weight: 400;
+  font-size: 1.1rem !important;
+}
+
+ion-item::part(native) {
+  padding-left: 0;
+}
+
+
+.rounded-input {
+  --placeholder-color: #9E9E9E;
+  --background: #0A112F;
+  --border-radius: 20px;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  --box-shadow: none;
+  border: none;
+  --placeholder-font-weight: 300;
+  font-size: .9rem;
+  font-weight: 300;
+}
