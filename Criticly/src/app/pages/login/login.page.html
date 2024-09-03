@@ -5,7 +5,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
   <div class="login-container">
     <!-- Centered Logo -->
     <div class="logo-container">
@@ -17,38 +16,75 @@
       <h6>Inicio de Sesión</h6>
     </div>
 
-    <!-- Input Fields with Instructions -->
-    <div class="login-input-container">
-      <p>Ingresa tus datos:</p>
-      <ion-item class="input-container">
-        <ion-label position="stacked">Correo Electronico</ion-label>
-        <ion-input placeholder="email@email.com" class="rounded-input" type="email">
-          <ion-icon name="person-outline" slot="start"></ion-icon>
-        </ion-input>
-      </ion-item>
-      <ion-item class="input-container">
-        <ion-label position="stacked">Contraseña</ion-label>
-        <ion-input placeholder="***********" class="rounded-input" type="password">
-          <ion-icon name="person-outline" slot="start"></ion-icon>
-        </ion-input>
-      </ion-item>
-    </div>
-
-    <!-- Buttons for Login and Register -->
-    <div class="button-container">
-      <ion-list>
-        <ion-item class="button-item">
-          <button mat-flat-button class="full-width-button" id="login-button"><strong>Ingresar</strong></button>
+    <form [formGroup]="form" (ngSubmit)="onLoginClick()">
+      <!-- Input Fields with Instructions -->
+      <div class="login-input-container">
+        <p>Ingresa tus datos:</p>
+        <ion-item class="input-container">
+          <ion-label position="stacked">Correo Electronico</ion-label>
+          <ion-input
+            placeholder="email@email.com"
+            class="rounded-input"
+            type="email"
+            [(ngModel)]="inputEmail"
+            formControlName="email"
+          >
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+          </ion-input>
         </ion-item>
-      </ion-list>
-      <ion-list>
-        <ion-item class="button-item">
-          <button mat-flat-button class="full-width-button" id="register-button"><strong>Registrarse</strong></button>
+        <div *ngIf="!form.controls['email'].valid && form.controls['email'].touched">
+          <p *ngIf="form.controls['email'].value == ''">Se requiere un correo electronico.</p>
+          <p *ngIf="!form.controls['email'].valid && form.controls['email'].value!=''">Por favor ingrese un correo valido.</p>
+        </div>
+        <ion-item class="input-container">
+          <ion-label position="stacked">Contraseña</ion-label>
+          <ion-input
+            placeholder="***********"
+            class="rounded-input"
+            type="password"
+            [(ngModel)]="inputPass"
+            formControlName="password"
+          >
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+          </ion-input>
         </ion-item>
-      </ion-list>
-    </div>
+        <div *ngIf="!form.controls['password'].valid && form.controls['password'].touched">
+          <p *ngIf="form.controls['password'].value == ''">Ingrese una contraseña</p>
+          <p *ngIf="!form.controls['password'].valid && form.controls['password'].value!=''">La contraseña no puede contener caracteres especiales o espacios.</p>
+        </div>
+      </div>
 
-    <br><br>
+      <!-- Buttons for Login and Register -->
+      <div class="button-container">
+        <ion-list>
+          <ion-item class="button-item">
+            <button
+              mat-flat-button
+              class="full-width-button"
+              id="login-button"
+              (click)="onLoginClick()"
+              type="submit"
+              [disabled]="!form.valid"
+            >
+              <strong>Ingresar</strong>
+            </button>
+          </ion-item>
+        </ion-list>
+        <ion-list>
+          <ion-item class="button-item">
+            <button
+              mat-flat-button
+              class="full-width-button"
+              id="register-button"
+              [routerLink]="['/registro']"
+            >
+              <strong>Registrarse</strong>
+            </button>
+          </ion-item>
+        </ion-list>
+      </div>
+    </form>
+    <br /><br />
     <!-- Additional Login Options -->
     <div class="other-options-container">
       <p class="centered-text">O ingresa con</p>

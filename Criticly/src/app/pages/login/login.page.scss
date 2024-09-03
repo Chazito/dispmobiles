@@ -73,6 +73,7 @@ ion-input {
 #login-button {
   background-color: #ffe500;
   color: black;
+  
 }
 
 #register-button {
@@ -107,4 +108,8 @@ ion-input {
   font-size: 70px;
   /* Adjust size as needed */
   color: white;
+}
+
+.login-input-container{
+  width: 90vw;
 }

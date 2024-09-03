@@ -1,0 +1,116 @@
+/*Container principal */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  margin-top: 30px;
+  width: 300px;
+  /* Tamaño del logo */
+  height: auto;
+}
+
+/* Centrar titulos y otros */
+.title-container,
+.other-options-container {
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+ion-label {
+  margin-bottom: 10px !important;
+  font-size: 1.1rem !important;
+}
+
+button {
+  font-size: 1.1rem;
+}
+
+.button-container,
+.login-input-container {
+  width: 100%;
+  padding: 10px;
+}
+
+.full-width-button {
+  width: 100%;
+  height: 40px;
+  display: block;
+}
+
+.rounded-input {
+  --placeholder-color: #9e9e9e;
+  --background: #0a112f;
+  --border-radius: 20px;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  --box-shadow: none;
+  border: none;
+  --placeholder-font-weight: 300;
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+ion-input {
+  --ion-color-primary: #ffffff !important;
+}
+
+#register-button {
+  background-color: #ffe500;
+  color: white;
+}
+#register-button:disabled {
+  background-color: #4d4503;
+  color: rgb(71, 71, 71);
+}
+
+.icon-container {
+  display: flex;
+  justify-content: space-between;
+  /* Distribute space evenly between icons */
+  width: 100%;
+  /* Ensure the container uses all available width */
+  padding: 0 16px;
+  /* Optional: Add some padding for spacing */
+}
+
+.icon-button {
+  flex: 1;
+  /* Make each button take equal width */
+  display: flex;
+  justify-content: center;
+  /* Center the icon within the button */
+  align-items: center;
+  /* Center the icon vertically */
+  --padding-start: 0;
+  /* Remove default padding to keep button size uniform */
+  --padding-end: 0;
+}
+
+.icon-button ion-icon {
+  font-size: 70px;
+  /* Adjust size as needed */
+  color: white;
+}
+
+.login-input-container {
+  width: 90vw;
+}
+
+a {
+  color: #ffe500;
+}
