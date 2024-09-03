@@ -9,8 +9,8 @@
       <p class="ion-padding-horizontal">Destacado</p>
       <swiper-container class="margin" pagination="false" space-between="20" slides-per-view="3.7"
         [slidesOffsetBefore]="20" [slidesOffsetAfter]="20" free-mode="true">
-        <swiper-slide routerLink="./578" *ngFor="let i of [null,null,null,null,null,null,null,null,null,null]">
-          <div style="width: 100px;height: 170px; background-color: gray;"></div>
+        <swiper-slide *ngFor="let i of [null,null,null,null,null,null,null,null,null,null]">
+          <div style="width: 100px;height: 170px; background-color: gray;" [routerLink]="['/entry']"></div>
         </swiper-slide>
       </swiper-container>
     </div>
