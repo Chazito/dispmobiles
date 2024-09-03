@@ -22,35 +22,30 @@
         <p>Ingresa tus datos:</p>
         <ion-item class="input-container">
           <ion-label position="stacked">Correo Electronico</ion-label>
-          <ion-input
-            placeholder="email@email.com"
-            class="rounded-input"
-            type="email"
-            [(ngModel)]="inputEmail"
-            formControlName="email"
-          >
+          <ion-input placeholder="email@email.com" class="rounded-input" type="email" [(ngModel)]="inputEmail"
+            formControlName="email">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
         <div *ngIf="!form.controls['email'].valid && form.controls['email'].touched">
-          <p *ngIf="form.controls['email'].value == ''">Se requiere un correo electronico.</p>
-          <p *ngIf="!form.controls['email'].valid && form.controls['email'].value!=''">Por favor ingrese un correo valido.</p>
+          <p *ngIf="form.controls['email'].value === ''">Se requiere un correo electronico.</p>
+          <p *ngIf="!form.controls['email'].valid && form.controls['email'].value! ===''">Por favor ingrese un correo
+            valido.</p>
         </div>
         <ion-item class="input-container">
           <ion-label position="stacked">Contraseña</ion-label>
-          <ion-input
-            placeholder="***********"
-            class="rounded-input"
-            type="password"
-            [(ngModel)]="inputPass"
-            formControlName="password"
-          >
+          <ion-input placeholder="***********" class="rounded-input" type="password" [(ngModel)]="inputPass"
+            formControlName="password">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
         <div *ngIf="!form.controls['password'].valid && form.controls['password'].touched">
-          <p *ngIf="form.controls['password'].value == ''">Ingrese una contraseña</p>
-          <p *ngIf="!form.controls['password'].valid && form.controls['password'].value!=''">La contraseña no puede contener caracteres especiales o espacios.</p>
+          <p *ngIf="form.controls['password'].value === ''">Ingrese una contraseña</p>
+          <p *ngIf="!form.controls['password'].valid && form.controls['password'].value! ===''">La contraseña no puede
+            contener caracteres especiales o espacios.</p>
+        </div>
+        <div style="width: 100%; display: flex; justify-content: end;align-items: center;padding-right: 20px;">
+          <p class="ion-padding-top" routerLink="/recuperar">Recuperar contraseña</p>
         </div>
       </div>
 
@@ -58,26 +53,15 @@
       <div class="button-container">
         <ion-list>
           <ion-item class="button-item">
-            <button
-              mat-flat-button
-              class="full-width-button"
-              id="login-button"
-              (click)="onLoginClick()"
-              type="submit"
-              [disabled]="!form.valid"
-            >
+            <button mat-flat-button class="full-width-button" id="login-button" (click)="onLoginClick()" type="submit"
+              [disabled]="!form.valid">
               <strong>Ingresar</strong>
             </button>
           </ion-item>
         </ion-list>
         <ion-list>
           <ion-item class="button-item">
-            <button
-              mat-flat-button
-              class="full-width-button"
-              id="register-button"
-              [routerLink]="['/registro']"
-            >
+            <button mat-flat-button class="full-width-button" id="register-button" [routerLink]="['/registro']">
               <strong>Registrarse</strong>
             </button>
           </ion-item>

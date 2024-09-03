@@ -57,10 +57,17 @@ const routes: Routes = [
   }, {
     path: 'nuevo-editar-titulo',
     loadChildren: () => import('./pages/nuevo-editar-titulo/nuevo-editar-titulo.module').then(m => m.NuevoEditarTituloPageModule)
-  }, {
+  }
+  ,
+  {
+    path: 'recuperar',
+    loadChildren: () => import('./pages/recuperar/recuperar.module').then(m => m.RecuperarPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }
+
 
 ];
 
