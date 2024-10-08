@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 import { AlertController, Platform } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Rol } from './rol';
+import { TipoTitulo } from './tipo-titulo';
+import { Usuario } from './usuario';
+import { Titulo } from './titulo';
+import { Resenna } from './resenna';
+import { Marcado } from './marcado';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +28,45 @@ export class ServicebdService {
   //variable para observable de estado de la Base de Datos
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  listaRol = new BehaviorSubject([]);
+  listaTipoTitulo = new BehaviorSubject([]);
+
+  listaUsuario = new BehaviorSubject([]);
+  listaTitulo = new BehaviorSubject([]);
+
+  listaResenna = new BehaviorSubject([]);
+  listaMarcador = new BehaviorSubject([]);
+
   constructor(private sqlite: SQLite, private platform: Platform, private alertController: AlertController) {
     this.crearBD();
    }
 
   dbState(){
     return this.isDbReady.asObservable();
+  }
+
+  fetchRol() : Observable<Rol[]>{
+    return this.listaRol.asObservable();
+  }
+
+  fetchTipoTitulo() : Observable<TipoTitulo[]>{
+    return this.listaTipoTitulo.asObservable();
+  }
+
+  fetchUsuario() : Observable<Usuario[]>{
+    return this.listaUsuario.asObservable();
+  }
+
+  fetchTitulo() : Observable<Titulo[]>{
+    return this.listaTitulo.asObservable();
+  }
+
+  fetchResenna() : Observable<Resenna[]>{
+    return this.listaResenna.asObservable();
+  }
+
+  fetchMarcador() : Observable<Marcado[]>{
+    return this.listaMarcador.asObservable();
   }
 
   async presentAlert(titulo:string, msj:string) {
@@ -77,5 +116,19 @@ export class ServicebdService {
     }catch(e){
       this.presentAlert('Creación de Tablas','Error: ' + JSON.stringify(e));
     }
+  }
+
+  selectTipoTitulo(){
+    return this.database.executeSql("SELECT * FROM tipotitulo",[]).then(res => {
+      let items : TipoTitulo[] = [];
+      if(res.rows.length > 0){
+        for(var i = 0; i < res.rows.length; i++){
+          items.push({
+            idTipo: res.rows.item(i).idTipo,
+            nombre: res.rows.item(i).nombre
+          })
+        }
+      }
+    })
   }
 }
