@@ -7,7 +7,7 @@ import { TipoTitulo } from './tipo-titulo';
 import { Usuario } from './usuario';
 import { Titulo } from './titulo';
 import { Resenna } from './resenna';
-import { Marcado } from './marcado';
+import { Marcador } from './marcador';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class ServicebdService {
   tablaTitulo : string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
   
   tablaResenna : string = "CREATE TABLE IF NOT EXISTS Resenna (idResenna INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, id_titulo INTEGER NOT NULL, comentario TEXT, fechaPublicacion DATE, calificacion REAL, esVisible BOOLEAN, fechaEliminada DATE, motivoEliminacion TEXT, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (id_titulo) REFERENCES Titulo(idTitulo));";
-  tablaMarcador : string = "CREATE TABLE IF NOT EXISTS Marcado (idMarcados INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, fechaMarcado DATE, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
+  tablaMarcador : string = "CREATE TABLE IF NOT EXISTS Marcador (idMarcados INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, fechaMarcado DATE, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
 
   //variable para observable de estado de la Base de Datos
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -65,7 +65,7 @@ export class ServicebdService {
     return this.listaResenna.asObservable();
   }
 
-  fetchMarcador() : Observable<Marcado[]>{
+  fetchMarcador() : Observable<Marcador[]>{
     return this.listaMarcador.asObservable();
   }
 
@@ -130,5 +130,98 @@ export class ServicebdService {
         }
       }
     })
+  }
+
+  selectRol(){
+    return this.database.executeSql("SELECT * FROM rol",[]).then(res => {
+      let items : Rol[] = [];
+      if(res.rows.length > 0){
+        for(var i = 0; i < res.rows.length; i++){
+          items.push({
+            idRol: res.rows.item(i).idRol,
+            nombre: res.rows.item(i).nombre
+          })
+        }
+      }
+    })
+  }
+
+  selectMarcado() {
+    return this.database.executeSql("SELECT * FROM Marcador", []).then(res => {
+      let items: Marcador[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            idMarcados: res.rows.item(i).idMarcados,
+            idUsuario: res.rows.item(i).idUsuario,
+            idTitulo: res.rows.item(i).idTitulo,
+            fechaMarcado: res.rows.item(i).fechaMarcado
+          });
+        }
+      }
+    });
+  }
+
+  selectTitulo() {
+    return this.database.executeSql("SELECT * FROM Titulo", []).then(res => {
+      let items: Titulo[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            idTitulo: res.rows.item(i).idTitulo,
+            idTipoTitulo: res.rows.item(i).idTipoTitulo,
+            nombre: res.rows.item(i).nombre,
+            sinopsis: res.rows.item(i).sinopsis,
+            duracion: res.rows.item(i).duracion,
+            URLImagen: res.rows.item(i).URLImagen,
+            URLTrailer: res.rows.item(i).URLTrailer,
+            fechaEstreno: res.rows.item(i).fechaEstreno
+          });
+        }
+      }
+    });
+  }
+
+  selectUsuario() {
+    return this.database.executeSql("SELECT * FROM Usuario", []).then(res => {
+      let items: Usuario[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            idUsuario: res.rows.item(i).idUsuario,
+            nombre: res.rows.item(i).nombre,
+            apellido: res.rows.item(i).apellido,
+            correo: res.rows.item(i).correo,
+            clave: res.rows.item(i).clave,
+            fechaNacimiento: res.rows.item(i).fechaNacimiento,
+            avatar: res.rows.item(i).avatar,
+            telefono: res.rows.item(i).telefono,
+            reputacion: res.rows.item(i).reputacion,
+            id_rol: res.rows.item(i).id_rol
+          });
+        }
+      }
+    });
+  }
+
+  selectResenna() {
+    return this.database.executeSql("SELECT * FROM Resenna", []).then(res => {
+      let items: Resenna[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            idResenna: res.rows.item(i).idResenna,
+            idUsuario: res.rows.item(i).idUsuario,
+            id_titulo: res.rows.item(i).id_titulo,
+            comentario: res.rows.item(i).comentario,
+            fechaPublicacion: res.rows.item(i).fechaPublicacion,
+            calificacion: res.rows.item(i).calificacion,
+            esVisible: res.rows.item(i).esVisible,
+            fechaEliminada: res.rows.item(i).fechaEliminada,
+            motivoEliminacion: res.rows.item(i).motivoEliminacion
+          });
+        }
+      }
+    });
   }
 }

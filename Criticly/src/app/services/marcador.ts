@@ -1,4 +1,4 @@
-export class Marcado {
+export class Marcador {
     idMarcados!: string;
     idUsuario!: string;
     idTitulo!: string;
