@@ -52,3 +52,35 @@ p {
 ion-button {
   text-transform: none;
 }
+
+ion-alert .alert-button-inner {
+  color: var(--ion-color-medium);
+}
+
+ion-alert .alert-radio-group {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
+}
+
+ion-alert .alert-head {
+  padding: 10px 20px !important;
+}
+
+ion-alert .alert-radio-icon .alert-radio-inner {
+  background-color: yellow;
+  border-color: yellow;
+}
+
+ion-alert .alert-radio-label {
+  border-color: yellow;
+  color: yellow;
+}
+
+ion-alert .alert-radio-icon {
+  border-color: #fff !important;
+}
+
+[aria-checked=true].sc-ion-alert-md .alert-radio-icon.sc-ion-alert-md {
+  border-color: yellow !important;
+}

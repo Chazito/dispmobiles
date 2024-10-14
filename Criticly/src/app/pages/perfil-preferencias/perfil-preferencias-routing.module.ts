@@ -6,13 +6,14 @@ const routes: Routes = [
   {
     path: '',
     component: PerfilPreferenciasPage
-  },  {
+  },
+  {
     path: 'notificaciones',
-    loadChildren: () => import('./notificaciones/notificaciones.module').then( m => m.NotificacionesPageModule)
+    loadChildren: () => import('./notificaciones/notificaciones.module').then(m => m.NotificacionesPageModule)
   },
   {
     path: 'seguridad',
-    loadChildren: () => import('./seguridad/seguridad.module').then( m => m.SeguridadPageModule)
+    loadChildren: () => import('./seguridad/seguridad.module').then(m => m.SeguridadPageModule)
   }
 
 ];
