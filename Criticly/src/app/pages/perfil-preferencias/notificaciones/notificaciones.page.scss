@@ -1,0 +1,41 @@
+#container {
+  margin-inline: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.h5Container {
+  margin-bottom: 10px;
+}
+
+ion-button {
+  --background: rgba(255, 255, 255, 0);
+  --color: #fff;
+  margin: 0;
+  margin-top: 10px;
+  font-weight: 400;
+  width: 100%;
+}
+
+ion-button div {
+  width: 100%;
+  text-align: start;
+  padding: 10px 0;
+}
+
+ion-toggle {
+  --handle-background: #ffffff;
+  --handle-background-checked: #ffffff;
+  --track-background-checked: #FFE500;
+  --background: #f4f4f4;
+}
+
+:root {
+  --ion-color-warning: #ffffff;
+  --ion-text-color-contrast: #ffffff;
+}
+
+p {
+  padding-bottom: 5px;
+}

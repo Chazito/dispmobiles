@@ -28,6 +28,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/perfil-preferencias/perfil-preferencias.module').then(m => m.PerfilPreferenciasPageModule)
   },
   {
+    path: 'perfil-preferencias/general',
+    loadChildren: () => import('./pages/perfil-preferencias/general/general.module').then(m => m.GeneralPageModule)
+  },
+  {
     path: 'entry',
     loadChildren: () => import('./pages/entry/entry.module').then(m => m.EntryPageModule)
   },
@@ -67,6 +71,7 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'home'
   }
+
 
 
 ];

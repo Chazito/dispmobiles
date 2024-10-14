@@ -13,41 +13,50 @@
       <h5><strong>Configuración</strong></h5>
     </div>
     <div class="ion-text-start">
-      <ion-button expand="block" fill="clear" class="config-button">
+      <ion-button expand="block" fill="clear" class="config-button" routerLink="./general">
         <div>
           <p>
             General
           </p>
         </div>
       </ion-button>
-      <ion-button expand="block" fill="clear" class="config-button">
+      <ion-button expand="block" fill="clear" class="config-button" routerLink="./notificaciones">
         <div>
           <p>
             Notificaciones
           </p>
         </div>
       </ion-button>
-      <ion-button expand="block" fill="clear" class="config-button">
-        <div>
-          <p>
-            Tema
-          </p>
-        </div>
-      </ion-button>
-      <ion-button expand="block" fill="clear" class="config-button">
+
+      <ion-button expand="block" fill="clear" class="config-button" routerLink="./seguridad">
         <div>
           <p>
             Seguridad
           </p>
         </div>
       </ion-button>
-      <ion-button expand="block" fill="clear" class="config-button">
-        <div>
-          <p>
-            Idioma
-          </p>
-        </div>
-      </ion-button>
+      <ion-list>
+        <ion-item>
+          <ion-select label="Idioma" placeholder="Español">
+            <ion-select-option value="es">Español</ion-select-option>
+            <ion-select-option value="en">English</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+      <div>
+        <p style="padding: 10px 0;">
+          Tema
+        </p>
+        <ion-segment value="default">
+          <ion-segment-button value="default">
+            <ion-label>Claro</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="segment">
+            <ion-label>Oscuro </ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
     </div>
   </div>
+
 </ion-content>

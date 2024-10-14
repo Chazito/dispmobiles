@@ -23,3 +23,17 @@ ion-button div {
   text-align: start;
   padding: 10px 0;
 }
+
+ion-segment-button {
+  --ion-color-primary: #ffffff;
+  --background: #ffffff05;
+  --background-checked: #ffffff05;
+  --ion-text-color-step-150: white;
+  --ion-text-color-step-850: white
+}
+
+ion-item {
+  --padding-start: 0;
+  --padding-end: 0;
+  margin-left: 0;
+}
