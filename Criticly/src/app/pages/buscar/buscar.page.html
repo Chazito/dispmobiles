@@ -1,16 +1,29 @@
-<ion-header [translucent]="true" class="ion-no-border">
+<ion-header class="ion-no-border" style="margin: 0;padding-top: 10px; background-color: var(--ion-color-tertiary);">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-searchbar searchIcon="../../../assets/icon/search.svg" color="primary" placeholder="Buscar..."></ion-searchbar>
   </ion-toolbar>
+  <div class="filtros">
+    <ion-chip *ngFor="let filtro of filtros" [outline]="true" color="light">
+      <ion-label (click)="agregarFiltro(filtro)">{{ filtro }}</ion-label>
+      <ion-icon name="close" *ngIf="filtrosSelec.includes(filtro)" (click)="eliminarFiltro(filtro)"></ion-icon>
+    </ion-chip>
+  </div>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Buscar</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="resultados">
+    <div class="resultado" *ngFor="let item of [1,2,3,4,5,6,7,8,9,0]">
+      <div class="imgContainer ion-padding">
+        <img src="https://placehold.co/80x120" alt="Poster" class="posterImg" />
+      </div>
+      <div class="detalles ion-padding-end">
+        <h6>Inception</h6>
+        <p>2010</p>
+        <p>Leonardo DiCaprio, Tom Hardy, Ellen Page</p>
+      </div>
+    </div>
+  </div>
 </ion-content>
