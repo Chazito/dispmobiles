@@ -118,6 +118,8 @@ export class ServicebdService {
     }
   }
 
+
+
   selectTipoTitulo() {
     return this.database.executeSql("SELECT * FROM tipotitulo", []).then(res => {
       let items: TipoTitulo[] = [];
@@ -203,6 +205,38 @@ export class ServicebdService {
       }
     });
   }
+
+  selectUsuarioPorEmail(email: string, password: string): Promise<Usuario | null> {
+    const query = "SELECT * FROM Usuario WHERE correo = ?";
+    return this.database.executeSql(query, [email]).then(res => {
+      if (res.rows.length > 0) {
+        const usuario: Usuario = {
+          idUsuario: res.rows.item(0).idUsuario,
+          nombre: res.rows.item(0).nombre,
+          apellido: res.rows.item(0).apellido,
+          correo: res.rows.item(0).correo,
+          clave: res.rows.item(0).clave,
+          fechaNacimiento: res.rows.item(0).fechaNacimiento,
+          avatar: res.rows.item(0).avatar,
+          telefono: res.rows.item(0).telefono,
+          reputacion: res.rows.item(0).reputacion,
+          id_rol: res.rows.item(0).id_rol
+        };
+
+        if (usuario.clave === password) {
+          return usuario;
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    }).catch(error => {
+      console.error("Error al consultar el usuario por email", error);
+      return null;
+    });
+  }
+
 
   selectResenna() {
     return this.database.executeSql("SELECT * FROM Resenna", []).then(res => {

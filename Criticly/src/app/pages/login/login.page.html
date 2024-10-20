@@ -12,13 +12,12 @@
     <div class="title-container">
       <h6><strong>Inicia sesión</strong></h6>
     </div>
-    <form [formGroup]="form" (ngSubmit)="onLoginClick()">
+    <form [formGroup]="form">
       <div class="login-input-container">
         <p>Ingresa tus datos:</p>
         <ion-item class="input-container">
           <ion-label position="stacked">Correo electrónico</ion-label>
-          <ion-input placeholder="email@email.com" class="rounded-input" type="email" [(ngModel)]="inputEmail"
-            formControlName="email">
+          <ion-input placeholder="email@email.com" class="rounded-input" type="email" formControlName="email">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
@@ -27,8 +26,7 @@
         </div>
         <ion-item class="input-container">
           <ion-label position="stacked">Contraseña</ion-label>
-          <ion-input placeholder="***********" class="rounded-input" type="password" [(ngModel)]="inputPass"
-            formControlName="password">
+          <ion-input placeholder="***********" class="rounded-input" type="password" formControlName="password">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
@@ -42,8 +40,8 @@
       </div>
 
       <div class="button-container">
-        <ion-button id="login-button" class="ion-margin-bottom" (click)="onLoginClick()" type="submit"
-          [disabled]="!form.valid" expand="full" color="secondary" shape="round">
+        <ion-button id="login-button" class="ion-margin-bottom" (click)="login()" type="submit" [disabled]="!form.valid"
+          expand="full" color="secondary" shape="round">
           <strong class="ion-margin">Ingresar</strong>
         </ion-button>
         <ion-button expand="full" color="primary" shape="round" mat-flat-button id="register-button"

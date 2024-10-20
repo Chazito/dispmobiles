@@ -9,11 +9,11 @@
               <ion-avatar slot="start">
                 <img src="../assets/icon/user.svg" alt="Profile Picture">
               </ion-avatar>
-              <ion-label id="labelUsuario" *ngIf="isLoggedIn">
+              <ion-label id="labelUsuario" *ngIf="isAuth">
                 <p id="nombreUsuario">Nombre de usuario</p>
                 <p class="email">correo&#64;ejemplo.com</p>
               </ion-label>
-              <ion-label *ngIf="!isLoggedIn">
+              <ion-label *ngIf="!isAuth">
                 <p id="nombreUsuario">Iniciar sesión</p>
               </ion-label>
             </ion-item>
@@ -55,12 +55,15 @@
             </div>
           </ion-list>
         </ion-menu-toggle>
-        <ion-button (click)="toggleAuth()" slot="end" id="cerrarSesion" color="danger">
-          <div style="display: flex; justify-content: center; align-items: center;">
-            <ion-icon slot="start" name="log-out-outline" size="small"></ion-icon>
-            <ion-label style="margin-left: 5px ; font-size: .9rem;">Cerrar sesión</ion-label>
-          </div>
-        </ion-button>
+        <div style="display: flex; flex-direction: column;align-items: center;">
+          <p (click)="logout()" style="font-size: .8rem;text-decoration: underline;">Cambiar usuario</p>
+          <ion-button [disabled]="!isAuth" slot="end" id="cerrarSesion" color="danger">
+            <div style="display: flex; justify-content: center; align-items: center;">
+              <ion-icon slot="start" name="log-out-outline" size="small"></ion-icon>
+              <ion-label style="margin-left: 5px ; font-size: .9rem;">Cerrar sesión</ion-label>
+            </div>
+          </ion-button>
+        </div>
       </div>
     </ion-content>
   </ion-menu>

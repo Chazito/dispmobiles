@@ -8,10 +8,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { ComponentsModule } from './components/components.module';
 import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, IonicModule.forRoot(), AppRoutingModule, ComponentsModule],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, IonicModule.forRoot(), AppRoutingModule, ComponentsModule, IonicStorageModule.forRoot()],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideAnimationsAsync(), SQLite],
   bootstrap: [AppComponent]
 
