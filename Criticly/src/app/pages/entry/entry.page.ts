@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./entry.page.scss'],
 })
 export class EntryPage implements OnInit {
+  rating: number = 3.4;
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  get ratingPercentage(): number {
+    return (this.rating / 5) * 100;
   }
 
 }

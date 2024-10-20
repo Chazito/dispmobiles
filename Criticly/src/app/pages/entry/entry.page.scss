@@ -1,42 +1,57 @@
 ion-content {
-    --padding-start: 16px;
-    --padding-end: 16px;
-  }
-  
-  .movie-container {
-    text-align: left;
-  }
-  
-  .movie-title {
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .movie-cover {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-  
-  .movie-summary {
-    text-align: left;
-    margin: 16px 0;
-  }
-  ion-icon[name="star"],
-  ion-icon[name="star-half"],
-  ion-icon[name="star-outline"] {
-    font-size: 48px; /* Adjust this value to make the stars bigger */
-  }
-  ion-icon[name="star"] {
-    color: #FFD700; /* Gold color for filled stars */
-  }
-  
-  ion-icon[name="star-half"] {
-    color: #FFD700; /* Gold color for half stars */
-  }
-  
-  ion-icon[name="star-outline"] {
-    color: #D3D3D3; /* Light gray color for empty stars */
-  }
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+.movie-container {
+  text-align: left;
+}
+
+.movie-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.movie-cover {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.movie-summary {
+  text-align: left;
+  margin: 16px 0;
+}
+
+ion-icon[name="star"],
+ion-icon[name="star-half"],
+ion-icon[name="star-outline"] {
+  font-size: 48px;
+  /* Adjust this value to make the stars bigger */
+}
+
+ion-icon[name="star"] {
+  color: #FFD700;
+  /* Gold color for filled stars */
+}
+
+ion-icon[name="star-half"] {
+  color: #FFD700;
+  /* Gold color for half stars */
+}
+
+ion-icon[name="star-outline"] {
+  color: #D3D3D3;
+  /* Light gray color for empty stars */
+}
+
+ion-card {
+  background-color: rgba(255, 255, 255, 0.033);
+  border-radius: 10px;
+}
+
+ion-item {
+  --background: none;
+}
