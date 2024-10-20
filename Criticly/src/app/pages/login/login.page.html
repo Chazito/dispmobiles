@@ -9,25 +9,21 @@
     <div class="logo-container">
       <ion-img class="logo" src="assets/images/logo.png"></ion-img>
     </div>
-
     <div class="title-container">
-      <h6>Inicio de Sesión</h6>
+      <h6><strong>Inicia sesión</strong></h6>
     </div>
-
     <form [formGroup]="form" (ngSubmit)="onLoginClick()">
       <div class="login-input-container">
         <p>Ingresa tus datos:</p>
         <ion-item class="input-container">
-          <ion-label position="stacked">Correo Electronico</ion-label>
+          <ion-label position="stacked">Correo electrónico</ion-label>
           <ion-input placeholder="email@email.com" class="rounded-input" type="email" [(ngModel)]="inputEmail"
             formControlName="email">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
         <div *ngIf="!form.controls['email'].valid && form.controls['email'].touched">
-          <p *ngIf="form.controls['email'].value === ''">Se requiere un correo electronico.</p>
-          <p *ngIf="!form.controls['email'].valid && form.controls['email'].value! ===''">Por favor ingrese un correo
-            valido.</p>
+          <p *ngIf="!form.controls['email'].valid && form.controls['email'].value! ===''">Datos no válidos</p>
         </div>
         <ion-item class="input-container">
           <ion-label position="stacked">Contraseña</ion-label>
@@ -37,12 +33,11 @@
           </ion-input>
         </ion-item>
         <div *ngIf="!form.controls['password'].valid && form.controls['password'].touched">
-          <p *ngIf="form.controls['password'].value === ''">Ingrese una contraseña</p>
-          <p *ngIf="!form.controls['password'].valid && form.controls['password'].value! ===''">La contraseña no puede
-            contener caracteres especiales o espacios.</p>
+          <p *ngIf="!form.controls['password'].valid && form.controls['password'].value! ===''">Datos no válidos</p>
         </div>
         <div style="width: 100%; display: flex; justify-content: end;align-items: center;padding-right: 20px;">
-          <p class="ion-padding-top" routerLink="/recuperar">Recuperar contraseña</p>
+          <p class="ion-padding-top" style="text-decoration: underline;" routerLink="/recuperar">Recuperar contraseña
+          </p>
         </div>
       </div>
 
