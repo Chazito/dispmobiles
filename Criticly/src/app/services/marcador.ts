@@ -1,6 +1,6 @@
-export class Marcador {
-  idMarcados!: string;
-  idUsuario!: string;
-  idTitulo!: string;
-  fechaMarcado!: Date;
+export interface Marcador {
+  idMarcados?: string;
+  idUsuario?: string;
+  idTitulo?: string;
+  fechaMarcado?: Date;
 }

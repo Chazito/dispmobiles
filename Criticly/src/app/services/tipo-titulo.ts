@@ -1,4 +1,4 @@
-export class TipoTitulo {
-    idTipo!: string;
-    nombre!: string;
+export interface TipoTitulo {
+  idTipo?: string;
+  nombre?: string;
 }
