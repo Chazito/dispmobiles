@@ -55,3 +55,9 @@ ion-card {
 ion-item {
   --background: none;
 }
+
+#movie-buttons ion-button {
+  margin: 10px 0;
+  --padding-top: 10px;
+  --padding-bottom: 10px
+}

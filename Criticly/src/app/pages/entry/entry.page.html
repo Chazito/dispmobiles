@@ -28,11 +28,11 @@
     </ion-row>
 
     <ion-row>
-      <ion-col size="12">
-        <ion-button expand="block" color="primary" href="https://youtube.com/watch?v=YoHD9XEInc0">
+      <ion-col id="movie-buttons" size="12">
+        <ion-button shape="round" expand="block" color="primary" href="https://youtube.com/watch?v=YoHD9XEInc0">
           Ver Tráiler
         </ion-button>
-        <ion-button expand="block" color="secondary">
+        <ion-button shape="round" expand="block" color="secondary">
           Añadir a mi lista
         </ion-button>
       </ion-col>
@@ -100,10 +100,11 @@
       </ion-col>
     </ion-row>
 
-    <!-- Review Button -->
     <ion-row>
       <ion-col size="12">
-        <ion-button expand="block" color="secondary">Escribir reseña</ion-button>
+        <ion-button shape="round" class="ion-padding" expand="block" color="secondary"
+          routerLink="/escribir-resenia">Escribir
+          reseña</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

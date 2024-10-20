@@ -68,12 +68,13 @@ const routes: Routes = [
     loadChildren: () => import('./pages/recuperar/recuperar.module').then(m => m.RecuperarPageModule)
   },
   {
+    path: 'escribir-resenia',
+    loadChildren: () => import('./pages/escribir-resenia/escribir-resenia.module').then(m => m.EscribirReseniaPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }
-
-
-
 ];
 
 @NgModule({

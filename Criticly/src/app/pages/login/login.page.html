@@ -42,21 +42,14 @@
       </div>
 
       <div class="button-container">
-        <ion-list>
-          <ion-item class="button-item">
-            <button mat-flat-button class="full-width-button" id="login-button" (click)="onLoginClick()" type="submit"
-              [disabled]="!form.valid">
-              <strong>Ingresar</strong>
-            </button>
-          </ion-item>
-        </ion-list>
-        <ion-list>
-          <ion-item class="button-item">
-            <button mat-flat-button class="full-width-button" id="register-button" [routerLink]="['/registro']">
-              <strong>Registrarse</strong>
-            </button>
-          </ion-item>
-        </ion-list>
+        <ion-button id="login-button" class="ion-margin-bottom" (click)="onLoginClick()" type="submit"
+          [disabled]="!form.valid" expand="full" color="secondary" shape="round">
+          <strong class="ion-margin">Ingresar</strong>
+        </ion-button>
+        <ion-button expand="full" color="primary" shape="round" mat-flat-button id="register-button"
+          [routerLink]="['/registro']">
+          <strong class="ion-margin">Registrarse</strong>
+        </ion-button>
       </div>
     </form>
     <br /><br />
