@@ -13,6 +13,8 @@ export class AppComponent {
 
   isAuth: boolean = false;
   tienePrivilegios: boolean = false;
+  nombreApellido: string | null = null;
+  correo: string | null = null;
 
   constructor(private router: Router, private auth: AuthService) {
     this.router.events.subscribe((e: any) => {
@@ -23,7 +25,15 @@ export class AppComponent {
       }
     })
     this.auth.isAuthObservable.subscribe((isAuth) => {
-      this.isAuth = isAuth; // Actualiza isLoggedIn cuando isAuth cambia
+      this.isAuth = isAuth;
+      const usuario = auth.usuarioValue
+      if (isAuth) {
+        this.nombreApellido = `${usuario?.nombre} ${usuario?.apellido}`
+        this.correo = usuario?.correo ? usuario.correo : null
+      } else {
+        this.nombreApellido = null;
+        this.correo = null;
+      }
     });
   }
 

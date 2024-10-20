@@ -14,13 +14,13 @@ export class RegistroPage implements OnInit {
 
   form: FormGroup;
 
-  inputNombre : string = "";
-  inputApellido : string = "";
-  inputEmail : string = "";
-  inputPass : string = "";
-  inputPass2 : string = "";
+  inputNombre: string = "";
+  inputApellido: string = "";
+  inputEmail: string = "";
+  inputPass: string = "";
+  inputPass2: string = "";
 
-  constructor(private fb: FormBuilder, private router : Router, private alertController : AlertController) {
+  constructor(private fb: FormBuilder, private router: Router, private alertController: AlertController) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required]],
       apellido: ['', [Validators.required]],
@@ -36,26 +36,26 @@ export class RegistroPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  onRegistroClick(){
-    this.presentAlert("Registro completo","Recibira un correo de confirmacion al email introducido","Volver al Login");
+  onRegistroClick() {
+    this.presentAlert("Registro completo", "Recibira un correo de confirmacion al email introducido", "Volver al Login");
   }
 
-  async presentAlert(titulo:string, mensaje:string, boton:string) {
+  async presentAlert(titulo: string, mensaje: string, boton: string) {
     const alert = await this.alertController.create({
       header: titulo,
       message: mensaje,
       buttons: [
         {
-          text:boton,
+          text: boton,
           cssClass: "alert-button",
-          handler: () =>{
+          handler: () => {
             this.router.navigate(['/login']);
           }
         }
       ],
-      
+
     });
 
     await alert.present();

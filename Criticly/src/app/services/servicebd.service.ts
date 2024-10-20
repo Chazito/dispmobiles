@@ -8,6 +8,7 @@ import { Usuario } from './usuario';
 import { Titulo } from './titulo';
 import { Resenna } from './resenna';
 import { Marcador } from './marcador';
+import { Noticia } from './noticia';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,12 @@ export class ServicebdService {
   tablaRol: string = "CREATE TABLE IF NOT EXISTS Rol (idRol INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL);";
   tablaTipoTitulo: string = "CREATE TABLE IF NOT EXISTS TipoTitulo (idTipo INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL);";
 
-  tablaUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, apellido TEXT NOT NULL, correo TEXT NOT NULL, clave TEXT NOT NULL, fechaNacimiento DATE, avatar TEXT, telefono TEXT, reputacion REAL, id_rol INTEGER NOT NULL, FOREIGN KEY (id_rol) REFERENCES Rol(idRol));";
+  tablaUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, apellido TEXT NOT NULL, correo TEXT NOT NULL UNIQUE, clave TEXT NOT NULL, fechaNacimiento DATE, avatar TEXT, telefono TEXT, reputacion REAL, id_rol INTEGER NOT NULL, FOREIGN KEY (id_rol) REFERENCES Rol(idRol));";
   tablaTitulo: string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
 
-  tablaResenna: string = "CREATE TABLE IF NOT EXISTS Resenna (idResenna INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, id_titulo INTEGER NOT NULL, comentario TEXT, fechaPublicacion DATE, calificacion REAL, esVisible BOOLEAN, fechaEliminada DATE, motivoEliminacion TEXT, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (id_titulo) REFERENCES Titulo(idTitulo));";
+  tablaResenna: string = "CREATE TABLE IF NOT EXISTS Resenna (idResenna INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, comentario TEXT, fechaPublicacion DATE, calificacion REAL, esVisible INTEGER, fechaEliminada DATE, motivoEliminacion TEXT, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (id_titulo) REFERENCES Titulo(idTitulo));";
   tablaMarcador: string = "CREATE TABLE IF NOT EXISTS Marcador (idMarcados INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, fechaMarcado DATE, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
 
-  //variable para observable de estado de la Base de Datos
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   listaRol = new BehaviorSubject([]);
@@ -80,23 +80,18 @@ export class ServicebdService {
   }
 
   crearBD() {
-    //verificar si la plataforma esta lista o no
     this.platform.ready().then(() => {
-      //creamos la base de datos
       this.sqlite.create({
-        name: 'bdnoticias.db',
+        name: 'critical.db',
         location: 'default'
       }).then((bd: SQLiteObject) => {
-        //guardar la conexion
         this.database = bd;
-        //llamar a la creación de tablas
         this.crearTablas();
-        //modificar el estado de mi base de datos
         this.isDbReady.next(true);
       }).catch(e => {
         this.presentAlert('Creación de BD', 'Error: ' + JSON.stringify(e));
-      })
-    })
+      });
+    });
   }
 
   async crearTablas() {
@@ -118,41 +113,12 @@ export class ServicebdService {
     }
   }
 
-
-
-  selectTipoTitulo() {
-    return this.database.executeSql("SELECT * FROM tipotitulo", []).then(res => {
-      let items: TipoTitulo[] = [];
-      if (res.rows.length > 0) {
-        for (var i = 0; i < res.rows.length; i++) {
-          items.push({
-            idTipo: res.rows.item(i).idTipo,
-            nombre: res.rows.item(i).nombre
-          })
-        }
-      }
-    })
-  }
-
-  selectRol() {
-    return this.database.executeSql("SELECT * FROM rol", []).then(res => {
-      let items: Rol[] = [];
-      if (res.rows.length > 0) {
-        for (var i = 0; i < res.rows.length; i++) {
-          items.push({
-            idRol: res.rows.item(i).idRol,
-            nombre: res.rows.item(i).nombre
-          })
-        }
-      }
-    })
-  }
-
-  selectMarcado() {
-    return this.database.executeSql("SELECT * FROM Marcador", []).then(res => {
+  selectMarcadorPorIdUsuario(idUsuario: string): Promise<Marcador[]> {
+    const query = "SELECT * FROM Marcador WHERE idUsuario = ?";
+    return this.database.executeSql(query, [idUsuario]).then(res => {
       let items: Marcador[] = [];
       if (res.rows.length > 0) {
-        for (var i = 0; i < res.rows.length; i++) {
+        for (let i = 0; i < res.rows.length; i++) {
           items.push({
             idMarcados: res.rows.item(i).idMarcados,
             idUsuario: res.rows.item(i).idUsuario,
@@ -161,28 +127,13 @@ export class ServicebdService {
           });
         }
       }
+      return items; // Retorna el array de marcadores
+    }).catch(e => {
+      console.error("Error al consultar marcadores por ID de usuario", e);
+      return []; // Retorna un array vacío en caso de error
     });
   }
 
-  selectTitulo() {
-    return this.database.executeSql("SELECT * FROM Titulo", []).then(res => {
-      let items: Titulo[] = [];
-      if (res.rows.length > 0) {
-        for (var i = 0; i < res.rows.length; i++) {
-          items.push({
-            idTitulo: res.rows.item(i).idTitulo,
-            idTipoTitulo: res.rows.item(i).idTipoTitulo,
-            nombre: res.rows.item(i).nombre,
-            sinopsis: res.rows.item(i).sinopsis,
-            duracion: res.rows.item(i).duracion,
-            URLImagen: res.rows.item(i).URLImagen,
-            URLTrailer: res.rows.item(i).URLTrailer,
-            fechaEstreno: res.rows.item(i).fechaEstreno
-          });
-        }
-      }
-    });
-  }
 
   selectUsuario() {
     return this.database.executeSql("SELECT * FROM Usuario", []).then(res => {
@@ -236,17 +187,16 @@ export class ServicebdService {
       return null;
     });
   }
-
-
-  selectResenna() {
-    return this.database.executeSql("SELECT * FROM Resenna", []).then(res => {
+  selectResennaPorIdTitulo(idTitulo: string): Promise<Resenna[]> {
+    const query = "SELECT * FROM Resenna WHERE idTitulo = ?";
+    return this.database.executeSql(query, [idTitulo]).then(res => {
       let items: Resenna[] = [];
       if (res.rows.length > 0) {
-        for (var i = 0; i < res.rows.length; i++) {
+        for (let i = 0; i < res.rows.length; i++) {
           items.push({
             idResenna: res.rows.item(i).idResenna,
             idUsuario: res.rows.item(i).idUsuario,
-            id_titulo: res.rows.item(i).id_titulo,
+            idTitulo: res.rows.item(i).idTitulo,
             comentario: res.rows.item(i).comentario,
             fechaPublicacion: res.rows.item(i).fechaPublicacion,
             calificacion: res.rows.item(i).calificacion,
@@ -256,6 +206,117 @@ export class ServicebdService {
           });
         }
       }
+      return items;
+    }).catch(e => {
+      console.error("Error al consultar reseñas por ID de título", e);
+      return [];
+    });
+  }
+
+  insertarUsuario(usuario: Usuario): Promise<any> {
+    const query = `
+      INSERT INTO Usuario (nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    return this.database.executeSql(query, [
+      usuario.nombre,
+      usuario.apellido,
+      usuario.correo,
+      usuario.clave,
+      usuario.fechaNacimiento,
+      usuario.avatar,
+      usuario.telefono,
+      usuario.reputacion,
+      usuario.id_rol || 0
+    ]).then(() => {
+      return { success: true };
+    }).catch(e => {
+      console.error("Error al insertar usuario", e);
+      return { success: false, error: e };
+    });
+  }
+
+  insertarMarcador(marcador: Marcador): Promise<any> {
+    const query = `
+      INSERT INTO Marcador (idUsuario, idTitulo, fechaMarcado)
+      VALUES (?, ?, ?)
+    `;
+
+    return this.database.executeSql(query, [
+      marcador.idUsuario,
+      marcador.idTitulo,
+      marcador.fechaMarcado
+    ]).then(res => {
+      return { success: true, id: res.insertId };
+    }).catch(e => {
+      console.error("Error al insertar marcador", e);
+      return { success: false, error: e };
+    });
+  }
+
+  insertarResenna(resenna: Resenna): Promise<any> {
+    const query = `
+      INSERT INTO Resenna (idUsuario, id_titulo, comentario, fechaPublicacion, calificacion, esVisible, fechaEliminada, motivoEliminacion)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    return this.database.executeSql(query, [
+      resenna.idUsuario,
+      resenna.idTitulo,
+      resenna.comentario,
+      resenna.fechaPublicacion,
+      resenna.calificacion,
+      resenna.esVisible,
+      resenna.fechaEliminada,
+      resenna.motivoEliminacion
+    ]).then(res => {
+      return { success: true, id: res.insertId };
+    }).catch(e => {
+      console.error("Error al insertar reseña", e);
+      return { success: false, error: e };
+    });
+  }
+
+  insertarTitulo(titulo: Titulo): Promise<any> {
+    const query = `
+      INSERT INTO Titulo (idTipoTitulo, nombre, sinopsis, duracion, URLImagen, URLTrailer, fechaEstreno)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    return this.database.executeSql(query, [
+      titulo.idTipoTitulo,
+      titulo.nombre,
+      titulo.sinopsis,
+      titulo.duracion,
+      titulo.URLImagen,
+      titulo.URLTrailer,
+      titulo.fechaEstreno
+    ]).then(res => {
+      return { success: true, id: res.insertId };
+    }).catch(e => {
+      console.error("Error al insertar título", e);
+      return { success: false, error: e };
+    });
+  }
+
+  insertarNoticia(noticia: Noticia): Promise<any> {
+    const query = `
+      INSERT INTO Noticia (titulo, contenido, autor, fechaPublicacion, imagenUrl, categoria)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
+    return this.database.executeSql(query, [
+      noticia.titulo,
+      noticia.contenido,
+      noticia.autor,
+      noticia.fechaPublicacion,
+      noticia.imagenUrl,
+    ]).then(res => {
+      return { success: true, id: res.insertId };
+    }).catch(e => {
+      console.error("Error al insertar noticia", e);
+      return { success: false, error: e };
     });
   }
 }

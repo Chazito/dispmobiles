@@ -1,7 +1,7 @@
 export class Resenna {
   idResenna!: string;
   idUsuario!: string;
-  id_titulo!: string;
+  idTitulo!: string;
   comentario!: string;
   fechaPublicacion!: Date;
   calificacion!: number;

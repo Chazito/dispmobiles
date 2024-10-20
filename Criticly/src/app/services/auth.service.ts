@@ -10,7 +10,7 @@ import { ServicebdService } from './servicebd.service';
 export class AuthService {
   private isAuthSubject = new BehaviorSubject<boolean>(false);
   isAuthObservable = this.isAuthSubject.asObservable();
-  usuario: Usuario | null = null;
+  private usuario: Usuario | null = null;
 
   constructor(private storage: Storage, private sqlService: ServicebdService) {
     this.init();
@@ -53,5 +53,9 @@ export class AuthService {
   async isAuthenticated(): Promise<boolean> {
     const isAuth = await this.storage.get('isAuth');
     return isAuth === true;
+  }
+
+  get usuarioValue() {
+    return this.usuario
   }
 }
