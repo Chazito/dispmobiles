@@ -10,7 +10,7 @@ import { resenias } from 'src/assets/datos';
 })
 export class AdminListaResennasPage implements OnInit {
 
-  resennas: Resenna[] = [...resenias]
+  resennas: Resenna[] = []
 
   constructor(private bd: ServicebdService) { }
 

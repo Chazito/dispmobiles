@@ -13,9 +13,10 @@ import { peliculas, resenias } from 'src/assets/datos';
 })
 export class PeliculaDetallePage implements OnInit {
 
-  pelicula?: Titulo
+  pelicula?: Titulo = peliculas[0]
   resenias: Resenna[] = [];
   isAuth: boolean = false;
+  tienePrivilegios: boolean = false
   constructor(
     private route: ActivatedRoute,
     private sqlService: ServicebdService, private auth: AuthService
@@ -35,6 +36,7 @@ export class PeliculaDetallePage implements OnInit {
     });
     this.auth.isAuthObservable.subscribe((isAuth) => {
       this.isAuth = isAuth;
+      this.tienePrivilegios = this.auth.usuarioValue?.id_rol == 1;
     });
   }
 

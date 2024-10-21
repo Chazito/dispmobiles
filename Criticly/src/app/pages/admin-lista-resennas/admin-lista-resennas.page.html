@@ -6,16 +6,12 @@
     <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true" style="height: 100vh;">
   <div id="container">
     <div class="h5Container">
       <h5><strong>Reseñas</strong></h5>
     </div>
     <div id="usersContainer" class="ion-text-start">
-      <ion-button shape="round" [routerLink]="['/nuevo']">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
-      </ion-button>
       <ion-button *ngFor="let resenna of resennas" expand="false" fill="clear" class="config-button">
         <div id="userContainer">
           <p id="nombreRol">{{ resenna.titulo}}</p>

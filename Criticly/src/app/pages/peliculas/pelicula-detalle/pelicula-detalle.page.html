@@ -8,6 +8,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding-vertical">
+  <ion-button *ngIf="tienePrivilegios" class="titleButton ion-no-padding" fill="solid" size="small" color="transparent"
+    [routerLink]="['editar']">
+    <div id="titleContainer">
+      <ion-icon name="create-outline" slot="start" size="large" class="add-icon"></ion-icon>
+      <p>
+        Editar título
+      </p>
+    </div>
+  </ion-button>
   <ion-row>
     <ion-col size="12">
       <img style="max-width: 360px; height: auto;" [src]="pelicula!.URLImagen" alt="Movie Cover" class="movie-cover">

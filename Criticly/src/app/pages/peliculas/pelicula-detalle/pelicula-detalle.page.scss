@@ -61,3 +61,10 @@ ion-item {
   --padding-top: 10px;
   --padding-bottom: 10px
 }
+
+#titleContainer {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}

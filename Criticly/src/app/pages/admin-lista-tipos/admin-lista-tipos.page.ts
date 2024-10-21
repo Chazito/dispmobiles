@@ -10,7 +10,7 @@ import { tiposTitulo } from 'src/assets/datos';
 })
 export class AdminListaTiposPage implements OnInit {
 
-  tipos: TipoTitulo[] = [...tiposTitulo]
+  tipos: TipoTitulo[] = []
 
   constructor(private bd: ServicebdService) { }
 

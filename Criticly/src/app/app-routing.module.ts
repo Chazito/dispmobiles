@@ -40,6 +40,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/peliculas/peliculas.module').then(m => m.PeliculasPageModule)
   },
   {
+    path: 'titulo/nuevo',
+    loadChildren: () => import('./pages/nuevo-titulo/nuevo-titulo.module').then(m => m.NuevoTituloPageModule)
+  },
+  {
     path: 'titulo/:id',
     loadChildren: () => import('./pages/peliculas/pelicula-detalle/pelicula-detalle.module').then(m => m.PeliculaDetallePageModule)
   },
@@ -47,6 +51,11 @@ const routes: Routes = [
     path: 'titulo/:id/escribir-resenia',
     loadChildren: () => import('./pages/escribir-resenia/escribir-resenia.module').then(m => m.EscribirReseniaPageModule)
   },
+  {
+    path: 'titulo/:id/editar',
+    loadChildren: () => import('./pages/editar-titulo/editar-titulo.module').then(m => m.EditarTituloPageModule)
+  },
+
   {
     path: 'noticias',
     loadChildren: () => import('./pages/noticias/noticias.module').then(m => m.NoticiasPageModule)
@@ -66,9 +75,6 @@ const routes: Routes = [
   {
     path: 'usuarios/:id',
     loadChildren: () => import('./pages/usuarios/usuario/usuario.module').then(m => m.UsuarioPageModule)
-  }, {
-    path: 'nuevo-editar-titulo',
-    loadChildren: () => import('./pages/nuevo-editar-titulo/nuevo-editar-titulo.module').then(m => m.NuevoEditarTituloPageModule)
   },
   {
     path: 'recuperar',
@@ -89,7 +95,8 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: 'home'
-  }
+  },
+
 ];
 
 @NgModule({

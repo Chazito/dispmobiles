@@ -9,10 +9,7 @@ import { ServicebdService } from 'src/app/services/servicebd.service';
   styleUrls: ['./resenna.page.scss'],
 })
 export class ResennaPage implements OnInit {
-
-
   resenna: Resenna = {}
-
   constructor(private sqlService: ServicebdService, private route: ActivatedRoute) { }
 
   ngOnInit() {

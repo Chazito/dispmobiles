@@ -752,7 +752,7 @@ export class ServicebdService {
       });
   }
 
-  modificarTituloPorId(idTitulo: string, nuevoTitulo: Titulo): Promise<boolean> {
+  modificarTituloPorId(nuevoTitulo: Titulo): Promise<boolean> {
     const query = `
       UPDATE Titulo
       SET idTipoTitulo = ?, nombre = ?, sinopsis = ?, puntuacion = ?, duracion = ?,
@@ -768,7 +768,7 @@ export class ServicebdService {
       nuevoTitulo.URLImagen,
       nuevoTitulo.URLTrailer,
       nuevoTitulo.fechaEstreno,
-      idTitulo
+      nuevoTitulo.idTitulo
     ];
 
     return this.database.executeSql(query, params).then(res => {

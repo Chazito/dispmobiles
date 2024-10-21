@@ -25,10 +25,8 @@ export class AppComponent {
       }
     })
     this.auth.isAuthObservable.subscribe((isAuth) => {
-      // this.isAuth = isAuth;
-      this.isAuth = true;
-      // this.tienePrivilegios = this.auth.usuarioValue?.id_rol == 1;
-      this.tienePrivilegios = true;
+      this.isAuth = isAuth;
+      this.tienePrivilegios = this.auth.usuarioValue?.id_rol == 1;
       const usuario = auth.usuarioValue
       if (isAuth) {
         this.nombreApellido = `${usuario?.nombre} ${usuario?.apellido}`

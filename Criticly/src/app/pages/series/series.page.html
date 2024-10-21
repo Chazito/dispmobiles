@@ -10,10 +10,11 @@
         Series
       </strong>
     </h5>
-    <ion-button *ngIf="tienePrivilegios" class="titleButton ion-no-padding" fill="solid" size="small"
-      color="transparent">
+    <ion-button [routerLink]="['/titulo/nuevo']" *ngIf="tienePrivilegios" class="titleButton ion-no-padding"
+      fill="solid" size="small" color="transparent">
       <div id="titleContainer">
-        <ion-icon name="add-circle-outline" slot="start" size="large" class="add-icon"></ion-icon>
+        <ion-icon routerLinkActive="router-link-active" name="add-circle-outline" slot="start" size="large"
+          class="add-icon"></ion-icon>
         <p>
           Añadir título
         </p>
