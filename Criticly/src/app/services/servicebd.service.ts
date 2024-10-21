@@ -226,6 +226,24 @@ export class ServicebdService {
     })
   }
 
+  modificarRol(x : Rol){
+    return this.database.executeSql("UPDATE rol SET nombre = ? WHERE idRol = ?",[x.nombre, x.idRol]).then(res =>{
+      this.presentAlert("Rol","Rol modificado correctamente");
+      this.selectRol();
+    }).catch(e=>{
+      this.presentAlert("Rol","Error al modificar: " + JSON.stringify(e));
+    })
+  }
+
+  insertarRol(x : Rol){
+    return this.database.executeSql("INSERT INTO rol(nombre) values(?)",[x.nombre]).then(res =>{
+      this.presentAlert("Rol","Rol agregado correctamente");
+      this.selectRol();
+    }).catch(e=>{
+      this.presentAlert("Rol","Error al agregar: " + JSON.stringify(e));
+    })
+  }
+
   selectRol() {
     return this.database.executeSql("SELECT * FROM rol", []).then(res => {
       let items: Rol[] = [];
