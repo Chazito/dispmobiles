@@ -1,76 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicebdService } from '../services/servicebd.service';
+import { Titulo } from '../services/titulo';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
 
-  arregloDestacados : any = [
-    {
-      idTitulo: "",
-      idTipoTitulo: "",
-      nombre: "",
-      sinopsis: "",
-      duracion: "", 
-      URLImagen: "",
-      URLTrailer: "",
-      fechaEstreno: Date
-    }
-  ];
-  arregloCriticados : any = [
-    {
-      idTitulo: "",
-      idTipoTitulo: "",
-      nombre: "",
-      sinopsis: "",
-      duracion: "", 
-      URLImagen: "",
-      URLTrailer: "",
-      fechaEstreno: Date
-    }
-  ];
-  arregloMejores : any = [
-    {
-      idTitulo: "",
-      idTipoTitulo: "",
-      nombre: "",
-      sinopsis: "",
-      duracion: "", 
-      URLImagen: "",
-      URLTrailer: "",
-      fechaEstreno: Date
-    }
-  ];
+  arregloDestacados: Titulo[] = []
+  arregloCriticados: Titulo[] = []
+  arregloMejores: Titulo[] = []
 
-  constructor(private db : ServicebdService) {
-    
+  constructor(private db: ServicebdService) {
+
   }
 
-  ngOnInit(){
-    
-    this.db.dbState().subscribe(res=>{
-      if(res){
+  ngOnInit() {
+
+    this.db.dbState().subscribe(res => {
+      if (res) {
         this.db.selectDestacados();
         this.db.selectCriticados();
         this.db.selectMejores();
 
-        this.db.fetchDestacados().subscribe(data =>{
+        this.db.fetchDestacados().subscribe(data => {
           this.arregloDestacados = data;
         })
-        this.db.fetchCriticados().subscribe(data =>{
+        this.db.fetchCriticados().subscribe(data => {
           this.arregloCriticados = data;
         })
-        this.db.fetchMejor().subscribe(data =>{
+        this.db.fetchMejor().subscribe(data => {
           this.arregloMejores = data;
         })
       }
     })
   }
 
-  clickOnEntry(x : any){
+  clickOnEntry(x: any) {
     console.log("Woops");
   }
 
