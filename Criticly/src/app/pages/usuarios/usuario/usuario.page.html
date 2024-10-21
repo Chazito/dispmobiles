@@ -1,0 +1,72 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/usuarios"></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="container" style="height: auto;">
+    <div>
+      <form>
+        <ion-item class="input-container">
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-input placeholder="Nombre" [value]="usuario.nombre" class="rounded-input">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Apellido</ion-label>
+          <ion-input placeholder="Apellido" [value]="usuario.apellido" class="rounded-input">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Correo electrónico</ion-label>
+          <ion-input type="email" [value]="usuario.correo" placeholder="correo@ejemplo.com" class="rounded-input">
+            <ion-icon name="mail-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Contraseña</ion-label>
+          <ion-input type="password" [value]="usuario.clave" placeholder="Introduce tu contraseña"
+            class="rounded-input">
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">ID Usuario</ion-label>
+          <ion-input placeholder="ID Usuario" [value]="usuario.idUsuario" disabled class="rounded-input"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Reputación</ion-label>
+          <ion-input type="number" [value]="usuario.reputacion" disabled placeholder="Reputación"
+            class="rounded-input"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Rol</ion-label>
+          <ion-select [(ngModel)]="usuario.id_rol" value="0" class="rounded-input">
+            <ion-select-option value="0">Usuario</ion-select-option>
+            <ion-select-option value="1">Administrador</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </form>
+
+    </div>
+    <ion-footer class="ion-no-border">
+      <ion-toolbar class="ion-no-border">
+        <ion-button expand="full" id="guardar" color="secondary" shape="round">
+          <strong>Guardar</strong>
+        </ion-button>
+      </ion-toolbar>
+    </ion-footer>
+  </div>
+</ion-content>

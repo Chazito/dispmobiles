@@ -62,6 +62,10 @@ const routes: Routes = [
   {
     path: 'usuarios',
     loadChildren: () => import('./pages/usuarios/usuarios.module').then(m => m.UsuariosPageModule)
+  },
+  {
+    path: 'usuarios/:id',
+    loadChildren: () => import('./pages/usuarios/usuario/usuario.module').then( m => m.UsuarioPageModule)
   }, {
     path: 'nuevo-editar-titulo',
     loadChildren: () => import('./pages/nuevo-editar-titulo/nuevo-editar-titulo.module').then(m => m.NuevoEditarTituloPageModule)

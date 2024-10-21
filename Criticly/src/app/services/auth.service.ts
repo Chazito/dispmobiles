@@ -24,7 +24,7 @@ export class AuthService {
 
   async validarUsuarioPorEmail(email: string, password: string): Promise<Usuario | null> {
     try {
-      const usuarioData = await this.sqlService.selectUsuarioPorEmail(email, password);
+      const usuarioData = await this.sqlService.validarUsuarioPorEmail(email, password);
       if (usuarioData) {
         this.usuario = usuarioData;
         return this.usuario;
