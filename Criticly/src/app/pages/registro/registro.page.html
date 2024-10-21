@@ -11,83 +11,56 @@
     <div class="logo-container">
       <ion-img class="logo" src="assets/images/logo.png"></ion-img>
     </div>
-    <form [formGroup]="form" (ngSubmit)="onRegistroClick()">
+    <form (ngSubmit)="onRegistroClick()">
       <div class="login-input-container">
         <p>Ingresa tus datos:</p>
+        
+        <!-- Nombre -->
         <ion-item class="input-container">
           <ion-label position="stacked">Nombre</ion-label>
-          <ion-input placeholder="Pedro" class="rounded-input" type="text" formControlName="nombre">
-            <ion-icon name="person-outline" slot="start"></ion-icon>
-          </ion-input>
+          <ion-input [(ngModel)]="inputNombre" placeholder="Pedro" class="rounded-input" type="text"></ion-input>
         </ion-item>
-        <div *ngIf="!form.controls['nombre'].valid && form.controls['nombre'].touched">
-          <p *ngIf="form.controls['nombre'].value === ''">
-            Se requiere un nombre.
-          </p>
+        <div *ngIf="inputNombre && !isValidName(inputNombre)">
+          <p>Nombre inválido. Solo letras (máx. 20).</p>
         </div>
+        
+        <!-- Apellido -->
         <ion-item class="input-container">
           <ion-label position="stacked">Apellido</ion-label>
-          <ion-input placeholder="Gonzalez" class="rounded-input" type="text" formControlName="apellido">
-            <ion-icon name="person-outline" slot="start"></ion-icon>
-          </ion-input>
+          <ion-input [(ngModel)]="inputApellido" placeholder="Gonzalez" class="rounded-input" type="text"></ion-input>
         </ion-item>
-        <div *ngIf="!form.controls['apellido'].valid && form.controls['apellido'].touched">
-          <p *ngIf="form.controls['apellido'].value === ''">
-            Se requiere un apellido.
-          </p>
+        <div *ngIf="inputApellido && !isValidName(inputApellido)">
+          <p>Apellido inválido. Solo letras (máx. 20).</p>
         </div>
+        
+        <!-- Correo electrónico -->
         <ion-item class="input-container">
           <ion-label position="stacked">Correo electrónico</ion-label>
-          <ion-input placeholder="email@email.com" class="rounded-input" type="email" formControlName="email">
-            <ion-icon name="person-outline" slot="start"></ion-icon>
-          </ion-input>
+          <ion-input [(ngModel)]="inputEmail" placeholder="email@email.com" class="rounded-input" type="email"></ion-input>
         </ion-item>
-        <div *ngIf="!form.controls['email'].valid && form.controls['email'].touched">
-          <p *ngIf="form.controls['email'].value === ''">
-            Se requiere un correo electrónico.
-          </p>
-          <p *ngIf="!form.controls['email'].valid && form.controls['email'].value !==''">
-            Por favor ingrese un correo válido.
-          </p>
+        <div *ngIf="inputEmail && !isValidEmail(inputEmail)">
+          <p>Correo electrónico inválido.</p>
         </div>
+        
+        <!-- Contraseña -->
         <ion-item class="input-container">
           <ion-label position="stacked">Contraseña</ion-label>
-          <ion-input placeholder="***********" class="rounded-input" type="password" formControlName="password">
-            <ion-icon name="person-outline" slot="start"></ion-icon>
-          </ion-input>
+          <ion-input [(ngModel)]="inputPass" placeholder="***********" class="rounded-input" type="password"></ion-input>
         </ion-item>
-        <div *ngIf="!form.controls['password'].valid && form.controls['password'].touched">
-          <p *ngIf="form.controls['password'].value === ''">
-            Ingrese una contraseña
-          </p>
-          <p *ngIf="!form.controls['password'].value.match('^(?=.*[A-Z])')">
-            La contraseña debe tener al menos un caracter en mayúscula.
-          </p>
-          <p *ngIf="!form.controls['password'].value.match('(?=.*[a-z])')">
-            La contraseña debe tener al menos un caracter en minúscula.
-          </p>
-          <p *ngIf="!form.controls['password'].value.match('(.*[0-9].*)')">
-            La contraseña debe tener al menos un caracter numérico.
-          </p>
-          <p *ngIf="!form.controls['password'].value.match('(?=.*[!@#$%^&*])')">
-            La contraseña debe tener al menos un caracter especial.
-          </p>
-          <p *ngIf="!form.controls['password'].value.match('.{8,}')">
-            La contraseña debe tener al menos 8 caracteres.
-          </p>
+        <div *ngIf="inputPass && !isValidPassword(inputPass)">
+          <p>Contraseña inválida. Debe tener entre 8-20 caracteres, al menos una letra mayúscula, una minúscula, un número y un caracter especial.</p>
         </div>
+        
+        <!-- Confirmar contraseña -->
         <ion-item class="input-container">
           <ion-label position="stacked">Confirmar contraseña</ion-label>
-          <ion-input placeholder="***********" class="rounded-input" type="password" formControlName="password2">
-            <ion-icon name="person-outline" slot="start"></ion-icon>
-          </ion-input>
+          <ion-input [(ngModel)]="inputPass2" placeholder="***********" class="rounded-input" type="password"></ion-input>
         </ion-item>
-        <div *ngIf="!form.controls['password2'].valid && form.controls['password2'].touched">
-          <p *ngIf="form.controls['password2'].value !== form.controls['password'].value">
-            Las contraseñas deben ser iguales
-          </p>
+        <div *ngIf="inputPass2 && !passwordsMatch()">
+          <p>Las contraseñas no coinciden.</p>
         </div>
       </div>
+      
       <br />
       <div class="title-container" style="margin: 0;">
         <p>
@@ -98,7 +71,7 @@
       <br />
       <ion-footer class="ion-no-border">
         <ion-toolbar class="ion-no-border">
-          <ion-button expand="full" color="secondary" shape="round" [disabled]="!form.valid">
+          <ion-button expand="full" color="secondary" shape="round" type="submit">
             <strong class="ion-margin">Registrarse</strong>
           </ion-button>
         </ion-toolbar>
