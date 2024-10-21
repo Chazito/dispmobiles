@@ -26,7 +26,7 @@ export class AdminListaTiposPage implements OnInit {
     });
   }
 
-  eliminar(x: any) {
-    this.bd.eliminarRol(x.idRol);
+  eliminar(idTipo: string) {
+    this.bd.eliminarTipo(idTipo);
   }
 }

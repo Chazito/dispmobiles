@@ -1,13 +1,92 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-title>resenna</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/resennas"></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">resenna</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div id="container" style="height: auto;">
+    <div>
+      <form>
+        <ion-item class="input-container">
+          <ion-label position="stacked">ID Reseña</ion-label>
+          <ion-input placeholder="ID Reseña" [value]="resenna.idResenna" disabled class="rounded-input"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">ID Usuario</ion-label>
+          <ion-input placeholder="ID Usuario" [(ngModel)]="resenna.idUsuario" disabled name="idUsuario"
+            class="rounded-input"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">ID Título</ion-label>
+          <ion-input placeholder="ID Título" [(ngModel)]="resenna.idTitulo" disabled name="idTitulo"
+            class="rounded-input"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Título</ion-label>
+          <ion-input placeholder="Título" [(ngModel)]="resenna.titulo" name="titulo" class="rounded-input"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Comentario</ion-label>
+          <ion-textarea placeholder="Comentario" [(ngModel)]="resenna.comentario" name="comentario"
+            class="rounded-input"></ion-textarea>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Fecha Publicación</ion-label>
+          <ion-input [value]="resenna.fechaPublicacion | date:'dd/MM/yyyy'" disabled name="fechaPublicacion"
+            class="rounded-input"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Calificación</ion-label>
+          <ion-input type="number" placeholder="Calificación" [(ngModel)]="resenna.calificacion" name="calificacion"
+            min="1" max="5" class="rounded-input"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Visible</ion-label>
+          <ion-select [(ngModel)]="resenna.esVisible" name="esVisible" class="rounded-input">
+            <ion-select-option value="1">Visible</ion-select-option>
+            <ion-select-option value="0">Oculto</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Fecha Eliminación</ion-label>
+          <ion-input [value]="resenna.fechaPublicacion | date:'dd/MM/yyyy'" disabled name="fechaPublicacion"
+            class="rounded-input"></ion-input>
+
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Motivo Eliminación</ion-label>
+          <ion-textarea placeholder="Motivo de la eliminación" [(ngModel)]="resenna.motivoEliminacion"
+            name="motivoEliminacion" class="rounded-input"></ion-textarea>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">URL Imagen</ion-label>
+          <ion-input placeholder="URL de la imagen" [(ngModel)]="resenna.URLImagen" name="URLImagen"
+            class="rounded-input"></ion-input>
+        </ion-item>
+      </form>
+
+    </div>
+    <ion-footer class="ion-no-border">
+      <ion-toolbar class="ion-no-border">
+        <ion-button (click)="modificarResenna()" expand="full" id="guardar" color="secondary" shape="round">
+          <strong>Guardar</strong>
+        </ion-button>
+      </ion-toolbar>
+    </ion-footer>
+  </div>
 </ion-content>

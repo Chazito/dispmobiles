@@ -27,7 +27,7 @@ export class AdminListaRolesPage implements OnInit {
     });
   }
 
-  eliminar(x: any) {
-    this.bd.eliminarRol(x.idRol);
+  eliminar(idRol: string) {
+    this.bd.eliminarRol(idRol);
   }
 }

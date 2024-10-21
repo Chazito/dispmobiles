@@ -368,6 +368,29 @@ export class ServicebdService {
     });
   }
 
+  selectResenna() {
+    return this.database.executeSql("SELECT * FROM Resenna", []).then(res => {
+      let items: Resenna[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            idResenna: res.rows.item(i).idResenna,
+            idUsuario: res.rows.item(i).idUsuario,
+            idTitulo: res.rows.item(i).idTitulo,
+            comentario: res.rows.item(i).comentario,
+            fechaPublicacion: res.rows.item(i).fechaPublicacion,
+            calificacion: res.rows.item(i).calificacion,
+            esVisible: res.rows.item(i).esVisible,
+            fechaEliminada: res.rows.item(i).fechaEliminada,
+            motivoEliminacion: res.rows.item(i).motivoEliminacion
+          });
+        }
+      }
+
+      this.listaUsuario.next(items as any);
+    });
+  }
+
   validarUsuarioPorEmail(email: string, password: string): Promise<Usuario | null> {
     const query = "SELECT * FROM Usuario WHERE correo = ?";
     return this.database.executeSql(query, [email]).then(res => {
@@ -447,6 +470,32 @@ export class ServicebdService {
       return items;
     }).catch(e => {
       console.error("Error al consultar reseñas por ID de título", e);
+      return [];
+    });
+  }
+
+  selectResennaPorId(idResenna: string): Promise<Resenna[]> {
+    const query = "SELECT * FROM Resenna WHERE idResenna = ?";
+    return this.database.executeSql(query, [idResenna]).then(res => {
+      let items: Resenna[] = [];
+      if (res.rows.length > 0) {
+        for (let i = 0; i < res.rows.length; i++) {
+          items.push({
+            idResenna: res.rows.item(i).idResenna,
+            idUsuario: res.rows.item(i).idUsuario,
+            idTitulo: res.rows.item(i).idTitulo,
+            comentario: res.rows.item(i).comentario,
+            fechaPublicacion: res.rows.item(i).fechaPublicacion,
+            calificacion: res.rows.item(i).calificacion,
+            esVisible: res.rows.item(i).esVisible,
+            fechaEliminada: res.rows.item(i).fechaEliminada,
+            motivoEliminacion: res.rows.item(i).motivoEliminacion
+          });
+        }
+      }
+      return items;
+    }).catch(e => {
+      console.error("Error al consultar reseñas por ID", e);
       return [];
     });
   }
@@ -537,6 +586,22 @@ export class ServicebdService {
       })
       .catch(e => {
         console.error("Error al eliminar el usuario", e);
+        return { success: false, error: e };
+      });
+  }
+
+  eliminarTipo(idTipo: string): Promise<any> {
+    const query = "DELETE FROM TipoTiutulo WHERE idTipo = ?";
+    return this.database.executeSql(query, [idTipo])
+      .then(res => {
+        if (res.rowsAffected > 0) {
+          return { success: true };
+        } else {
+          return { success: false, message: "No se encontró el tipo con el ID especificado." };
+        }
+      })
+      .catch(e => {
+        console.error("Error al eliminar el tipo", e);
         return { success: false, error: e };
       });
   }
@@ -719,7 +784,7 @@ export class ServicebdService {
     });
   }
 
-  modificarResennaPorId(idResenna: string, nuevaResenna: Resenna): Promise<boolean> {
+  modificarResennaPorId(resenna: Resenna): Promise<boolean> {
     const query = `
     UPDATE Resenna
     SET idUsuario = ?, idTitulo = ?, comentario = ?, fechaPublicacion = ?,
@@ -728,16 +793,16 @@ export class ServicebdService {
     WHERE idResenna = ?;
   `;
     const params = [
-      nuevaResenna.idUsuario,
-      nuevaResenna.idTitulo,
-      nuevaResenna.comentario,
-      nuevaResenna.fechaPublicacion,
-      nuevaResenna.calificacion,
-      nuevaResenna.esVisible,
-      nuevaResenna.fechaEliminada,
-      nuevaResenna.motivoEliminacion,
-      nuevaResenna.URLImagen,
-      idResenna
+      resenna.idUsuario,
+      resenna.idTitulo,
+      resenna.comentario,
+      resenna.fechaPublicacion,
+      resenna.calificacion,
+      resenna.esVisible,
+      resenna.fechaEliminada,
+      resenna.motivoEliminacion,
+      resenna.URLImagen,
+      resenna.idResenna
     ];
 
     return this.database.executeSql(query, params).then(res => {
