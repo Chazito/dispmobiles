@@ -52,6 +52,11 @@
                 <ion-icon slot="start" name="people-outline" size="large"></ion-icon>
                 <ion-label>Usuarios</ion-label>
               </ion-item>
+
+              <ion-item *ngIf="tienePrivilegios" [routerLink]="['/admin-lista-roles']" routerLinkActive="active">
+                <ion-icon slot="start" name="people-outline" size="large"></ion-icon>
+                <ion-label>Administrar Roles</ion-label>
+              </ion-item>
             </div>
           </ion-list>
         </ion-menu-toggle>

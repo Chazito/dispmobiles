@@ -237,6 +237,15 @@ export class ServicebdService {
     })
   }
 
+  eliminarRol(x : string){
+    return this.database.executeSql("DELETE FROM rol WHERE idRol = ?",[x]).then(res =>{
+      this.selectRol();
+      this.presentAlert("Rol","Rol eliminado correctamente.");
+    }).catch(e =>{
+      this.presentAlert("Rol","Error al eliminar: " + JSON.stringify(e));
+    });
+  }
+
   selectMarcado() {
     return this.database.executeSql("SELECT * FROM Marcador", []).then(res => {
       let items: Marcador[] = [];
