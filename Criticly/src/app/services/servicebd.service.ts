@@ -120,8 +120,8 @@ export class ServicebdService {
       await this.database.executeSql(this.tablaResenna, []);
       await this.database.executeSql(this.tablaMarcador, []);
 
-      await this.database.executeSql("INSERT INTO rol(nombre) values('Usuario')",[]);
-      await this.database.executeSql("INSERT INTO rol(nombre) values('Admin')",[]);
+      await this.database.executeSql("INSERT INTO rol(nombre) values('Usuario')", []);
+      await this.database.executeSql("INSERT INTO rol(nombre) values('Admin')", []);
 
     } catch (e) {
       console.log(JSON.stringify(e));
@@ -502,7 +502,7 @@ export class ServicebdService {
 
   insertarUsuario(newUser: Usuario) {
     let insertSql = "INSERT INTO usuario(nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) values(?,?,?,?,?,?,?,?,?)";
-    if(newUser.correo == "fr.nuneza@duocuc.cl"){
+    if (newUser.correo == "fr.nuneza@duocuc.cl") {
       newUser.id_rol = 1;
     }
     return this.database.executeSql(insertSql, [newUser.nombre, newUser.apellido, newUser.correo, newUser.clave, newUser.fechaNacimiento, newUser.avatar, newUser.telefono, newUser.reputacion, newUser.id_rol]).then(res => {
@@ -515,7 +515,7 @@ export class ServicebdService {
   }
 
   insertarResenna(resenna: Resenna) {
-    let insertSql = "INSERT INTO resenna(idUsuario , idTitulo , comentario , fechaPublicacion , calificacion , esVisible , fechaEliminada , motivoEliminacion) values(?,?,?,?,?,?,?,?)";
+    let insertSql = "INSERT INTO resenna(idUsuario , idTitulo ,titulo, comentario , fechaPublicacion , calificacion , esVisible , fechaEliminada , motivoEliminacion) values(?,?,?,?,?,?,?,?,?)";
     return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.idTitulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, resenna.esVisible, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
       this.presentAlert("Nueva Reseña", "Reseña ingresada correctamente.");
 
