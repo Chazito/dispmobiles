@@ -1,11 +1,11 @@
-export class Resenna {
-  idResenna!: string;
-  idUsuario!: string;
-  id_titulo!: string;
-  comentario!: string;
-  fechaPublicacion!: Date;
-  calificacion!: number;
-  esVisible!: 0 | 1;
-  fechaEliminada!: Date;
-  motivoEliminacion!: string;
+export interface Resenna {
+  idResenna?: string;
+  idUsuario?: string;
+  idTitulo?: string;
+  comentario?: string;
+  fechaPublicacion?: Date;
+  calificacion?: number;
+  esVisible?: 0 | 1;
+  fechaEliminada?: Date;
+  motivoEliminacion?: string;
 }

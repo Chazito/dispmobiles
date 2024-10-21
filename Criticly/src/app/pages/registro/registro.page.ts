@@ -17,11 +17,11 @@ export class RegistroPage implements OnInit {
 
   form: FormGroup;
 
-  inputNombre : string = "";
-  inputApellido : string = "";
-  inputEmail : string = "";
-  inputPass : string = "";
-  inputPass2 : string = "";
+  inputNombre: string = "";
+  inputApellido: string = "";
+  inputEmail: string = "";
+  inputPass: string = "";
+  inputPass2: string = "";
 
   constructor(private fb: FormBuilder, private router : Router, private alertController : AlertController, private db : ServicebdService) {
     this.form = this.fb.group({
@@ -39,11 +39,11 @@ export class RegistroPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onRegistroClick(){
 
-    let user : Usuario = new Usuario();
+    let user : any;
     user.nombre = this.inputNombre;
     user.apellido = this.inputApellido;
     user.correo = this.inputEmail;
@@ -56,20 +56,20 @@ export class RegistroPage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  async presentAlert(titulo:string, mensaje:string, boton:string) {
+  async presentAlert(titulo: string, mensaje: string, boton: string) {
     const alert = await this.alertController.create({
       header: titulo,
       message: mensaje,
       buttons: [
         {
-          text:boton,
+          text: boton,
           cssClass: "alert-button",
-          handler: () =>{
+          handler: () => {
             this.router.navigate(['/login']);
           }
         }
       ],
-      
+
     });
 
     await alert.present();

@@ -6,83 +6,49 @@
 
 <ion-content [fullscreen]="true">
   <div class="login-container">
-    <!-- Centered Logo -->
     <div class="logo-container">
       <ion-img class="logo" src="assets/images/logo.png"></ion-img>
     </div>
-
-    <!-- Centered Title -->
     <div class="title-container">
-      <h6>Inicio de Sesión</h6>
+      <h6><strong>Inicia sesión</strong></h6>
     </div>
-
-    <form [formGroup]="form" (ngSubmit)="onLoginClick()">
-      <!-- Input Fields with Instructions -->
+    <form [formGroup]="form">
       <div class="login-input-container">
         <p>Ingresa tus datos:</p>
         <ion-item class="input-container">
-          <ion-label position="stacked">Correo Electronico</ion-label>
-          <ion-input placeholder="email@email.com" class="rounded-input" type="email" [(ngModel)]="inputEmail"
-            formControlName="email">
+          <ion-label position="stacked">Correo electrónico</ion-label>
+          <ion-input placeholder="email@email.com" class="rounded-input" type="email" formControlName="email">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
         <div *ngIf="!form.controls['email'].valid && form.controls['email'].touched">
-          <p *ngIf="form.controls['email'].value === ''">Se requiere un correo electronico.</p>
-          <p *ngIf="!form.controls['email'].valid && form.controls['email'].value! ===''">Por favor ingrese un correo
-            valido.</p>
+          <p *ngIf="!form.controls['email'].valid && form.controls['email'].value! ===''">Datos no válidos</p>
         </div>
         <ion-item class="input-container">
           <ion-label position="stacked">Contraseña</ion-label>
-          <ion-input placeholder="***********" class="rounded-input" type="password" [(ngModel)]="inputPass"
-            formControlName="password">
+          <ion-input placeholder="***********" class="rounded-input" type="password" formControlName="password">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
         <div *ngIf="!form.controls['password'].valid && form.controls['password'].touched">
-          <p *ngIf="form.controls['password'].value === ''">Ingrese una contraseña</p>
-          <p *ngIf="!form.controls['password'].valid && form.controls['password'].value! ===''">La contraseña no puede
-            contener caracteres especiales o espacios.</p>
+          <p *ngIf="!form.controls['password'].valid && form.controls['password'].value! ===''">Datos no válidos</p>
         </div>
         <div style="width: 100%; display: flex; justify-content: end;align-items: center;padding-right: 20px;">
-          <p class="ion-padding-top" routerLink="/recuperar">Recuperar contraseña</p>
+          <p class="ion-padding-top" style="text-decoration: underline;" routerLink="/recuperar">Recuperar contraseña
+          </p>
         </div>
       </div>
 
-      <!-- Buttons for Login and Register -->
       <div class="button-container">
-        <ion-list>
-          <ion-item class="button-item">
-            <button mat-flat-button class="full-width-button" id="login-button" (click)="onLoginClick()" type="submit"
-              [disabled]="!form.valid">
-              <strong>Ingresar</strong>
-            </button>
-          </ion-item>
-        </ion-list>
-        <ion-list>
-          <ion-item class="button-item">
-            <button mat-flat-button class="full-width-button" id="register-button" [routerLink]="['/registro']">
-              <strong>Registrarse</strong>
-            </button>
-          </ion-item>
-        </ion-list>
+        <ion-button id="login-button" class="ion-margin-bottom" (click)="login()" type="submit" [disabled]="!form.valid"
+          expand="full" color="secondary" shape="round">
+          <strong class="ion-margin">Ingresar</strong>
+        </ion-button>
+        <ion-button expand="full" color="primary" shape="round" mat-flat-button id="register-button"
+          [routerLink]="['/registro']">
+          <strong class="ion-margin">Registrarse</strong>
+        </ion-button>
       </div>
     </form>
-    <br /><br />
-    <!-- Additional Login Options -->
-    <div class="other-options-container">
-      <p class="centered-text">O ingresa con</p>
-      <div class="icon-container">
-        <ion-button fill="clear" class="icon-button">
-          <ion-icon name="logo-google"></ion-icon>
-        </ion-button>
-        <ion-button fill="clear" class="icon-button">
-          <ion-icon name="logo-facebook"></ion-icon>
-        </ion-button>
-        <ion-button fill="clear" class="icon-button">
-          <ion-icon name="logo-apple"></ion-icon>
-        </ion-button>
-      </div>
-    </div>
   </div>
 </ion-content>

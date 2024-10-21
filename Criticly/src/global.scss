@@ -84,3 +84,9 @@ ion-alert .alert-radio-icon {
 [aria-checked=true].sc-ion-alert-md .alert-radio-icon.sc-ion-alert-md {
   border-color: yellow !important;
 }
+
+ion-button {
+  font-size: 1.1rem;
+  letter-spacing: 0;
+  font-weight: bold;
+}
