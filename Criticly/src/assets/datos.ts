@@ -497,21 +497,20 @@ export const marcadores: Marcador[] = [
   },
 ];
 
-export const query: string = `
-INSERT INTO rol (idRol, nombre) VALUES
+export const insertRol: string = `INSERT INTO rol (idRol, nombre) VALUES
 ('0', 'Usuario'),
-('1', 'Administrador');
+('1', 'Administrador');`
 
-INSERT INTO tipoTitulo (idTipo, nombre) VALUES
+export const insertTipoTitulo: string = `INSERT INTO tipoTitulo (idTipo, nombre) VALUES
 ('1', 'Películas'),
 ('2', 'Series'),
-('3', 'Documentales');
+('3', 'Documentales');`
 
-INSERT INTO usuario (idUsuario, nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) VALUES
+export const insertUsuario: string = `INSERT INTO usuario (idUsuario, nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) VALUES
 ('1', 'Juan', 'Pérez', 'juan.perez@example.com', 'password123', '1990-05-15', 'https://example.com/avatar-juan.jpg', '123456789', 4.5, 0),
-('2', 'Ana', 'Gómez', 'ana.gomez@example.com', 'securepassword456', '1985-11-23', 'https://example.com/avatar-ana.jpg', '987654321', 5.0, 1);
+('2', 'Juan', 'Gómez', 'juan.gomez@example.com', 'securepassword456', '1985-11-23', 'https://example.com/avatar-ana.jpg', '987654321', 5.0, 1);`
 
-INSERT INTO titulo (idTitulo, idTipoTitulo, nombre, sinopsis, duracion, URLImagen, URLTrailer, fechaEstreno, puntuacion) VALUES
+export const insertTitulo: string = `INSERT INTO titulo (idTitulo, idTipoTitulo, nombre, sinopsis, duracion, URLImagen, URLTrailer, fechaEstreno, puntuacion) VALUES
 ('1', '1', 'Inception', 'Un ladrón que roba secretos corporativos a través del uso de tecnología de sueños compartidos se le da la tarea inversa: plantar una idea en la mente de un CEO.', '148 min', 'https://placehold.co/100x170', 'https://example.com/inception-trailer.mp4', '2010-07-16', 4.8),
 ('2', '1', 'The Matrix', 'Un hacker aprende la impactante verdad sobre su realidad y su papel en la guerra contra sus controladores.', '136 min', 'https://placehold.co/100x170', 'https://example.com/matrix-trailer.mp4', '1999-03-31', 4.7),
 ('3', '1', 'Buscando a Nemo', 'Un pez payaso llamado Marlin, junto con una pez cirujano azul llamada Dory, busca a su hijo Nemo que ha sido capturado por unos buzos.', '100 min', 'https://placehold.co/100x170', 'https://example.com/nemo-trailer.mp4', '2003-05-30', 4.5),
@@ -521,9 +520,9 @@ INSERT INTO titulo (idTitulo, idTipoTitulo, nombre, sinopsis, duracion, URLImage
 ('7', '1', 'Titanic', 'Una historia de amor entre Jack y Rose a bordo del desafortunado Titanic que se hunde tras chocar con un iceberg.', '195 min', 'https://placehold.co/100x170', 'https://example.com/titanic-trailer.mp4', '1997-12-19', 4.7),
 ('8', '1', 'Jurassic Park', 'Un grupo de visitantes lucha por sobrevivir en un parque temático donde dinosaurios clonados escapan de sus jaulas.', '127 min', 'https://placehold.co/100x170', 'https://example.com/jurassic-park-trailer.mp4', '1993-06-11', 4.6),
 ('9', '1', 'Gladiator', 'Un general romano es traicionado y reducido a la esclavitud, buscando venganza contra el emperador que lo traicionó.', '155 min', 'https://placehold.co/100x170', 'https://example.com/gladiator-trailer.mp4', '2000-05-05', 4.8),
-('10', '1', 'The Shawshank Redemption', 'Dos hombres en una prisión encuentran amistad y redención mientras intentan sobrevivir en un entorno brutal.', '142 min', 'https://placehold.co/100x170', 'https://example.com/shawshank-trailer.mp4', '1994-09-23', 4.9);
+('10', '1', 'The Shawshank Redemption', 'Dos hombres en una prisión encuentran amistad y redención mientras intentan sobrevivir en un entorno brutal.', '142 min', 'https://placehold.co/100x170', 'https://example.com/shawshank-trailer.mp4', '1994-09-23', 4.9);`
 
-INSERT INTO resenna (idResenna, idUsuario, idTitulo, comentario, fechaPublicacion, calificacion, esVisible) VALUES
+export const insertResenna = `INSERT INTO resenna (idResenna, idUsuario, idTitulo, comentario, fechaPublicacion, calificacion, esVisible) VALUES
 ('1', '1', '1', 'Una experiencia visual impresionante que desafía la mente. ¡Me encantó!', '2023-01-15', 5, 1),
 ('2', '2', '1', 'Inception es una obra maestra del cine moderno. La trama es compleja pero muy satisfactoria.', '2023-01-20', 4, 1),
 ('3', '1', '2', 'Un clásico que redefine la ciencia ficción. Los efectos especiales son asombrosos.', '2023-02-10', 5, 1),
@@ -555,13 +554,12 @@ INSERT INTO resenna (idResenna, idUsuario, idTitulo, comentario, fechaPublicacio
 ('29', '1', '7', 'Una historia de amor que nunca me canso de ver. Simplemente hermosa.', '2023-05-18', 5, 1),
 ('30', '2', '7', 'La música y la actuación son inolvidables. ¡Un clásico!', '2023-05-22', 4, 1),
 ('31', '1', '8', 'Una aventura que cambió el cine para siempre. Los dinosaurios son geniales.', '2023-06-10', 5, 1),
-('32', '2', '8', '¡La nostalgia es real! Un clásico que nunca pierde su encanto.', '2023-06-12', 4, 1);
+('32', '2', '8', '¡La nostalgia es real! Un clásico que nunca pierde su encanto.', '2023-06-12', 4, 1);`
 
-INSERT INTO marcador (idMarcador, idUsuario, idTitulo, fechaMarcado) VALUES
+export const insertMarcador = `INSERT INTO marcador (idMarcador, idUsuario, idTitulo, fechaMarcado) VALUES
 ('1', '1', '1', '2024-10-01'),
 ('2', '2', '3', '2024-10-02'),
 ('3', '1', '2', '2024-10-03'),
 ('4', '2', '4', '2024-10-04'),
-('5', '1', '5', '2024-10-05');
-`
+('5', '1', '5', '2024-10-05');`
 

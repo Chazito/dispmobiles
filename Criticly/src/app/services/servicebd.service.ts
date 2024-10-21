@@ -8,7 +8,7 @@ import { Usuario } from './usuario';
 import { Titulo } from './titulo';
 import { Resenna } from './resenna';
 import { Marcador } from './marcador';
-import { query } from 'src/assets/datos';
+import { insertMarcador, insertResenna, insertRol, insertTipoTitulo, insertTitulo, insertUsuario } from 'src/assets/datos';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,8 @@ export class ServicebdService {
 
   database!: SQLiteObject;
 
-  tablaRol: string = "CREATE TABLE IF NOT EXISTS Rol (idRol INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL);";
-  tablaTipoTitulo: string = "CREATE TABLE IF NOT EXISTS TipoTitulo (idTipo INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL);";
+  tablaRol: string = "CREATE TABLE IF NOT EXISTS Rol (idRol INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL UNIQUE);";
+  tablaTipoTitulo: string = "CREATE TABLE IF NOT EXISTS tipoTitulo (idTipo INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL UNIQUE);";
 
   tablaUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, apellido TEXT NOT NULL, correo TEXT NOT NULL UNIQUE, clave TEXT NOT NULL, fechaNacimiento DATE, avatar TEXT, telefono TEXT, reputacion REAL, id_rol INTEGER NOT NULL, FOREIGN KEY (id_rol) REFERENCES Rol(idRol));";
   tablaTitulo: string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT,puntuacion REAL, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
@@ -102,14 +102,21 @@ export class ServicebdService {
       this.sqlite.create({
         name: 'critical.db',
         location: 'default'
-      }).then((bd: SQLiteObject) => {
+      }).then(async (bd: SQLiteObject) => {
         this.database = bd;
-        this.crearTablas();
-        this.database.executeSql(query)
+        await this.crearTablas()
+        await this.database.executeSql(insertRol)
+        await this.database.executeSql(insertTipoTitulo)
+        await this.database.executeSql(insertUsuario)
+        await this.database.executeSql(insertTitulo)
+        await this.database.executeSql(insertResenna)
+        await this.database.executeSql(insertMarcador)
         this.isDbReady.next(true);
       }).catch(e => {
         this.presentAlert('Creación de BD', 'Error: ' + JSON.stringify(e));
       });
+    }).catch(e => {
+      this.presentAlert('Error al preparar la plataforma', JSON.stringify(e));
     });
   }
 
@@ -125,7 +132,7 @@ export class ServicebdService {
       //await this.database.executeSql("INSERT INTO rol(nombre) values('Usuario')", []);
       //await this.database.executeSql("INSERT INTO rol(nombre) values('Admin')", []);
 
-      await this.database.executeSql("UPDATE usuario SET id_rol = 2 WHERE correo = 'fr.nuneza@duocuc.cl'",[]);
+      await this.database.executeSql("UPDATE usuario SET id_rol = 2 WHERE correo = 'fr.nuneza@duocuc.cl'", []);
 
     } catch (e) {
       console.log(JSON.stringify(e));
@@ -136,6 +143,7 @@ export class ServicebdService {
   selectDestacados() {
     //Por ahora son los recientes
     return this.database.executeSql("SELECT * FROM titulo ORDER BY fechaEstreno DESC", []).then(res => {
+      this.presentAlert('Select destacados', JSON.stringify(res))
       let items: Titulo[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
@@ -287,6 +295,7 @@ export class ServicebdService {
 
   selectTitulo() {
     return this.database.executeSql("SELECT * FROM Titulo", []).then(res => {
+      this.presentAlert('Select destacados', JSON.stringify(res))
       let items: Titulo[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
