@@ -20,9 +20,9 @@ export class ServicebdService {
   tablaTipoTitulo: string = "CREATE TABLE IF NOT EXISTS TipoTitulo (idTipo INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL);";
 
   tablaUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, apellido TEXT NOT NULL, correo TEXT NOT NULL UNIQUE, clave TEXT NOT NULL, fechaNacimiento DATE, avatar TEXT, telefono TEXT, reputacion REAL, id_rol INTEGER NOT NULL, FOREIGN KEY (id_rol) REFERENCES Rol(idRol));";
-  tablaTitulo: string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
+  tablaTitulo: string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT,puntuacion RE, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
 
-  tablaResenna: string = "CREATE TABLE IF NOT EXISTS Resenna (idResenna INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, comentario TEXT, fechaPublicacion DATE, calificacion REAL, esVisible INTEGER, fechaEliminada DATE, motivoEliminacion TEXT, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (id_titulo) REFERENCES Titulo(idTitulo));";
+  tablaResenna: string = "CREATE TABLE IF NOT EXISTS Resenna (idResenna INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL,titulo TEXT, comentario TEXT, fechaPublicacion DATE, calificacion REAL, esVisible INTEGER, fechaEliminada DATE, motivoEliminacion TEXT, URLImagen TEXT, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (id_titulo) REFERENCES Titulo(idTitulo));";
   tablaMarcador: string = "CREATE TABLE IF NOT EXISTS Marcador (idMarcador INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, fechaMarcado DATE, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
 
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -382,93 +382,6 @@ export class ServicebdService {
     });
   }
 
-  insertarUsuario(usuario: Usuario): Promise<any> {
-    const query = `
-      INSERT INTO Usuario (nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    return this.database.executeSql(query, [
-      usuario.nombre,
-      usuario.apellido,
-      usuario.correo,
-      usuario.clave,
-      usuario.fechaNacimiento,
-      usuario.avatar,
-      usuario.telefono,
-      usuario.reputacion,
-      usuario.id_rol || 0
-    ]).then(() => {
-      return { success: true };
-    }).catch(e => {
-      console.error("Error al insertar usuario", e);
-      return { success: false, error: e };
-    });
-  }
-
-  insertarMarcador(marcador: Marcador): Promise<any> {
-    const query = `
-      INSERT INTO Marcador (idUsuario, idTitulo, fechaMarcado)
-      VALUES (?, ?, ?)
-    `;
-
-    return this.database.executeSql(query, [
-      marcador.idUsuario,
-      marcador.idTitulo,
-      marcador.fechaMarcado
-    ]).then(res => {
-      return { success: true, id: res.insertId };
-    }).catch(e => {
-      console.error("Error al insertar marcador", e);
-      return { success: false, error: e };
-    });
-  }
-
-  insertarResenna(resenna: Resenna): Promise<any> {
-    const query = `
-      INSERT INTO Resenna (idUsuario, id_titulo, comentario, fechaPublicacion, calificacion, esVisible, fechaEliminada, motivoEliminacion)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    return this.database.executeSql(query, [
-      resenna.idUsuario,
-      resenna.idTitulo,
-      resenna.comentario,
-      resenna.fechaPublicacion,
-      resenna.calificacion,
-      resenna.esVisible,
-      resenna.fechaEliminada,
-      resenna.motivoEliminacion
-    ]).then(res => {
-      return { success: true, id: res.insertId };
-    }).catch(e => {
-      console.error("Error al insertar reseña", e);
-      return { success: false, error: e };
-    });
-  }
-
-  insertarTitulo(titulo: Titulo): Promise<any> {
-    const query = `
-      INSERT INTO Titulo (idTipoTitulo, nombre, sinopsis, duracion, URLImagen, URLTrailer, fechaEstreno)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    return this.database.executeSql(query, [
-      titulo.idTipoTitulo,
-      titulo.nombre,
-      titulo.sinopsis,
-      titulo.duracion,
-      titulo.URLImagen,
-      titulo.URLTrailer,
-      titulo.fechaEstreno
-    ]).then(res => {
-      return { success: true, id: res.insertId };
-    }).catch(e => {
-      console.error("Error al insertar título", e);
-      return { success: false, error: e };
-    });
-  }
-
   eliminarTitulo(idTitulo: string): Promise<any> {
     const query = "DELETE FROM Titulo WHERE idTitulo = ?";
     return this.database.executeSql(query, [idTitulo])
@@ -553,7 +466,7 @@ export class ServicebdService {
     });
   }
 
-  insertNewUser(newUser: Usuario) {
+  insertarUsuario(newUser: Usuario) {
     let insertSql = "INSERT INTO usuario(nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) values(?,?,?,?,?,?,?,?,?,?)";
     return this.database.executeSql(insertSql, [newUser.nombre, newUser.apellido, newUser.correo, newUser.clave, newUser.fechaNacimiento, newUser.avatar, newUser.telefono, newUser.reputacion, newUser.id_rol]).then(res => {
       this.presentAlert("Registro", "Nuevo usuario creado con éxito.");
@@ -564,7 +477,7 @@ export class ServicebdService {
     });
   }
 
-  insertResenna(resenna: Resenna) {
+  insertarResenna(resenna: Resenna) {
     let insertSql = "INSERT INTO resenna(idUsuario , id_titulo , comentario , fechaPublicacion , calificacion , esVisible , fechaEliminada , motivoEliminacion) values(?,?,?,?,?,?,?,?,?)";
     return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.idTitulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, resenna.esVisible, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
       this.presentAlert("Nueva Reseña", "Reseña ingresada correctamente.");
@@ -574,7 +487,7 @@ export class ServicebdService {
     });
   }
 
-  insertTitulo(titulo: Titulo) {
+  insertarTitulo(titulo: Titulo) {
     let insertSql = "INSERT INTO titulo(idTipoTitulo , nombre , sinopsis , duracion , URLImagen , URLTrailer , fechaEstreno) values(?,?,?,?,?,?,?,?)";
     return this.database.executeSql(insertSql, [titulo.idTipoTitulo, titulo.nombre, titulo.sinopsis, titulo.duracion, titulo.URLImagen, titulo.URLTrailer, titulo.fechaEstreno]).then(res => {
       this.presentAlert("Nuevo Título", "Nuevo título ingresado correctamente");
@@ -585,7 +498,7 @@ export class ServicebdService {
     });
   }
 
-  insertMarcador(marcador: Marcador) {
+  insertarMarcador(marcador: Marcador) {
     let insertSql = "INSERT INTO marcador(idMarcador , idUsuario , idTitulo , fechaMarcado) values(?,?,?,?)";
     return this.database.executeSql(insertSql, [marcador.idMarcador, marcador.idUsuario, marcador.idTitulo, marcador.fechaMarcado]).then(res => {
       this.presentAlert("Nuevo Marcador", "Marcador guardado.");
@@ -596,7 +509,7 @@ export class ServicebdService {
     })
   }
 
-  insertTipoTitulo(tipo: TipoTitulo) {
+  insertarTipoTitulo(tipo: TipoTitulo) {
     let insertSql = "INSERT INTO TipoTitulo(nombre) values(?)";
     this.database.executeSql(insertSql, [tipo.nombre]).then(res => {
       this.presentAlert("Nuevo Tipo", "Nuevo tipo ingresado correctamente.");

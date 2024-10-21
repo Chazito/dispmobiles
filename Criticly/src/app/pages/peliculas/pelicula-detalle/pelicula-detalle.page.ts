@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { Resenna } from 'src/app/services/resenna';
+import { ServicebdService } from 'src/app/services/servicebd.service';
+import { Titulo } from 'src/app/services/titulo';
+import { peliculas, resenias } from 'src/assets/datos';
 
 @Component({
   selector: 'app-pelicula-detalle',
@@ -7,13 +13,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PeliculaDetallePage implements OnInit {
 
-  rating: number = 3.4;
+  pelicula?: Titulo
+  resenias: Resenna[] = [];
+  isAuth: boolean = false;
+  constructor(
+    private route: ActivatedRoute,
+    private sqlService: ServicebdService, private auth: AuthService
+  ) { }
 
-  constructor() { }
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.sqlService.selectTituloPorId(id).then((pelicula: any) => {
+          if (pelicula) this.pelicula = pelicula;
+        }).catch(() => {
+          return peliculas.find(pelicula => pelicula.idTitulo === id);
+        });
+      }
+      this.cargarResenias()
+    });
+    this.auth.isAuthObservable.subscribe((isAuth) => {
+      this.isAuth = isAuth;
+    });
+  }
 
-  ngOnInit() { }
+  cargarResenias() {
+    this.sqlService.selectResennaPorIdTitulo(this.pelicula?.idTitulo!).then((res: any) => {
+      this.resenias = res;
+    }).catch((error: any) => {
+      console.error('Error al cargar reseñas:', error);
+      this.resenias = resenias.filter(resenia => resenia.idTitulo === this.pelicula?.idTitulo)
+    });
+  }
 
-  get ratingPercentage(): number {
-    return (this.rating / 5) * 100;
+
+  get ratingPorcentaje(): number {
+    return (this.pelicula!.puntuacion! / 5) * 100 || 0;
   }
 }

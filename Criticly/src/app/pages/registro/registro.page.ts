@@ -13,17 +13,11 @@ import { Usuario } from 'src/app/services/usuario';
 export class RegistroPage implements OnInit {
   StrongPasswordRegx: RegExp =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
-  nameRegex : RegExp = /^[A-Za-z]{1,20}$/;
+  nameRegex: RegExp = /^[A-Za-z]{1,20}$/;
 
   form: FormGroup;
 
-  inputNombre: string = "";
-  inputApellido: string = "";
-  inputEmail: string = "";
-  inputPass: string = "";
-  inputPass2: string = "";
-
-  constructor(private fb: FormBuilder, private router : Router, private alertController : AlertController, private db : ServicebdService) {
+  constructor(private fb: FormBuilder, private router: Router, private alertController: AlertController, private db: ServicebdService) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.pattern(this.nameRegex)]],
       apellido: ['', [Validators.required, Validators.pattern(this.nameRegex)]],
@@ -41,17 +35,16 @@ export class RegistroPage implements OnInit {
 
   ngOnInit() { }
 
-  onRegistroClick(){
+  onRegistroClick() {
+    let user: any;
+    user.nombre = this.form.get('nombre')?.value;
+    user.apellido = this.form.get('apellido')?.value;
+    user.correo = this.form.get('email')?.value;
+    user.clave = this.form.get('password')?.value;
 
-    let user : any;
-    user.nombre = this.inputNombre;
-    user.apellido = this.inputApellido;
-    user.correo = this.inputEmail;
-    user.clave = this.inputPass;
+    this.db.insertarUsuario(user);
 
-    this.db.insertNewUser(user);
-
-    this.presentAlert("Registro completo","Recibira un correo de confirmacion al email introducido","Volver al Login");
+    this.presentAlert("Registro completo", "Recibira un correo de confirmacion al email introducido", "Volver al Login");
 
     this.router.navigate(['/login']);
   }

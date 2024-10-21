@@ -40,8 +40,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/peliculas/peliculas.module').then(m => m.PeliculasPageModule)
   },
   {
-    path: 'peliculas/:id',
+    path: 'titulo/:id',
     loadChildren: () => import('./pages/peliculas/pelicula-detalle/pelicula-detalle.module').then(m => m.PeliculaDetallePageModule)
+  },
+  {
+    path: 'titulo/:id/escribir-resenia',
+    loadChildren: () => import('./pages/escribir-resenia/escribir-resenia.module').then(m => m.EscribirReseniaPageModule)
   },
   {
     path: 'noticias',
@@ -66,10 +70,6 @@ const routes: Routes = [
   {
     path: 'recuperar',
     loadChildren: () => import('./pages/recuperar/recuperar.module').then(m => m.RecuperarPageModule)
-  },
-  {
-    path: 'escribir-resenia',
-    loadChildren: () => import('./pages/escribir-resenia/escribir-resenia.module').then(m => m.EscribirReseniaPageModule)
   },
   {
     path: '**',

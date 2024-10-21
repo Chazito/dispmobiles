@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { AuthService } from 'src/app/services/auth.service';
+import { Resenna } from 'src/app/services/resenna';
+import { ServicebdService } from 'src/app/services/servicebd.service';
 
 @Component({
   selector: 'app-escribir-resenia',
@@ -10,9 +14,13 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 export class EscribirReseniaPage implements OnInit {
   reseniaForm!: FormGroup;
   URLImagen: string | undefined;
-  constructor(private fb: FormBuilder) { }
+  idTitulo?: string;
+  constructor(private fb: FormBuilder, private sqlService: ServicebdService, private route: ActivatedRoute, private auth: AuthService) { }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.idTitulo = params.get('id')!;
+    });
     this.reseniaForm = this.fb.group({
       titulo: ['', [Validators.required]],
       resenia: ['', [Validators.required]],
@@ -46,8 +54,16 @@ export class EscribirReseniaPage implements OnInit {
 
   publicarResenia() {
     if (this.reseniaForm.valid) {
-      const datosForm = this.reseniaForm.value;
-      console.log('Reseña enviada:', datosForm);
+      const datosForm: Resenna = {
+        idTitulo: this.idTitulo, idUsuario: this.auth.usuarioValue?.idUsuario,
+        titulo: this.reseniaForm.get('titulo')?.value,
+        comentario: this.reseniaForm.get('resenia')?.value,
+        calificacion: this.reseniaForm.get('rating')?.value,
+        URLImagen: "",
+        fechaPublicacion: new Date(),
+        esVisible: 1
+      };
+      this.sqlService.insertarResenna(datosForm)
     }
   }
 }

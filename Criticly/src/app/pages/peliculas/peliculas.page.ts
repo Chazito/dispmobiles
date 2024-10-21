@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Titulo } from 'src/app/services/titulo';
 import { peliculas } from 'src/assets/datos'
@@ -11,17 +12,15 @@ import { peliculas } from 'src/assets/datos'
 })
 export class PeliculasPage implements OnInit {
 
-  tienePrivilegios: boolean = true;
+  tienePrivilegios: boolean = false;
   destacados: Titulo[] = []
   criticados: Titulo[] = []
   mejores: Titulo[] = []
 
 
-  constructor(private router: Router, private sqlService: ServicebdService) {
-    this.router.events.subscribe((e: any) => {
-      if (e && e.url) {
-        this.tienePrivilegios = e.url.includes('auth=true')
-      }
+  constructor(private router: Router, private sqlService: ServicebdService, private auth: AuthService) {
+    auth.isAuthObservable.subscribe(() => {
+      if (auth.usuarioValue?.id_rol === 1) { this.tienePrivilegios = true } else { this.tienePrivilegios = false }
     })
     sqlService.fetchDestacados().subscribe(res => {
       if (res.length < 1) {

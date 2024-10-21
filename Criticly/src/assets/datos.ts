@@ -1,3 +1,4 @@
+import { Resenna } from "src/app/services/resenna";
 import { Titulo } from "src/app/services/titulo";
 import { Usuario } from "src/app/services/usuario";
 
@@ -10,7 +11,8 @@ export const peliculas: Titulo[] = [
     duracion: '148 min',
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/inception-trailer.mp4',
-    fechaEstreno: new Date('2010-07-16')
+    fechaEstreno: new Date('2010-07-16'),
+    puntuacion: 4.8
   },
   {
     idTitulo: '2',
@@ -20,7 +22,8 @@ export const peliculas: Titulo[] = [
     duracion: '136 min',
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/matrix-trailer.mp4',
-    fechaEstreno: new Date('1999-03-31')
+    fechaEstreno: new Date('1999-03-31'),
+    puntuacion: 4.7
   },
   {
     idTitulo: '3',
@@ -30,7 +33,8 @@ export const peliculas: Titulo[] = [
     duracion: '100 min',
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/nemo-trailer.mp4',
-    fechaEstreno: new Date('2003-05-30')
+    fechaEstreno: new Date('2003-05-30'),
+    puntuacion: 4.5
   },
   {
     idTitulo: '4',
@@ -40,7 +44,8 @@ export const peliculas: Titulo[] = [
     duracion: '169 min',
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/interstellar-trailer.mp4',
-    fechaEstreno: new Date('2014-11-07')
+    fechaEstreno: new Date('2014-11-07'),
+    puntuacion: 4.6
   },
   {
     idTitulo: '5',
@@ -50,7 +55,8 @@ export const peliculas: Titulo[] = [
     duracion: '152 min',
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/dark-knight-trailer.mp4',
-    fechaEstreno: new Date('2008-07-18')
+    fechaEstreno: new Date('2008-07-18'),
+    puntuacion: 4.9
   },
   {
     idTitulo: '6',
@@ -60,7 +66,8 @@ export const peliculas: Titulo[] = [
     duracion: '162 min',
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/avatar-trailer.mp4',
-    fechaEstreno: new Date('2009-12-18')
+    fechaEstreno: new Date('2009-12-18'),
+    puntuacion: 4.4
   },
   {
     idTitulo: '7',
@@ -70,7 +77,8 @@ export const peliculas: Titulo[] = [
     duracion: '195 min',
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/titanic-trailer.mp4',
-    fechaEstreno: new Date('1997-12-19')
+    fechaEstreno: new Date('1997-12-19'),
+    puntuacion: 4.7
   },
   {
     idTitulo: '8',
@@ -80,9 +88,34 @@ export const peliculas: Titulo[] = [
     duracion: '127 min',
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/jurassic-park-trailer.mp4',
-    fechaEstreno: new Date('1993-06-11')
+    fechaEstreno: new Date('1993-06-11'),
+    puntuacion: 4.6
+  },
+  {
+    idTitulo: '9',
+    idTipoTitulo: '1',
+    nombre: 'Gladiator',
+    sinopsis: 'Un general romano es traicionado y reducido a la esclavitud, buscando venganza contra el emperador que lo traicionó.',
+    duracion: '155 min',
+    URLImagen: 'https://placehold.co/100x170',
+    URLTrailer: 'https://example.com/gladiator-trailer.mp4',
+    fechaEstreno: new Date('2000-05-05'),
+    puntuacion: 4.8
+  },
+  {
+    idTitulo: '10',
+    idTipoTitulo: '1',
+    nombre: 'The Shawshank Redemption',
+    sinopsis: 'Dos hombres en una prisión encuentran amistad y redención mientras intentan sobrevivir en un entorno brutal.',
+    duracion: '142 min',
+    URLImagen: 'https://placehold.co/100x170',
+    URLTrailer: 'https://example.com/shawshank-trailer.mp4',
+    fechaEstreno: new Date('1994-09-23'),
+    puntuacion: 4.9
   },
 ];
+
+
 
 export const usuarios: Usuario[] = [
   {
@@ -109,4 +142,297 @@ export const usuarios: Usuario[] = [
     reputacion: 5.0,
     id_rol: 1 // Rol de administrador
   }
+];
+
+export const resenias: Resenna[] = [
+  {
+    idResenna: '1',
+    idUsuario: '1',
+    idTitulo: '1',
+    comentario: 'Una experiencia visual impresionante que desafía la mente. ¡Me encantó!',
+    fechaPublicacion: new Date('2023-01-15'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '2',
+    idUsuario: '2',
+    idTitulo: '1',
+    comentario: 'Inception es una obra maestra del cine moderno. La trama es compleja pero muy satisfactoria.',
+    fechaPublicacion: new Date('2023-01-20'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+  {
+    idResenna: '3',
+    idUsuario: '1',
+    idTitulo: '2',
+    comentario: 'Un clásico que redefine la ciencia ficción. Los efectos especiales son asombrosos.',
+    fechaPublicacion: new Date('2023-02-10'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '4',
+    idUsuario: '2',
+    idTitulo: '2',
+    comentario: 'La Matrix sigue siendo relevante hoy en día. La historia y la filosofía son profundas.',
+    fechaPublicacion: new Date('2023-02-15'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+  {
+    idResenna: '5',
+    idUsuario: '1',
+    idTitulo: '3',
+    comentario: 'Una hermosa historia sobre la familia y la amistad. Perfecta para todas las edades.',
+    fechaPublicacion: new Date('2023-03-01'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '6',
+    idUsuario: '2',
+    idTitulo: '3',
+    comentario: 'Divertida y conmovedora, "Buscando a Nemo" es un clásico de Pixar.',
+    fechaPublicacion: new Date('2023-03-05'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+  {
+    idResenna: '7',
+    idUsuario: '1',
+    idTitulo: '4',
+    comentario: 'Una epopeya espacial que nos hace reflexionar sobre el futuro de la humanidad.',
+    fechaPublicacion: new Date('2023-03-20'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '8',
+    idUsuario: '2',
+    idTitulo: '4',
+    comentario: 'Interstellar es visualmente impresionante y emocionalmente potente.',
+    fechaPublicacion: new Date('2023-03-25'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+  {
+    idResenna: '9',
+    idUsuario: '1',
+    idTitulo: '5',
+    comentario: 'Una película de superhéroes que elevó el género a nuevas alturas. Heath Ledger es increíble como el Joker.',
+    fechaPublicacion: new Date('2023-04-10'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '10',
+    idUsuario: '2',
+    idTitulo: '5',
+    comentario: 'Un thriller intenso que mantiene al espectador al borde de su asiento.',
+    fechaPublicacion: new Date('2023-04-15'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+  {
+    idResenna: '11',
+    idUsuario: '1',
+    idTitulo: '6',
+    comentario: 'Una obra maestra de la animación con un mensaje profundo sobre la conexión humana.',
+    fechaPublicacion: new Date('2023-05-01'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '12',
+    idUsuario: '2',
+    idTitulo: '6',
+    comentario: 'Una experiencia cinematográfica inolvidable, con un mundo visualmente impresionante.',
+    fechaPublicacion: new Date('2023-05-05'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+  {
+    idResenna: '13',
+    idUsuario: '1',
+    idTitulo: '7',
+    comentario: 'Una historia de amor épica que se queda contigo mucho después de que termines de ver la película.',
+    fechaPublicacion: new Date('2023-05-15'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '14',
+    idUsuario: '2',
+    idTitulo: '7',
+    comentario: 'El guion es impresionante y las actuaciones son conmovedoras.',
+    fechaPublicacion: new Date('2023-05-20'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+  {
+    idResenna: '15',
+    idUsuario: '1',
+    idTitulo: '8',
+    comentario: 'Un clásico de aventuras que nunca pasa de moda. Perfecto para los amantes de los dinosaurios.',
+    fechaPublicacion: new Date('2023-06-01'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '16',
+    idUsuario: '2',
+    idTitulo: '8',
+    comentario: 'La mezcla de acción y humor la hace perfecta para toda la familia.',
+    fechaPublicacion: new Date('2023-06-05'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+  {
+    idResenna: '17',
+    idUsuario: '1',
+    idTitulo: '1',
+    comentario: 'Una trama que me hizo pensar durante días. La dirección es impecable.',
+    fechaPublicacion: new Date('2023-01-30'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '18',
+    idUsuario: '2',
+    idTitulo: '1',
+    comentario: 'No puedo creer cómo lograron hacer algo tan único. Un viaje inolvidable.',
+    fechaPublicacion: new Date('2023-02-05'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+
+  {
+    idResenna: '19',
+    idUsuario: '1',
+    idTitulo: '2',
+    comentario: 'Impactante en muchos niveles. Los efectos son revolucionarios.',
+    fechaPublicacion: new Date('2023-02-20'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '20',
+    idUsuario: '2',
+    idTitulo: '2',
+    comentario: 'La filosofía detrás de la historia es realmente fascinante.',
+    fechaPublicacion: new Date('2023-02-25'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+
+  {
+    idResenna: '21',
+    idUsuario: '1',
+    idTitulo: '3',
+    comentario: 'Una aventura maravillosa que nunca deja de hacerme sonreír.',
+    fechaPublicacion: new Date('2023-03-10'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '22',
+    idUsuario: '2',
+    idTitulo: '3',
+    comentario: 'Perfecta para ver en familia. Las animaciones son hermosas.',
+    fechaPublicacion: new Date('2023-03-12'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+  {
+    idResenna: '23',
+    idUsuario: '1',
+    idTitulo: '4',
+    comentario: 'Una obra maestra que combina ciencia y emoción de manera extraordinaria.',
+    fechaPublicacion: new Date('2023-04-01'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '24',
+    idUsuario: '2',
+    idTitulo: '4',
+    comentario: 'Me encanta cómo explora el amor y el sacrificio. ¡Inolvidable!',
+    fechaPublicacion: new Date('2023-04-05'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+  {
+    idResenna: '25',
+    idUsuario: '1',
+    idTitulo: '5',
+    comentario: 'Es simplemente la mejor película de superhéroes que se ha hecho. Ledger es un genio.',
+    fechaPublicacion: new Date('2023-04-20'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '26',
+    idUsuario: '2',
+    idTitulo: '5',
+    comentario: 'Un thriller intenso que redefine el género. ¡Imperdible!',
+    fechaPublicacion: new Date('2023-04-25'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '27',
+    idUsuario: '1',
+    idTitulo: '6',
+    comentario: 'Visualmente asombroso, una experiencia que trasciende la pantalla.',
+    fechaPublicacion: new Date('2023-05-10'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '28',
+    idUsuario: '2',
+    idTitulo: '6',
+    comentario: 'Una historia conmovedora en un mundo impresionante. ¡Quiero más!',
+    fechaPublicacion: new Date('2023-05-12'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+  {
+    idResenna: '29',
+    idUsuario: '1',
+    idTitulo: '7',
+    comentario: 'Una historia de amor que nunca me canso de ver. Simplemente hermosa.',
+    fechaPublicacion: new Date('2023-05-18'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '30',
+    idUsuario: '2',
+    idTitulo: '7',
+    comentario: 'La música y la actuación son inolvidables. ¡Un clásico!',
+    fechaPublicacion: new Date('2023-05-22'),
+    calificacion: 4,
+    esVisible: 1,
+  },
+  {
+    idResenna: '31',
+    idUsuario: '1',
+    idTitulo: '8',
+    comentario: 'Una aventura que cambió el cine para siempre. Los dinosaurios son geniales.',
+    fechaPublicacion: new Date('2023-06-10'),
+    calificacion: 5,
+    esVisible: 1,
+  },
+  {
+    idResenna: '32',
+    idUsuario: '2',
+    idTitulo: '8',
+    comentario: '¡La nostalgia es real! Un clásico que nunca pierde su encanto.',
+    fechaPublicacion: new Date('2023-06-12'),
+    calificacion: 4,
+    esVisible: 1,
+  },
 ];
