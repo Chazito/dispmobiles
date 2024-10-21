@@ -19,6 +19,17 @@ export class AuthService {
   async init() {
     await this.storage.create();
     const storedAuth = await this.storage.get('isAuth');
+  
+    this.sqlService.dbState().subscribe(async res => {
+      if (res) {
+        if (storedAuth === true) {
+          const userID = await this.storage.get('userID'); // Await the userID
+          if (userID) {
+            this.usuario = await this.sqlService.selectUsuarioPorId(userID); // Await the SQL service call
+          }
+        }
+      }
+    });
     this.isAuthSubject.next(storedAuth === true);
   }
 
@@ -41,6 +52,7 @@ export class AuthService {
 
   async login() {
     await this.storage.set('isAuth', true);
+    await this.storage.set('userID', this.usuario?.idUsuario)
     this.isAuthSubject.next(true);
   }
 
