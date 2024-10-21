@@ -148,6 +148,7 @@ export class ServicebdService {
   }
 
   async crearTablas() {
+    this.storage = await this.storage.create();
     let initialized = await this.storage.get('initialized');
     if (initialized) return;
     try {
@@ -157,12 +158,6 @@ export class ServicebdService {
       await this.database.executeSql(this.tablaTitulo, []);
       await this.database.executeSql(this.tablaResenna, []);
       await this.database.executeSql(this.tablaMarcador, []);
-
-      //await this.database.executeSql("INSERT INTO rol(nombre) values('Usuario')", []);
-      //await this.database.executeSql("INSERT INTO rol(nombre) values('Admin')", []);
-
-      await this.database.executeSql("UPDATE usuario SET id_rol = 2 WHERE correo = 'fr.nuneza@duocuc.cl'", []);
-
     } catch (e) {
       console.log(JSON.stringify(e));
       this.presentAlert('Creación de Tablas', 'Error: ' + JSON.stringify(e));
