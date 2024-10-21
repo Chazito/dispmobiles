@@ -18,7 +18,7 @@ export class ServicebdService {
   database!: SQLiteObject;
 
   tablaRol: string = "CREATE TABLE IF NOT EXISTS Rol (idRol INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL UNIQUE);";
-  tablaTipoTitulo: string = "CREATE TABLE IF NOT EXISTS TipoTitulo (idTipo INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL UNIQUE);";
+  tablaTipoTitulo: string = "CREATE TABLE IF NOT EXISTS tipoTitulo (idTipo INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL UNIQUE);";
 
   tablaUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, apellido TEXT NOT NULL, correo TEXT NOT NULL UNIQUE, clave TEXT NOT NULL, fechaNacimiento DATE, avatar TEXT, telefono TEXT, reputacion REAL, id_rol INTEGER NOT NULL, FOREIGN KEY (id_rol) REFERENCES Rol(idRol));";
   tablaTitulo: string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT,puntuacion REAL, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
@@ -102,28 +102,15 @@ export class ServicebdService {
       this.sqlite.create({
         name: 'critical.db',
         location: 'default'
-      }).then((bd: SQLiteObject) => {
+      }).then(async (bd: SQLiteObject) => {
         this.database = bd;
-        this.crearTablas().catch(e => this.presentAlert('Crear tablas', JSON.stringify(e)));
-        this.database.executeSql(insertRol)
-          .then(res => this.presentAlert('query', JSON.stringify(res)))
-          .catch(e => this.presentAlert('Error al ejecutar insertar Rol', JSON.stringify(e)));
-        this.database.executeSql(insertTipoTitulo)
-          .then(res => this.presentAlert('query', JSON.stringify(res)))
-          .catch(e => this.presentAlert('Error al ejecutar insertar Tipo Título', JSON.stringify(e)));
-        this.database.executeSql(insertUsuario)
-          .then(res => this.presentAlert('query', JSON.stringify(res)))
-          .catch(e => this.presentAlert('Error al ejecutar insertar Usuario', JSON.stringify(e)));
-        this.database.executeSql(insertTitulo)
-          .then(res => this.presentAlert('query', JSON.stringify(res)))
-          .catch(e => this.presentAlert('Error al ejecutar insertar Título', JSON.stringify(e)));
-        this.database.executeSql(insertResenna)
-          .then(res => this.presentAlert('query', JSON.stringify(res)))
-          .catch(e => this.presentAlert('Error al ejecutar insertar Reseña', JSON.stringify(e)));
-        this.database.executeSql(insertMarcador)
-          .then(res => this.presentAlert('query', JSON.stringify(res)))
-          .catch(e => this.presentAlert('Error al ejecutar insertar Marcador', JSON.stringify(e)));
-
+        await this.crearTablas()
+        await this.database.executeSql(insertRol)
+        await this.database.executeSql(insertTipoTitulo)
+        await this.database.executeSql(insertUsuario)
+        await this.database.executeSql(insertTitulo)
+        await this.database.executeSql(insertResenna)
+        await this.database.executeSql(insertMarcador)
         this.isDbReady.next(true);
       }).catch(e => {
         this.presentAlert('Creación de BD', 'Error: ' + JSON.stringify(e));
