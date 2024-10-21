@@ -22,18 +22,6 @@ export class UsuarioPage implements OnInit {
         });
       }
     });
-    if (!this.usuario.idUsuario) this.usuario = {
-      idUsuario: "1",
-      nombre: "Juan",
-      apellido: "Pérez",
-      correo: "juan.perez@example.com",
-      clave: "contraseñaSegura",
-      fechaNacimiento: new Date("1990-05-15"),
-      avatar: "https://example.com/avatar.jpg",
-      telefono: "+1234567890",
-      reputacion: 4.5,
-      id_rol: 0
-    }
   }
 
   modificarUsuario() {

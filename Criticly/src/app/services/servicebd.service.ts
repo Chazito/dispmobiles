@@ -8,6 +8,7 @@ import { Usuario } from './usuario';
 import { Titulo } from './titulo';
 import { Resenna } from './resenna';
 import { Marcador } from './marcador';
+import { query } from 'src/assets/datos';
 
 @Injectable({
   providedIn: 'root'
@@ -104,6 +105,7 @@ export class ServicebdService {
       }).then((bd: SQLiteObject) => {
         this.database = bd;
         this.crearTablas();
+        this.database.executeSql(query)
         this.isDbReady.next(true);
       }).catch(e => {
         this.presentAlert('Creación de BD', 'Error: ' + JSON.stringify(e));
@@ -239,12 +241,12 @@ export class ServicebdService {
     })
   }
 
-  eliminarRol(x : string){
-    return this.database.executeSql("DELETE FROM rol WHERE idRol = ?",[x]).then(res =>{
+  eliminarRol(x: string) {
+    return this.database.executeSql("DELETE FROM rol WHERE idRol = ?", [x]).then(res => {
       this.selectRol();
-      this.presentAlert("Rol","Rol eliminado correctamente.");
-    }).catch(e =>{
-      this.presentAlert("Rol","Error al eliminar: " + JSON.stringify(e));
+      this.presentAlert("Rol", "Rol eliminado correctamente.");
+    }).catch(e => {
+      this.presentAlert("Rol", "Error al eliminar: " + JSON.stringify(e));
     });
   }
 
