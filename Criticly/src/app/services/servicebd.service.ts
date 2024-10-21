@@ -8,7 +8,6 @@ import { Usuario } from './usuario';
 import { Titulo } from './titulo';
 import { Resenna } from './resenna';
 import { Marcador } from './marcador';
-import { Noticia } from './noticia';
 
 @Injectable({
   providedIn: 'root'
@@ -32,15 +31,15 @@ export class ServicebdService {
   listaTipoTitulo = new BehaviorSubject([]);
 
   listaUsuario = new BehaviorSubject([]);
-  listaTitulo = new BehaviorSubject([]);
+  listaTitulo = new BehaviorSubject<Titulo[]>([]);
 
   listaResenna = new BehaviorSubject([]);
   listaMarcador = new BehaviorSubject([]);
 
   //Home
-  listaDestacados = new BehaviorSubject([]);
-  listaCriticados = new BehaviorSubject([]);
-  listaMejor = new BehaviorSubject([]);
+  listaDestacados = new BehaviorSubject<Titulo[]>([]);
+  listaCriticados = new BehaviorSubject<Titulo[]>([]);
+  listaMejor = new BehaviorSubject<Titulo[]>([]);
 
   constructor(private sqlite: SQLite, private platform: Platform, private alertController: AlertController) {
     this.crearBD();
@@ -137,7 +136,7 @@ export class ServicebdService {
       let items: Titulo[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
-          if(i > 9){
+          if (i > 9) {
             //Limitar la lista de destacados a 10 items
             break;
           }
@@ -153,17 +152,17 @@ export class ServicebdService {
           })
         }
       }
-      this.listaDestacados.next(items as any);
+      this.listaDestacados.next(items);
     })
   }
 
-  selectCriticados(){
+  selectCriticados() {
     let sortedSql = "SELECT titulo.*, COUNT(resenna.id_titulo) AS resenna_count FROM titulo LEFT JOIN resenna ON titulo.idTitulo = resenna.id_titulo GROUP BY titulo.idTitulo ORDER BY resenna_count DESC";
-    this.database.executeSql(sortedSql, []).then(res =>{
+    this.database.executeSql(sortedSql, []).then(res => {
       let items: Titulo[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
-          if(i > 9){
+          if (i > 9) {
             //Limitar la lista de destacados a 10 items
             break;
           }
@@ -183,13 +182,13 @@ export class ServicebdService {
     })
   }
 
-  selectMejores(){
+  selectMejores() {
     let sortedSql = "SELECT titulo.*, AVG(resenna.calificacion) AS avg_calificacion FROM titulo LEFT JOIN resenna ON titulo.idTitulo = resenna.id_titulo GROUP BY titulo.idTitulo ORDER BY avg_calificacion DESC";
-    this.database.executeSql(sortedSql, []).then(res =>{
+    this.database.executeSql(sortedSql, []).then(res => {
       let items: Titulo[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
-          if(i > 9){
+          if (i > 9) {
             //Limitar la lista de destacados a 10 items
             break;
           }
@@ -245,7 +244,7 @@ export class ServicebdService {
       if (res.rows.length > 0) {
         for (let i = 0; i < res.rows.length; i++) {
           items.push({
-            idMarcados: res.rows.item(i).idMarcados,
+            idMarcador: res.rows.item(i).idMarcador,
             idUsuario: res.rows.item(i).idUsuario,
             idTitulo: res.rows.item(i).idTitulo,
             fechaMarcado: res.rows.item(i).fechaMarcado
@@ -332,6 +331,7 @@ export class ServicebdService {
       return null;
     });
   }
+
   selectResennaPorIdTitulo(idTitulo: string): Promise<Resenna[]> {
     const query = "SELECT * FROM Resenna WHERE idTitulo = ?";
     return this.database.executeSql(query, [idTitulo]).then(res => {
@@ -355,6 +355,30 @@ export class ServicebdService {
     }).catch(e => {
       console.error("Error al consultar reseñas por ID de título", e);
       return [];
+    });
+  }
+
+  selectTituloPorId(idTitulo: string): Promise<Titulo | null> {
+    const query = "SELECT * FROM Titulo WHERE idTitulo = ?";
+    return this.database.executeSql(query, [idTitulo]).then(res => {
+      if (res.rows.length > 0) {
+        const titulo: Titulo = {
+          idTitulo: res.rows.item(0).idTitulo,
+          idTipoTitulo: res.rows.item(0).idTipoTitulo,
+          nombre: res.rows.item(0).nombre,
+          sinopsis: res.rows.item(0).sinopsis,
+          duracion: res.rows.item(0).duracion,
+          URLImagen: res.rows.item(0).URLImagen,
+          URLTrailer: res.rows.item(0).URLTrailer,
+          fechaEstreno: res.rows.item(0).fechaEstreno
+        };
+        return titulo;
+      } else {
+        return null;
+      }
+    }).catch(e => {
+      console.error("Error al consultar el título por ID", e);
+      return null;
     });
   }
 
@@ -444,24 +468,67 @@ export class ServicebdService {
     });
   }
 
-  insertarNoticia(noticia: Noticia): Promise<any> {
-    const query = `
-      INSERT INTO Noticia (titulo, contenido, autor, fechaPublicacion, imagenUrl, categoria)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `;
+  eliminarTitulo(idTitulo: string): Promise<any> {
+    const query = "DELETE FROM Titulo WHERE idTitulo = ?";
+    return this.database.executeSql(query, [idTitulo])
+      .then(res => {
+        if (res.rowsAffected > 0) {
+          return { success: true };
+        } else {
+          return { success: false, message: "No se encontró el título con el ID especificado." };
+        }
+      })
+      .catch(e => {
+        console.error("Error al eliminar el título", e);
+        return { success: false, error: e };
+      });
+  }
 
-    return this.database.executeSql(query, [
-      noticia.titulo,
-      noticia.contenido,
-      noticia.autor,
-      noticia.fechaPublicacion,
-      noticia.imagenUrl,
-    ]).then(res => {
-      return { success: true, id: res.insertId };
-    }).catch(e => {
-      console.error("Error al insertar noticia", e);
-      return { success: false, error: e };
-    });
+  eliminarUsuario(idUsuario: string): Promise<any> {
+    const query = "DELETE FROM Usuario WHERE idUsuario = ?";
+    return this.database.executeSql(query, [idUsuario])
+      .then(res => {
+        if (res.rowsAffected > 0) {
+          return { success: true };
+        } else {
+          return { success: false, message: "No se encontró el usuario con el ID especificado." };
+        }
+      })
+      .catch(e => {
+        console.error("Error al eliminar el usuario", e);
+        return { success: false, error: e };
+      });
+  }
+
+  eliminarMarcador(idMarcador: string): Promise<any> {
+    const query = "DELETE FROM Marcador WHERE idMarcador = ?";
+    return this.database.executeSql(query, [idMarcador])
+      .then(res => {
+        if (res.rowsAffected > 0) {
+          return { success: true };
+        } else {
+          return { success: false, message: "No se encontró el marcador con el ID especificado." };
+        }
+      })
+      .catch(e => {
+        console.error("Error al eliminar el marcador", e);
+        return { success: false, error: e };
+      });
+  }
+  eliminarResenna(idResenna: string): Promise<any> {
+    const query = "DELETE FROM Resenna WHERE idResenna = ?";
+    return this.database.executeSql(query, [idResenna])
+      .then(res => {
+        if (res.rowsAffected > 0) {
+          return { success: true };
+        } else {
+          return { success: false, message: "No se encontró la reseña con el ID especificado." };
+        }
+      })
+      .catch(e => {
+        console.error("Error al eliminar la reseña", e);
+        return { success: false, error: e };
+      });
   }
 
   selectMarcadorPorIdUsuario(idUsuario: string): Promise<Marcador[]> {
@@ -471,7 +538,7 @@ export class ServicebdService {
       if (res.rows.length > 0) {
         for (let i = 0; i < res.rows.length; i++) {
           items.push({
-            idMarcados: res.rows.item(i).idMarcados,
+            idMarcador: res.rows.item(i).idMarcador,
             idUsuario: res.rows.item(i).idUsuario,
             idTitulo: res.rows.item(i).idTitulo,
             fechaMarcado: res.rows.item(i).fechaMarcado
@@ -518,8 +585,8 @@ export class ServicebdService {
   }
 
   insertMarcador(marcador: Marcador) {
-    let insertSql = "INSERT INTO marcador(idMarcados , idUsuario , idTitulo , fechaMarcado) values(?,?,?,?)";
-    return this.database.executeSql(insertSql, [marcador.idMarcados, marcador.idUsuario, marcador.idTitulo, marcador.fechaMarcado]).then(res => {
+    let insertSql = "INSERT INTO marcador(idMarcador , idUsuario , idTitulo , fechaMarcado) values(?,?,?,?)";
+    return this.database.executeSql(insertSql, [marcador.idMarcador, marcador.idUsuario, marcador.idTitulo, marcador.fechaMarcado]).then(res => {
       this.presentAlert("Nuevo Marcador", "Marcador guardado.");
 
       this.selectMarcado();

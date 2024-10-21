@@ -1,5 +1,5 @@
 export interface Marcador {
-  idMarcados?: string;
+  idMarcador?: string;
   idUsuario?: string;
   idTitulo?: string;
   fechaMarcado?: Date;

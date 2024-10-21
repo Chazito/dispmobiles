@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PeliculaDetallePage implements OnInit {
 
+  rating: number = 3.4;
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
+  get ratingPercentage(): number {
+    return (this.rating / 5) * 100;
+  }
 }

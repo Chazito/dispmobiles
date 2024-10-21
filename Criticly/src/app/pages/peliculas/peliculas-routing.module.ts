@@ -12,7 +12,11 @@ const routes: Routes = [
   {
     path: ':id',
     component: PeliculaDetallePage
+  },  {
+    path: 'pelicula-detalle',
+    loadChildren: () => import('./pelicula-detalle/pelicula-detalle.module').then( m => m.PeliculaDetallePageModule)
   }
+
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
