@@ -114,18 +114,17 @@ export class ServicebdService {
   async crearTablas() {
     try {
       await this.database.executeSql(this.tablaRol, []);
-
       await this.database.executeSql(this.tablaTipoTitulo, []);
-
       await this.database.executeSql(this.tablaUsuario, []);
-
       await this.database.executeSql(this.tablaTitulo, []);
-
       await this.database.executeSql(this.tablaResenna, []);
-
       await this.database.executeSql(this.tablaMarcador, []);
 
+      await this.database.executeSql("INSERT INTO rol(nombre) values('Usuario')", []);
+      await this.database.executeSql("INSERT INTO rol(nombre) values('Admin')", []);
+
     } catch (e) {
+      console.log(JSON.stringify(e));
       this.presentAlert('Creación de Tablas', 'Error: ' + JSON.stringify(e));
     }
   }
@@ -493,9 +492,12 @@ export class ServicebdService {
   }
 
   insertarUsuario(newUser: Usuario) {
-    let insertSql = "INSERT INTO usuario(nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) values(?,?,?,?,?,?,?,?,?,?)";
+    let insertSql = "INSERT INTO usuario(nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) values(?,?,?,?,?,?,?,?,?)";
+    if (newUser.correo == "fr.nuneza@duocuc.cl") {
+      newUser.id_rol = 1;
+    }
     return this.database.executeSql(insertSql, [newUser.nombre, newUser.apellido, newUser.correo, newUser.clave, newUser.fechaNacimiento, newUser.avatar, newUser.telefono, newUser.reputacion, newUser.id_rol]).then(res => {
-      this.presentAlert("Registro", "Nuevo usuario creado con éxito.");
+      //this.presentAlert("Registro", "Nuevo usuario creado con éxito.");
 
       this.selectUsuario();
     }).catch(err => {
@@ -504,7 +506,7 @@ export class ServicebdService {
   }
 
   insertarResenna(resenna: Resenna) {
-    let insertSql = "INSERT INTO resenna(idUsuario , idTitulo , comentario , fechaPublicacion , calificacion , esVisible , fechaEliminada , motivoEliminacion) values(?,?,?,?,?,?,?,?,?)";
+    let insertSql = "INSERT INTO resenna(idUsuario , idTitulo ,titulo, comentario , fechaPublicacion , calificacion , esVisible , fechaEliminada , motivoEliminacion) values(?,?,?,?,?,?,?,?,?)";
     return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.idTitulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, resenna.esVisible, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
       this.presentAlert("Nueva Reseña", "Reseña ingresada correctamente.");
 
@@ -514,7 +516,7 @@ export class ServicebdService {
   }
 
   insertarTitulo(titulo: Titulo) {
-    let insertSql = "INSERT INTO titulo(idTipoTitulo , nombre , sinopsis , duracion , URLImagen , URLTrailer , fechaEstreno) values(?,?,?,?,?,?,?,?)";
+    let insertSql = "INSERT INTO titulo(idTipoTitulo , nombre , sinopsis , duracion , URLImagen , URLTrailer , fechaEstreno) values(?,?,?,?,?,?,?)";
     return this.database.executeSql(insertSql, [titulo.idTipoTitulo, titulo.nombre, titulo.sinopsis, titulo.duracion, titulo.URLImagen, titulo.URLTrailer, titulo.fechaEstreno]).then(res => {
       this.presentAlert("Nuevo Título", "Nuevo título ingresado correctamente");
 
@@ -525,7 +527,7 @@ export class ServicebdService {
   }
 
   insertarMarcador(marcador: Marcador) {
-    let insertSql = "INSERT INTO marcador(idMarcador , idUsuario , idTitulo , fechaMarcado) values(?,?,?,?)";
+    let insertSql = "INSERT INTO marcador(idUsuario , idTitulo , fechaMarcado) values(?,?,?)";
     return this.database.executeSql(insertSql, [marcador.idMarcador, marcador.idUsuario, marcador.idTitulo, marcador.fechaMarcado]).then(res => {
       this.presentAlert("Nuevo Marcador", "Marcador guardado.");
 

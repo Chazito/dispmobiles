@@ -37,7 +37,9 @@ export class LoginPage implements OnInit {
   async login(): Promise<boolean> {
     const usuarioEsValido = await this.auth.validarUsuarioPorEmail(this.form.get('email')?.value, this.form.get('password')?.value);
     if (usuarioEsValido) {
+      this.auth.login();
       this.presentToast("bottom", "Sesión iniciada correctamente", 2500);
+      this.router.navigate(['/home']);
       return true
     }
     else {
