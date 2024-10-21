@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Titulo } from 'src/app/services/titulo';
-import { peliculas } from 'src/assets/datos'
 
 @Component({
   selector: 'app-peliculas',
@@ -23,25 +22,13 @@ export class PeliculasPage implements OnInit {
       if (auth.usuarioValue?.id_rol === 1) { this.tienePrivilegios = true } else { this.tienePrivilegios = false }
     })
     sqlService.fetchDestacados().subscribe(res => {
-      if (res.length < 1) {
-        this.destacados = peliculas
-      } else {
-        this.destacados = res
-      }
+      this.destacados = res
     })
     sqlService.fetchCriticados().subscribe(res => {
-      if (res.length < 1) {
-        this.criticados = peliculas
-      } else {
-        this.criticados = res
-      }
+      this.criticados = res
     })
     sqlService.fetchMejor().subscribe(res => {
-      if (res.length < 1) {
-        this.mejores = peliculas
-      } else {
-        this.mejores = res
-      }
+      this.mejores = res
     })
   }
 

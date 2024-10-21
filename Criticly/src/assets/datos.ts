@@ -497,7 +497,21 @@ export const marcadores: Marcador[] = [
   },
 ];
 
-export const query: string = `INSERT INTO peliculas (idTitulo, idTipoTitulo, nombre, sinopsis, duracion, URLImagen, URLTrailer, fechaEstreno, puntuacion) VALUES
+export const query: string = `
+INSERT INTO rol (idRol, nombre) VALUES
+('0', 'Usuario'),
+('1', 'Administrador');
+
+INSERT INTO tipoTitulo (idTipo, nombre) VALUES
+('1', 'Películas'),
+('2', 'Series'),
+('3', 'Documentales');
+
+INSERT INTO usuario (idUsuario, nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) VALUES
+('1', 'Juan', 'Pérez', 'juan.perez@example.com', 'password123', '1990-05-15', 'https://example.com/avatar-juan.jpg', '123456789', 4.5, 0),
+('2', 'Ana', 'Gómez', 'ana.gomez@example.com', 'securepassword456', '1985-11-23', 'https://example.com/avatar-ana.jpg', '987654321', 5.0, 1);
+
+INSERT INTO titulo (idTitulo, idTipoTitulo, nombre, sinopsis, duracion, URLImagen, URLTrailer, fechaEstreno, puntuacion) VALUES
 ('1', '1', 'Inception', 'Un ladrón que roba secretos corporativos a través del uso de tecnología de sueños compartidos se le da la tarea inversa: plantar una idea en la mente de un CEO.', '148 min', 'https://placehold.co/100x170', 'https://example.com/inception-trailer.mp4', '2010-07-16', 4.8),
 ('2', '1', 'The Matrix', 'Un hacker aprende la impactante verdad sobre su realidad y su papel en la guerra contra sus controladores.', '136 min', 'https://placehold.co/100x170', 'https://example.com/matrix-trailer.mp4', '1999-03-31', 4.7),
 ('3', '1', 'Buscando a Nemo', 'Un pez payaso llamado Marlin, junto con una pez cirujano azul llamada Dory, busca a su hijo Nemo que ha sido capturado por unos buzos.', '100 min', 'https://placehold.co/100x170', 'https://example.com/nemo-trailer.mp4', '2003-05-30', 4.5),
@@ -509,11 +523,7 @@ export const query: string = `INSERT INTO peliculas (idTitulo, idTipoTitulo, nom
 ('9', '1', 'Gladiator', 'Un general romano es traicionado y reducido a la esclavitud, buscando venganza contra el emperador que lo traicionó.', '155 min', 'https://placehold.co/100x170', 'https://example.com/gladiator-trailer.mp4', '2000-05-05', 4.8),
 ('10', '1', 'The Shawshank Redemption', 'Dos hombres en una prisión encuentran amistad y redención mientras intentan sobrevivir en un entorno brutal.', '142 min', 'https://placehold.co/100x170', 'https://example.com/shawshank-trailer.mp4', '1994-09-23', 4.9);
 
-INSERT INTO usuarios (idUsuario, nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) VALUES
-('1', 'Juan', 'Pérez', 'juan.perez@example.com', 'password123', '1990-05-15', 'https://example.com/avatar-juan.jpg', '123456789', 4.5, 0),
-('2', 'Ana', 'Gómez', 'ana.gomez@example.com', 'securepassword456', '1985-11-23', 'https://example.com/avatar-ana.jpg', '987654321', 5.0, 1);
-
-INSERT INTO resenias (idResenna, idUsuario, idTitulo, comentario, fechaPublicacion, calificacion, esVisible) VALUES
+INSERT INTO resenna (idResenna, idUsuario, idTitulo, comentario, fechaPublicacion, calificacion, esVisible) VALUES
 ('1', '1', '1', 'Una experiencia visual impresionante que desafía la mente. ¡Me encantó!', '2023-01-15', 5, 1),
 ('2', '2', '1', 'Inception es una obra maestra del cine moderno. La trama es compleja pero muy satisfactoria.', '2023-01-20', 4, 1),
 ('3', '1', '2', 'Un clásico que redefine la ciencia ficción. Los efectos especiales son asombrosos.', '2023-02-10', 5, 1),
@@ -547,16 +557,7 @@ INSERT INTO resenias (idResenna, idUsuario, idTitulo, comentario, fechaPublicaci
 ('31', '1', '8', 'Una aventura que cambió el cine para siempre. Los dinosaurios son geniales.', '2023-06-10', 5, 1),
 ('32', '2', '8', '¡La nostalgia es real! Un clásico que nunca pierde su encanto.', '2023-06-12', 4, 1);
 
-INSERT INTO roles (idRol, nombre) VALUES
-('0', 'Usuario'),
-('1', 'Administrador');
-
-INSERT INTO tiposTitulo (idTipo, nombre) VALUES
-('1', 'Películas'),
-('2', 'Series'),
-('3', 'Documentales');
-
-INSERT INTO marcadores (idMarcador, idUsuario, idTitulo, fechaMarcado) VALUES
+INSERT INTO marcador (idMarcador, idUsuario, idTitulo, fechaMarcado) VALUES
 ('1', '1', '1', '2024-10-01'),
 ('2', '2', '3', '2024-10-02'),
 ('3', '1', '2', '2024-10-03'),
