@@ -462,7 +462,27 @@ export class ServicebdService {
     }).catch(e => {
       console.error("Error al insertar noticia", e);
       return { success: false, error: e };
-      this.listaResenna.next(items as any);
+    });
+  }
+
+  selectMarcadorPorIdUsuario(idUsuario: string): Promise<Marcador[]> {
+    const query = "SELECT * FROM Marcador WHERE idUsuario = ?";
+    return this.database.executeSql(query, [idUsuario]).then(res => {
+      let items: Marcador[] = [];
+      if (res.rows.length > 0) {
+        for (let i = 0; i < res.rows.length; i++) {
+          items.push({
+            idMarcados: res.rows.item(i).idMarcados,
+            idUsuario: res.rows.item(i).idUsuario,
+            idTitulo: res.rows.item(i).idTitulo,
+            fechaMarcado: res.rows.item(i).fechaMarcado
+          });
+        }
+      }
+      return items; // Retorna el array de marcadores
+    }).catch(e => {
+      console.error("Error al consultar marcadores por ID de usuario", e);
+      return []; // Retorna un array vacío en caso de error
     });
   }
 
@@ -479,10 +499,9 @@ export class ServicebdService {
 
   insertResenna(resenna: Resenna) {
     let insertSql = "INSERT INTO resenna(idUsuario , id_titulo , comentario , fechaPublicacion , calificacion , esVisible , fechaEliminada , motivoEliminacion) values(?,?,?,?,?,?,?,?,?)";
-    return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.id_titulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, resenna.esVisible, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
+    return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.idTitulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, resenna.esVisible, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
       this.presentAlert("Nueva Reseña", "Reseña ingresada correctamente.");
 
-      this.selectResenna();
     }).catch(err => {
       this.presentAlert("Reseña", "Error: " + JSON.stringify(err));
     });
