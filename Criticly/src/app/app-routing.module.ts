@@ -69,16 +69,12 @@ const routes: Routes = [
   }, {
     path: 'nuevo-editar-titulo',
     loadChildren: () => import('./pages/nuevo-editar-titulo/nuevo-editar-titulo.module').then(m => m.NuevoEditarTituloPageModule)
-  }
-  ,
+  },
   {
     path: 'recuperar',
     loadChildren: () => import('./pages/recuperar/recuperar.module').then(m => m.RecuperarPageModule)
   },
   {
-    path: '**',
-    redirectTo: 'home'
-  },  {
     path: 'admin-lista-roles',
     loadChildren: () => import('./pages/admin-lista-roles/admin-lista-roles.module').then( m => m.AdminListaRolesPageModule)
   },
@@ -109,9 +105,11 @@ const routes: Routes = [
   {
     path: 'admin-editar-resenna',
     loadChildren: () => import('./pages/admin-editar-resenna/admin-editar-resenna.module').then( m => m.AdminEditarResennaPageModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'home'
   }
-
-
 ];
 
 @NgModule({

@@ -120,8 +120,10 @@ export class ServicebdService {
       await this.database.executeSql(this.tablaResenna, []);
       await this.database.executeSql(this.tablaMarcador, []);
 
-      await this.database.executeSql("INSERT INTO rol(nombre) values('Usuario')", []);
-      await this.database.executeSql("INSERT INTO rol(nombre) values('Admin')", []);
+      //await this.database.executeSql("INSERT INTO rol(nombre) values('Usuario')", []);
+      //await this.database.executeSql("INSERT INTO rol(nombre) values('Admin')", []);
+
+      await this.database.executeSql("UPDATE usuario SET id_rol = 2 WHERE correo = 'fr.nuneza@duocuc.cl'",[]);
 
     } catch (e) {
       console.log(JSON.stringify(e));
@@ -503,7 +505,7 @@ export class ServicebdService {
   insertarUsuario(newUser: Usuario) {
     let insertSql = "INSERT INTO usuario(nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) values(?,?,?,?,?,?,?,?,?)";
     if (newUser.correo == "fr.nuneza@duocuc.cl") {
-      newUser.id_rol = 1;
+      newUser.id_rol = 2;
     }
     return this.database.executeSql(insertSql, [newUser.nombre, newUser.apellido, newUser.correo, newUser.clave, newUser.fechaNacimiento, newUser.avatar, newUser.telefono, newUser.reputacion, newUser.id_rol]).then(res => {
       //this.presentAlert("Registro", "Nuevo usuario creado con éxito.");
