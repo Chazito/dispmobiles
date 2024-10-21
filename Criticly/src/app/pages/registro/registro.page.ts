@@ -25,6 +25,9 @@ export class RegistroPage implements OnInit {
     private alertController: AlertController,
     private db: ServicebdService
   ) {}
+  ngOnInit() {
+    
+  }
 
   // Check if passwords match
   passwordsMatch(): boolean {
