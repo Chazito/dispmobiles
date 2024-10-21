@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicebdService } from '../services/servicebd.service';
 import { Titulo } from '../services/titulo';
+import { peliculas } from 'src/assets/datos';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,6 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-
     this.db.dbState().subscribe(res => {
       if (res) {
         this.db.selectDestacados();

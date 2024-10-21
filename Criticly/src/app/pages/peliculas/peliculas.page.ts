@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Titulo } from 'src/app/services/titulo';
-import { peliculas } from 'src/assets/datos'
 
 @Component({
   selector: 'app-peliculas',
