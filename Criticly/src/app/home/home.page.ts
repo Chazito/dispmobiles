@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServicebdService } from '../services/servicebd.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { ServicebdService } from '../services/servicebd.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit{
 
   arregloDestacados : any = [
     {
@@ -46,15 +46,17 @@ export class HomePage {
   ];
 
   constructor(private db : ServicebdService) {
-    this.db.selectDestacados();
-    this.db.selectCriticados();
-    this.db.selectMejores();
+    
   }
 
   ngOnInit(){
     
     this.db.dbState().subscribe(res=>{
       if(res){
+        this.db.selectDestacados();
+        this.db.selectCriticados();
+        this.db.selectMejores();
+
         this.db.fetchDestacados().subscribe(data =>{
           this.arregloDestacados = data;
         })
@@ -66,6 +68,10 @@ export class HomePage {
         })
       }
     })
+  }
+
+  clickOnEntry(x : any){
+    console.log("Woops");
   }
 
 }

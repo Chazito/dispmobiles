@@ -11,49 +11,65 @@ import { Usuario } from 'src/app/services/usuario';
   styleUrls: ['./registro.page.scss'],
 })
 export class RegistroPage implements OnInit {
-  StrongPasswordRegx: RegExp =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
-  nameRegex : RegExp = /^[A-Za-z]{1,20}$/;
+  StrongPasswordRegx: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+  nameRegex: RegExp = /^[A-Za-z]{1,20}$/;
 
-  form: FormGroup;
+  inputNombre: string = '';
+  inputApellido: string = '';
+  inputEmail: string = '';
+  inputPass: string = '';
+  inputPass2: string = '';
 
-  inputNombre: string = "";
-  inputApellido: string = "";
-  inputEmail: string = "";
-  inputPass: string = "";
-  inputPass2: string = "";
+  constructor(
+    private router: Router,
+    private alertController: AlertController,
+    private db: ServicebdService
+  ) {}
 
-  constructor(private fb: FormBuilder, private router : Router, private alertController : AlertController, private db : ServicebdService) {
-    this.form = this.fb.group({
-      nombre: ['', [Validators.required, Validators.pattern(this.nameRegex)]],
-      apellido: ['', [Validators.required, Validators.pattern(this.nameRegex)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [Validators.required, Validators.pattern(this.StrongPasswordRegx)],
-      ],
-      password2: [
-        '',
-        [Validators.required, Validators.pattern(this.StrongPasswordRegx)],
-      ],
-    });
+  // Check if passwords match
+  passwordsMatch(): boolean {
+    return this.inputPass === this.inputPass2;
   }
 
-  ngOnInit() { }
+  // Validation checks for each field
+  isValidName(name: string): boolean {
+    return this.nameRegex.test(name);
+  }
 
-  onRegistroClick(){
+  isValidEmail(email: string): boolean {
+    return /\S+@\S+\.\S+/.test(email);
+  }
 
-    let user : any;
-    user.nombre = this.inputNombre;
-    user.apellido = this.inputApellido;
-    user.correo = this.inputEmail;
-    user.clave = this.inputPass;
+  isValidPassword(password: string): boolean {
+    return this.StrongPasswordRegx.test(password);
+  }
 
-    this.db.insertNewUser(user);
+  onRegistroClick() {
+    if (
+      this.isValidName(this.inputNombre) &&
+      this.isValidName(this.inputApellido) &&
+      this.isValidEmail(this.inputEmail) &&
+      this.isValidPassword(this.inputPass) &&
+      this.passwordsMatch()
+    ) {
+      let user: any = {
+        nombre: this.inputNombre,
+        apellido: this.inputApellido,
+        correo: this.inputEmail,
+        clave: this.inputPass,
+      };
 
-    this.presentAlert("Registro completo","Recibira un correo de confirmacion al email introducido","Volver al Login");
-
-    this.router.navigate(['/login']);
+      this.db.insertarUsuario(user);
+      this.presentAlert(
+        'Registro completo',
+        'Recibirá un correo de confirmación al email introducido',
+        'Volver al Login'
+      );
+      this.router.navigate(['/login']);
+    } else {
+      // Handle validation errors
+      this.presentAlert('Error', 'Por favor, revisa los datos ingresados.', 'OK');
+    }
   }
 
   async presentAlert(titulo: string, mensaje: string, boton: string) {
@@ -63,13 +79,12 @@ export class RegistroPage implements OnInit {
       buttons: [
         {
           text: boton,
-          cssClass: "alert-button",
+          cssClass: 'alert-button',
           handler: () => {
             this.router.navigate(['/login']);
-          }
-        }
+          },
+        },
       ],
-
     });
 
     await alert.present();
