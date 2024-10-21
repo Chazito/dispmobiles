@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { ServicebdService } from 'src/app/services/servicebd.service';
+import { Usuario } from 'src/app/services/usuario';
 
 @Component({
   selector: 'app-registro',
@@ -10,7 +12,8 @@ import { AlertController } from '@ionic/angular';
 })
 export class RegistroPage implements OnInit {
   StrongPasswordRegx: RegExp =
-    /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+  nameRegex : RegExp = /^[A-Za-z]{1,20}$/;
 
   form: FormGroup;
 
@@ -20,10 +23,10 @@ export class RegistroPage implements OnInit {
   inputPass : string = "";
   inputPass2 : string = "";
 
-  constructor(private fb: FormBuilder, private router : Router, private alertController : AlertController) {
+  constructor(private fb: FormBuilder, private router : Router, private alertController : AlertController, private db : ServicebdService) {
     this.form = this.fb.group({
-      nombre: ['', [Validators.required]],
-      apellido: ['', [Validators.required]],
+      nombre: ['', [Validators.required, Validators.pattern(this.nameRegex)]],
+      apellido: ['', [Validators.required, Validators.pattern(this.nameRegex)]],
       email: ['', [Validators.required, Validators.email]],
       password: [
         '',
@@ -39,7 +42,18 @@ export class RegistroPage implements OnInit {
   ngOnInit() {}
 
   onRegistroClick(){
+
+    let user : Usuario = new Usuario();
+    user.nombre = this.inputNombre;
+    user.apellido = this.inputApellido;
+    user.correo = this.inputEmail;
+    user.clave = this.inputPass;
+
+    this.db.insertNewUser(user);
+
     this.presentAlert("Registro completo","Recibira un correo de confirmacion al email introducido","Volver al Login");
+
+    this.router.navigate(['/login']);
   }
 
   async presentAlert(titulo:string, mensaje:string, boton:string) {

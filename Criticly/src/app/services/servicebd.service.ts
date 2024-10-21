@@ -37,6 +37,11 @@ export class ServicebdService {
   listaResenna = new BehaviorSubject([]);
   listaMarcador = new BehaviorSubject([]);
 
+  //Home
+  listaDestacados = new BehaviorSubject([]);
+  listaCriticados = new BehaviorSubject([]);
+  listaMejor = new BehaviorSubject([]);
+
   constructor(private sqlite: SQLite, private platform: Platform, private alertController: AlertController) {
     this.crearBD();
   }
@@ -67,6 +72,19 @@ export class ServicebdService {
 
   fetchMarcador(): Observable<Marcador[]> {
     return this.listaMarcador.asObservable();
+  }
+
+  //Home
+  fetchDestacados(): Observable<Titulo[]> {
+    return this.listaDestacados.asObservable();
+  }
+
+  fetchCriticados(): Observable<Titulo[]> {
+    return this.listaCriticados.asObservable();
+  }
+
+  fetchMejor(): Observable<Titulo[]> {
+    return this.listaMejor.asObservable();
   }
 
   async presentAlert(titulo: string, msj: string) {
@@ -118,6 +136,84 @@ export class ServicebdService {
     }
   }
 
+  selectDestacados() {
+    //Por ahora son los recientes
+    return this.database.executeSql("SELECT * FROM titulo ORDER BY fechaEstreno DESC", []).then(res => {
+      let items: Titulo[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          if(i > 9){
+            //Limitar la lista de destacados a 10 items
+            break;
+          }
+          items.push({
+            idTitulo: res.rows.item(i).idTitulo,
+            idTipoTitulo: res.rows.item(i).idTipoTitulo,
+            nombre: res.rows.item(i).nombre,
+            sinopsis: res.rows.item(i).sinopsis,
+            duracion: res.rows.item(i).duracion,
+            URLImagen: res.rows.item(i).URLImagen,
+            URLTrailer: res.rows.item(i).URLTrailer,
+            fechaEstreno: res.rows.item(i).fechaEstreno
+          })
+        }
+      }
+      this.listaDestacados.next(items as any);
+    })
+  }
+
+  selectCriticados(){
+    let sortedSql = "SELECT titulo.*, COUNT(resenna.id_titulo) AS resenna_count FROM titulo LEFT JOIN resenna ON titulo.idTitulo = resenna.id_titulo GROUP BY titulo.idTitulo ORDER BY resenna_count DESC";
+    this.database.executeSql(sortedSql, []).then(res =>{
+      let items: Titulo[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          if(i > 9){
+            //Limitar la lista de destacados a 10 items
+            break;
+          }
+          items.push({
+            idTitulo: res.rows.item(i).idTitulo,
+            idTipoTitulo: res.rows.item(i).idTipoTitulo,
+            nombre: res.rows.item(i).nombre,
+            sinopsis: res.rows.item(i).sinopsis,
+            duracion: res.rows.item(i).duracion,
+            URLImagen: res.rows.item(i).URLImagen,
+            URLTrailer: res.rows.item(i).URLTrailer,
+            fechaEstreno: res.rows.item(i).fechaEstreno
+          })
+        }
+      }
+      this.listaCriticados.next(items as any);
+    })
+  }
+
+  selectMejores(){
+    let sortedSql = "SELECT titulo.*, AVG(resenna.calificacion) AS avg_calificacion FROM titulo LEFT JOIN resenna ON titulo.idTitulo = resenna.id_titulo GROUP BY titulo.idTitulo ORDER BY avg_calificacion DESC";
+    this.database.executeSql(sortedSql, []).then(res =>{
+      let items: Titulo[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          if(i > 9){
+            //Limitar la lista de destacados a 10 items
+            break;
+          }
+          items.push({
+            idTitulo: res.rows.item(i).idTitulo,
+            idTipoTitulo: res.rows.item(i).idTipoTitulo,
+            nombre: res.rows.item(i).nombre,
+            sinopsis: res.rows.item(i).sinopsis,
+            duracion: res.rows.item(i).duracion,
+            URLImagen: res.rows.item(i).URLImagen,
+            URLTrailer: res.rows.item(i).URLTrailer,
+            fechaEstreno: res.rows.item(i).fechaEstreno
+          })
+        }
+      }
+      this.listaMejor.next(items as any);
+    })
+  }
+
   selectTipoTitulo() {
     return this.database.executeSql("SELECT * FROM tipotitulo", []).then(res => {
       let items: TipoTitulo[] = [];
@@ -129,6 +225,7 @@ export class ServicebdService {
           })
         }
       }
+      this.listaTipoTitulo.next(items as any);
     })
   }
 
@@ -143,6 +240,7 @@ export class ServicebdService {
           })
         }
       }
+      this.listaRol.next(items as any);
     })
   }
 
@@ -159,6 +257,7 @@ export class ServicebdService {
           });
         }
       }
+      this.listaMarcador.next(items as any);
     });
   }
 
@@ -179,6 +278,8 @@ export class ServicebdService {
           });
         }
       }
+
+      this.listaTitulo.next(items as any);
     });
   }
 
@@ -201,6 +302,8 @@ export class ServicebdService {
           });
         }
       }
+
+      this.listaUsuario.next(items as any);
     });
   }
 
@@ -222,6 +325,62 @@ export class ServicebdService {
           });
         }
       }
+      this.listaResenna.next(items as any);
     });
+  }
+
+  insertNewUser(newUser: Usuario) {
+    let insertSql = "INSERT INTO usuario(nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) values(?,?,?,?,?,?,?,?,?,?)";
+    return this.database.executeSql(insertSql, [newUser.nombre, newUser.apellido, newUser.correo, newUser.clave, newUser.fechaNacimiento, newUser.avatar, newUser.telefono, newUser.reputacion, newUser.id_rol]).then(res => {
+      this.presentAlert("Registro", "Nuevo usuario creado con éxito.");
+
+      this.selectUsuario();
+    }).catch(err => {
+      this.presentAlert("Registro", "Error: " + JSON.stringify(err));
+    });
+  }
+
+  insertResenna(resenna: Resenna) {
+    let insertSql = "INSERT INTO resenna(idUsuario , id_titulo , comentario , fechaPublicacion , calificacion , esVisible , fechaEliminada , motivoEliminacion) values(?,?,?,?,?,?,?,?,?)";
+    return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.id_titulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, resenna.esVisible, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
+      this.presentAlert("Nueva Reseña", "Reseña ingresada correctamente.");
+
+      this.selectResenna();
+    }).catch(err => {
+      this.presentAlert("Reseña", "Error: " + JSON.stringify(err));
+    });
+  }
+
+  insertTitulo(titulo: Titulo) {
+    let insertSql = "INSERT INTO titulo(idTipoTitulo , nombre , sinopsis , duracion , URLImagen , URLTrailer , fechaEstreno) values(?,?,?,?,?,?,?,?)";
+    return this.database.executeSql(insertSql, [titulo.idTipoTitulo, titulo.nombre, titulo.sinopsis, titulo.duracion, titulo.URLImagen, titulo.URLTrailer, titulo.fechaEstreno]).then(res => {
+      this.presentAlert("Nuevo Título", "Nuevo título ingresado correctamente");
+
+      this.selectTitulo();
+    }).catch(err => {
+      this.presentAlert("Nuevo Título", "Error: " + JSON.stringify(err));
+    });
+  }
+
+  insertMarcador(marcador: Marcador) {
+    let insertSql = "INSERT INTO marcador(idMarcados , idUsuario , idTitulo , fechaMarcado) values(?,?,?,?)";
+    return this.database.executeSql(insertSql, [marcador.idMarcados, marcador.idUsuario, marcador.idTitulo, marcador.fechaMarcado]).then(res => {
+      this.presentAlert("Nuevo Marcador", "Marcador guardado.");
+
+      this.selectMarcado();
+    }).catch(err => {
+      this.presentAlert("Nuevo Marcador", "Error: " + JSON.stringify(err));
+    })
+  }
+
+  insertTipoTitulo(tipo: TipoTitulo) {
+    let insertSql = "INSERT INTO TipoTitulo(nombre) values(?)";
+    this.database.executeSql(insertSql, [tipo.nombre]).then(res => {
+      this.presentAlert("Nuevo Tipo", "Nuevo tipo ingresado correctamente.");
+
+      this.selectTipoTitulo();
+    }).catch(err => {
+      this.presentAlert("Nuevo Tipo", "Error: " + JSON.stringify(err));
+    })
   }
 }
