@@ -11,7 +11,7 @@ import { roles } from 'src/assets/datos';
 })
 export class AdminListaRolesPage implements OnInit {
 
-  roles: Rol[] = [...roles]
+  roles: Rol[] = []
 
   constructor(private bd: ServicebdService, private router: Router) {
 
