@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
+import { ServicebdService } from 'src/app/services/servicebd.service';
 
 @Component({
   selector: 'app-admin-editar-rol',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminEditarRolPage implements OnInit {
 
-  constructor() { }
+  constructor(private bd : ServicebdService, private router : Router) { 
+
+  }
 
   ngOnInit() {
+    
   }
 
 }
