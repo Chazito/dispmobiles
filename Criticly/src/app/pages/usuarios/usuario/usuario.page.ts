@@ -11,7 +11,7 @@ import { Usuario } from 'src/app/services/usuario';
 export class UsuarioPage implements OnInit {
 
   usuario: Usuario = {}
-  constructor(private route:ActivatedRoute, private sqlService: ServicebdService) { }
+  constructor(private route: ActivatedRoute, private sqlService: ServicebdService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -22,7 +22,7 @@ export class UsuarioPage implements OnInit {
         });
       }
     });
-    if (!this.usuario.idUsuario ) this.usuario = {
+    if (!this.usuario.idUsuario) this.usuario = {
       idUsuario: "1",
       nombre: "Juan",
       apellido: "Pérez",
@@ -35,5 +35,9 @@ export class UsuarioPage implements OnInit {
       id_rol: 0
     }
   }
-  
+
+  modificarUsuario() {
+    this.sqlService.modificarUsuario(this.usuario)
+  }
+
 }
