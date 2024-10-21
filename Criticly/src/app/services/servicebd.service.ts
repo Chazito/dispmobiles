@@ -106,11 +106,24 @@ export class ServicebdService {
         this.database = bd;
         await this.crearTablas()
         await this.database.executeSql(insertRol)
+          .then(res => this.presentAlert('query', JSON.stringify(res)))
+          .catch(e => this.presentAlert('Error al ejecutar insertar Rol', JSON.stringify(e)))
         await this.database.executeSql(insertTipoTitulo)
+          .then(res => this.presentAlert('query', JSON.stringify(res)))
+          .catch(e => this.presentAlert('Error al ejecutar insertar Tipo Título', JSON.stringify(e)));
         await this.database.executeSql(insertUsuario)
+          .then(res => this.presentAlert('query', JSON.stringify(res)))
+          .catch(e => this.presentAlert('Error al ejecutar insertar Usuario', JSON.stringify(e)));
         await this.database.executeSql(insertTitulo)
+          .then(res => this.presentAlert('query', JSON.stringify(res)))
+          .catch(e => this.presentAlert('Error al ejecutar insertar Título', JSON.stringify(e)));
         await this.database.executeSql(insertResenna)
+          .then(res => this.presentAlert('query', JSON.stringify(res)))
+          .catch(e => this.presentAlert('Error al ejecutar insertar Reseña', JSON.stringify(e)));
         await this.database.executeSql(insertMarcador)
+          .then(res => this.presentAlert('query', JSON.stringify(res)))
+          .catch(e => this.presentAlert('Error al ejecutar insertar Marcador', JSON.stringify(e)));
+
         this.isDbReady.next(true);
       }).catch(e => {
         this.presentAlert('Creación de BD', 'Error: ' + JSON.stringify(e));
