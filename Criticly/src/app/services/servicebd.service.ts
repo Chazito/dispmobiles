@@ -22,7 +22,7 @@ export class ServicebdService {
   tablaUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, apellido TEXT NOT NULL, correo TEXT NOT NULL UNIQUE, clave TEXT NOT NULL, fechaNacimiento DATE, avatar TEXT, telefono TEXT, reputacion REAL, id_rol INTEGER NOT NULL, FOREIGN KEY (id_rol) REFERENCES Rol(idRol));";
   tablaTitulo: string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT,puntuacion REAL, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
 
-  tablaResenna: string = "CREATE TABLE IF NOT EXISTS Resenna (idResenna INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL,titulo TEXT, comentario TEXT, fechaPublicacion DATE, calificacion REAL, esVisible INTEGER, fechaEliminada DATE, motivoEliminacion TEXT, URLImagen TEXT, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (id_titulo) REFERENCES Titulo(idTitulo));";
+  tablaResenna: string = "CREATE TABLE IF NOT EXISTS Resenna (idResenna INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL,titulo TEXT, comentario TEXT, fechaPublicacion DATE, calificacion REAL, esVisible INTEGER, fechaEliminada DATE, motivoEliminacion TEXT, URLImagen TEXT, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
   tablaMarcador: string = "CREATE TABLE IF NOT EXISTS Marcador (idMarcador INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, fechaMarcado DATE, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
 
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -157,7 +157,7 @@ export class ServicebdService {
   }
 
   selectCriticados() {
-    let sortedSql = "SELECT titulo.*, COUNT(resenna.id_titulo) AS resenna_count FROM titulo LEFT JOIN resenna ON titulo.idTitulo = resenna.id_titulo GROUP BY titulo.idTitulo ORDER BY resenna_count DESC";
+    let sortedSql = "SELECT titulo.*, COUNT(resenna.idTitulo) AS resenna_count FROM titulo LEFT JOIN resenna ON titulo.idTitulo = resenna.idTitulo GROUP BY titulo.idTitulo ORDER BY resenna_count DESC";
     this.database.executeSql(sortedSql, []).then(res => {
       let items: Titulo[] = [];
       if (res.rows.length > 0) {
@@ -183,7 +183,7 @@ export class ServicebdService {
   }
 
   selectMejores() {
-    let sortedSql = "SELECT titulo.*, AVG(resenna.calificacion) AS avg_calificacion FROM titulo LEFT JOIN resenna ON titulo.idTitulo = resenna.id_titulo GROUP BY titulo.idTitulo ORDER BY avg_calificacion DESC";
+    let sortedSql = "SELECT titulo.*, AVG(resenna.calificacion) AS avg_calificacion FROM titulo LEFT JOIN resenna ON titulo.idTitulo = resenna.idTitulo GROUP BY titulo.idTitulo ORDER BY avg_calificacion DESC";
     this.database.executeSql(sortedSql, []).then(res => {
       let items: Titulo[] = [];
       if (res.rows.length > 0) {
@@ -504,7 +504,7 @@ export class ServicebdService {
   }
 
   insertarResenna(resenna: Resenna) {
-    let insertSql = "INSERT INTO resenna(idUsuario , id_titulo , comentario , fechaPublicacion , calificacion , esVisible , fechaEliminada , motivoEliminacion) values(?,?,?,?,?,?,?,?,?)";
+    let insertSql = "INSERT INTO resenna(idUsuario , idTitulo , comentario , fechaPublicacion , calificacion , esVisible , fechaEliminada , motivoEliminacion) values(?,?,?,?,?,?,?,?,?)";
     return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.idTitulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, resenna.esVisible, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
       this.presentAlert("Nueva Reseña", "Reseña ingresada correctamente.");
 
