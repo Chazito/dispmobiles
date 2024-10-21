@@ -22,6 +22,7 @@ export class AdminListaRolesPage implements OnInit {
 
   ngOnInit() {
     this.bd.dbState().subscribe(res=>{
+      this.bd.selectRol();
       if(res){
         //subscribirme al observable del select
         this.bd.fetchRol().subscribe(data=>{
@@ -41,7 +42,7 @@ export class AdminListaRolesPage implements OnInit {
   }
 
   eliminar(x:any){
-    this.bd.eliminarRol(x.idnoticia);
+    this.bd.eliminarRol(x.idRol);
   }
 
   irAgregar(){
