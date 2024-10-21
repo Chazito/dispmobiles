@@ -1,0 +1,53 @@
+.content-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; // Full height to center vertically
+  }
+  
+  .center-container {
+    width: 100%;
+    max-width: 400px; // Limit the container width for better UX on larger screens
+    margin: 0 auto; // Center horizontally
+  }
+  
+  .role-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f3f4f8; // Slightly brighter color
+    border-radius: 12px; // Rounded shape
+    margin-bottom: 10px; // Separation between items
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for highlight
+    width: 100%;
+  
+    &:hover {
+      background-color: #e0e4ed; // Hover effect for highlight
+    }
+  }
+  
+  .id-rol {
+    flex: 0 0 50px; // Fixed width for ID column
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .role-name {
+    flex: 1;
+    font-size: 18px;
+    padding-left: 10px; // Separation between ID and Name
+    color: #333;
+  }
+  
+  ion-item-sliding {
+    --background: transparent; // Remove sliding background
+  }
+  
+  ion-item-options {
+    display: flex;
+    ion-item-option {
+      border-radius: 12px;
+    }
+  }
+  
