@@ -10,8 +10,8 @@
                 <img src="../assets/icon/user.svg" alt="Profile Picture">
               </ion-avatar>
               <ion-label id="labelUsuario" *ngIf="isAuth">
-                <p id="nombreUsuario">Nombre de usuario</p>
-                <p class="email">correo&#64;ejemplo.com</p>
+                <p id="nombreUsuario">{{nombreApellido}}</p>
+                <p class="email">{{correo}}</p>
               </ion-label>
               <ion-label *ngIf="!isAuth">
                 <p id="nombreUsuario">Iniciar sesión</p>

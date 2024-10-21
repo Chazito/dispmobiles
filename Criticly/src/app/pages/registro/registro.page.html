@@ -11,57 +11,55 @@
     <div class="logo-container">
       <ion-img class="logo" src="assets/images/logo.png"></ion-img>
     </div>
-    <form (ngSubmit)="onRegistroClick()">
-      <div class="login-input-container">
-        <p>Ingresa tus datos:</p>
-
-        <!-- Nombre -->
-        <ion-item class="input-container">
-          <ion-label position="stacked">Nombre</ion-label>
-          <ion-input placeholder="Pedro" class="rounded-input" type="text"></ion-input>
-        </ion-item>
-        <div *ngIf="form.get('nombre')?.value && !isValidName(form.get('nombre')?.value)">
-          <p>Nombre inválido. Solo letras (máx. 20).</p>
-        </div>
-
-        <!-- Apellido -->
-        <ion-item class="input-container">
-          <ion-label position="stacked">Apellido</ion-label>
-          <ion-input placeholder="Gonzalez" class="rounded-input" type="text"></ion-input>
-        </ion-item>
-        <div *ngIf="form.get('apellido')?.value && !isValidName(form.get('apellido')?.value)">
-          <p>Apellido inválido. Solo letras (máx. 20).</p>
-        </div>
-
-        <!-- Correo electrónico -->
-        <ion-item class="input-container">
-          <ion-label position="stacked">Correo electrónico</ion-label>
-          <ion-input placeholder="email@email.com" class="rounded-input" type="email"></ion-input>
-        </ion-item>
-        <div *ngIf="form.get('email')?.value && !isValidEmail(form.get('email')?.value)">
-          <p>Correo electrónico inválido.</p>
-        </div>
-
-        <!-- Contraseña -->
-        <ion-item class="input-container">
-          <ion-label position="stacked">Contraseña</ion-label>
-          <ion-input placeholder="***********" class="rounded-input" type="password"></ion-input>
-        </ion-item>
-        <div *ngIf="form.get('password')?.value && !isValidPassword(form.get('password')?.value)">
-          <p>Contraseña inválida. Debe tener entre 8-20 caracteres, al menos una letra mayúscula, una minúscula, un
-            número y un caracter especial.</p>
-        </div>
-
-        <!-- Confirmar contraseña -->
-        <ion-item class="input-container">
-          <ion-label position="stacked">Confirmar contraseña</ion-label>
-          <ion-input placeholder="***********" class="rounded-input" type="password"></ion-input>
-        </ion-item>
-        <div *ngIf="form.get('password2')?.value && !passwordsMatch()">
-          <p>Las contraseñas no coinciden.</p>
-        </div>
+    <div class="login-input-container">
+      <p>Ingresa tus datos:</p>
+    
+      <!-- Nombre -->
+      <ion-item class="input-container">
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input [(ngModel)]="inputNombre" placeholder="Pedro" class="rounded-input" type="text"></ion-input>
+      </ion-item>
+      <div *ngIf="inputNombre && !isValidName(inputNombre)">
+        <p>Nombre inválido. Solo letras (máx. 20).</p>
       </div>
-
+    
+      <!-- Apellido -->
+      <ion-item class="input-container">
+        <ion-label position="stacked">Apellido</ion-label>
+        <ion-input [(ngModel)]="inputApellido" placeholder="Gonzalez" class="rounded-input" type="text"></ion-input>
+      </ion-item>
+      <div *ngIf="inputApellido && !isValidName(inputApellido)">
+        <p>Apellido inválido. Solo letras (máx. 20).</p>
+      </div>
+    
+      <!-- Correo electrónico -->
+      <ion-item class="input-container">
+        <ion-label position="stacked">Correo electrónico</ion-label>
+        <ion-input [(ngModel)]="inputEmail" placeholder="email@email.com" class="rounded-input" type="email"></ion-input>
+      </ion-item>
+      <div *ngIf="inputEmail && !isValidEmail(inputEmail)">
+        <p>Correo electrónico inválido.</p>
+      </div>
+    
+      <!-- Contraseña -->
+      <ion-item class="input-container">
+        <ion-label position="stacked">Contraseña</ion-label>
+        <ion-input [(ngModel)]="inputPass" placeholder="***********" class="rounded-input" type="password"></ion-input>
+      </ion-item>
+      <div *ngIf="inputPass && !isValidPassword(inputPass)">
+        <p>Contraseña inválida. Debe tener entre 8-20 caracteres, al menos una letra mayúscula, una minúscula, un número y un caracter especial.</p>
+      </div>
+    
+      <!-- Confirmar contraseña -->
+      <ion-item class="input-container">
+        <ion-label position="stacked">Confirmar contraseña</ion-label>
+        <ion-input [(ngModel)]="inputPass2" placeholder="***********" class="rounded-input" type="password"></ion-input>
+      </ion-item>
+      <div *ngIf="inputPass2 && !passwordsMatch()">
+        <p>Las contraseñas no coinciden.</p>
+      </div>
+    
+      <!-- Términos y condiciones -->
       <br />
       <div class="title-container" style="margin: 0;">
         <p>
@@ -69,14 +67,16 @@
           <a>términos y condiciones.</a>
         </p>
       </div>
+    
+      <!-- Botón de registro -->
       <br />
       <ion-footer class="ion-no-border">
         <ion-toolbar class="ion-no-border">
-          <ion-button expand="full" color="secondary" shape="round" type="submit">
+          <ion-button expand="full" color="secondary" shape="round" (click)="onRegistroClick()">
             <strong class="ion-margin">Registrarse</strong>
           </ion-button>
         </ion-toolbar>
       </ion-footer>
-    </form>
+    </div>
   </div>
 </ion-content>

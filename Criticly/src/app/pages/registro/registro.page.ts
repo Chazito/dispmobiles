@@ -13,27 +13,24 @@ export class RegistroPage {
   StrongPasswordRegx: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
   nameRegex: RegExp = /^[A-Za-z]{1,20}$/;
 
-  form: FormGroup;
+  inputNombre: string = '';
+  inputApellido: string = '';
+  inputEmail: string = '';
+  inputPass: string = '';
+  inputPass2: string = '';
 
-  constructor(private fb: FormBuilder, private router: Router, private alertController: AlertController, private db: ServicebdService) {
-    this.form = this.fb.group({
-      nombre: ['', [Validators.required, Validators.pattern(this.nameRegex)]],
-      apellido: ['', [Validators.required, Validators.pattern(this.nameRegex)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [Validators.required, Validators.pattern(this.StrongPasswordRegx)],
-      ],
-      password2: [
-        '',
-        [Validators.required, Validators.pattern(this.StrongPasswordRegx)],
-      ],
-    });
-  }
+  constructor(
+    private router: Router,
+    private alertController: AlertController,
+    private db: ServicebdService
+  ) {}
+
+  // Check if passwords match
   passwordsMatch(): boolean {
-    return this.form.get('password')?.value === this.form.get('password2')?.value;
+    return this.inputPass === this.inputPass2;
   }
 
+  // Validation checks for each field
   isValidName(name: string): boolean {
     return this.nameRegex.test(name);
   }
@@ -48,17 +45,17 @@ export class RegistroPage {
 
   onRegistroClick() {
     if (
-      this.isValidName(this.form.get('nombre')?.value) &&
-      this.isValidName(this.form.get('apellido')?.value) &&
-      this.isValidEmail(this.form.get('email')?.value) &&
-      this.isValidPassword(this.form.get('password')?.value) &&
+      this.isValidName(this.inputNombre) &&
+      this.isValidName(this.inputApellido) &&
+      this.isValidEmail(this.inputEmail) &&
+      this.isValidPassword(this.inputPass) &&
       this.passwordsMatch()
     ) {
       let user: any = {
-        nombre: this.form.get('nombre')?.value,
-        apellido: this.form.get('apellido')?.value,
-        correo: this.form.get('email')?.value,
-        clave: this.form.get('password')?.value,
+        nombre: this.inputNombre,
+        apellido: this.inputApellido,
+        correo: this.inputEmail,
+        clave: this.inputPass,
       };
 
       this.db.insertarUsuario(user);
@@ -81,10 +78,7 @@ export class RegistroPage {
       buttons: [
         {
           text: boton,
-          cssClass: 'alert-button',
-          handler: () => {
-            this.router.navigate(['/login']);
-          },
+          cssClass: 'alert-button'
         },
       ],
     });
