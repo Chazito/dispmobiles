@@ -1,0 +1,111 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding-vertical">
+  <ion-row>
+    <ion-col size="12">
+      <img style="max-width: 360px; height: auto;"
+        src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX700_.jpg"
+        alt="Movie Cover" class="movie-cover">
+    </ion-col>
+  </ion-row>
+  <ion-grid class="movie-container">
+    <ion-row>
+      <ion-col size="12">
+        <h1 class="movie-title">Inception (Origen)</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p class="movie-summary">
+          Un ladrón que roba secretos corporativos mediante el uso de tecnología de intercambio de sueños recibe la
+          tarea inversa de plantar una idea en la mente de un CEO.
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col id="movie-buttons" size="12">
+        <ion-button shape="round" expand="block" color="primary" href="https://youtube.com/watch?v=YoHD9XEInc0">
+          Ver Tráiler
+        </ion-button>
+        <ion-button shape="round" expand="block" color="secondary">
+          Añadir a mi lista
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <h6 class="ion-padding-vertical">Detalles</h6>
+        <p><strong>Dirigida por:</strong> Christopher Nolan</p>
+        <p><strong>Reparto:</strong> Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page</p>
+        <p><strong>Género:</strong> Acción, Aventura, Sci-Fi</p>
+      </ion-col>
+    </ion-row>
+    <div class="ion-padding">
+      <h6 style="text-align: center;">Puntuación</h6>
+      <div style="width: 100%;" class="ion-padding">
+        <svg width="100%" viewBox="0 0 870 134" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <mask id="rating-mask">
+              <rect [attr.width]="ratingPercentage + '%'" height="100%" fill="white" />
+            </mask>
+          </defs>
+          <path
+            d="M0 74.7841H33.573L39.6451 52.185L45.7172 74.7841L63.1238 10L93.7542 124L113.05 52.185L119.122 74.7841L131.941 27.0749L144.76 74.7841H207.573L213.645 52.185L219.717 74.7841L237.124 10L267.754 124L287.05 52.185L293.122 74.7841L305.941 27.0749L318.76 74.7841H381.573L387.645 52.185L393.717 74.7841L411.124 10L441.754 124L461.05 52.185L467.122 74.7841L479.941 27.0749L492.76 74.7841H555.573L561.645 52.185L567.717 74.7841L585.124 10L615.754 124L635.05 52.185L641.122 74.7841L653.941 27.0749L666.76 74.7841H729.573L735.645 52.185L741.717 74.7841L759.124 10L789.754 124L809.05 52.185L815.122 74.7841L827.941 27.0749L840.76 74.7841H870"
+            stroke="#979797" stroke-width="5" />
+          <path
+            d="M0 74.7841H33.573L39.6451 52.185L45.7172 74.7841L63.1238 10L93.7542 124L113.05 52.185L119.122 74.7841L131.941 27.0749L144.76 74.7841H207.573L213.645 52.185L219.717 74.7841L237.124 10L267.754 124L287.05 52.185L293.122 74.7841L305.941 27.0749L318.76 74.7841H381.573L387.645 52.185L393.717 74.7841L411.124 10L441.754 124L461.05 52.185L467.122 74.7841L479.941 27.0749L492.76 74.7841H555.573L561.645 52.185L567.717 74.7841L585.124 10L615.754 124L635.05 52.185L641.122 74.7841L653.941 27.0749L666.76 74.7841H729.573L735.645 52.185L741.717 74.7841L759.124 10L789.754 124L809.05 52.185L815.122 74.7841L827.941 27.0749L840.76 74.7841H870"
+            stroke="#FFE500" stroke-width="5" mask="url(#rating-mask)" />
+        </svg>
+      </div>
+      <h6 style="text-align: center;"><strong>3.4</strong>/5</h6>
+    </div>
+    <ion-row>
+      <ion-col size="12">
+        <h6>Reseñas</h6>
+        <ion-card>
+          <ion-card-header class="ion-no-padding">
+            <ion-item lines="none">
+              <ion-avatar>
+                <ion-icon name="person-circle-outline" style="font-size: 40px;"></ion-icon>
+              </ion-avatar>
+              <ion-label class="ion-padding">User123</ion-label>
+              <ion-badge color="warning" slot="end">3/5</ion-badge>
+            </ion-item>
+          </ion-card-header>
+          <ion-card-content>
+            Concepto interesante pero un poco difícil de seguir a veces.
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-header class="ion-no-padding">
+            <ion-item lines="none">
+              <ion-avatar>
+                <ion-icon name="person-circle-outline" style="font-size: 40px;"></ion-icon>
+              </ion-avatar>
+              <ion-label class="ion-padding">User123</ion-label>
+              <ion-badge color="warning" slot="end">4/5</ion-badge>
+            </ion-item>
+          </ion-card-header>
+          <ion-card-content>
+            ¡Visuales fantásticas y una trama que desafía la mente!
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button shape="round" class="ion-padding" expand="block" color="secondary"
+          routerLink="/escribir-resenia">Escribir
+          reseña</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

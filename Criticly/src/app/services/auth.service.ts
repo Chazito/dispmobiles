@@ -18,7 +18,6 @@ export class AuthService {
 
   async init() {
     await this.storage.create();
-
     const storedAuth = await this.storage.get('isAuth');
     this.isAuthSubject.next(storedAuth === true);
   }

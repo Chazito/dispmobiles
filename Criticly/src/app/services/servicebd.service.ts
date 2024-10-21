@@ -8,7 +8,6 @@ import { Usuario } from './usuario';
 import { Titulo } from './titulo';
 import { Resenna } from './resenna';
 import { Marcador } from './marcador';
-import { Noticia } from './noticia';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +23,7 @@ export class ServicebdService {
   tablaTitulo: string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
 
   tablaResenna: string = "CREATE TABLE IF NOT EXISTS Resenna (idResenna INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, comentario TEXT, fechaPublicacion DATE, calificacion REAL, esVisible INTEGER, fechaEliminada DATE, motivoEliminacion TEXT, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (id_titulo) REFERENCES Titulo(idTitulo));";
-  tablaMarcador: string = "CREATE TABLE IF NOT EXISTS Marcador (idMarcados INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, fechaMarcado DATE, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
+  tablaMarcador: string = "CREATE TABLE IF NOT EXISTS Marcador (idMarcador INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, fechaMarcado DATE, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
 
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -120,17 +119,17 @@ export class ServicebdService {
       if (res.rows.length > 0) {
         for (let i = 0; i < res.rows.length; i++) {
           items.push({
-            idMarcados: res.rows.item(i).idMarcados,
+            idMarcador: res.rows.item(i).idMarcador,
             idUsuario: res.rows.item(i).idUsuario,
             idTitulo: res.rows.item(i).idTitulo,
             fechaMarcado: res.rows.item(i).fechaMarcado
           });
         }
       }
-      return items; // Retorna el array de marcadores
+      return items;
     }).catch(e => {
       console.error("Error al consultar marcadores por ID de usuario", e);
-      return []; // Retorna un array vacío en caso de error
+      return [];
     });
   }
 
@@ -187,6 +186,7 @@ export class ServicebdService {
       return null;
     });
   }
+
   selectResennaPorIdTitulo(idTitulo: string): Promise<Resenna[]> {
     const query = "SELECT * FROM Resenna WHERE idTitulo = ?";
     return this.database.executeSql(query, [idTitulo]).then(res => {
@@ -210,6 +210,30 @@ export class ServicebdService {
     }).catch(e => {
       console.error("Error al consultar reseñas por ID de título", e);
       return [];
+    });
+  }
+
+  selectTituloPorId(idTitulo: string): Promise<Titulo | null> {
+    const query = "SELECT * FROM Titulo WHERE idTitulo = ?";
+    return this.database.executeSql(query, [idTitulo]).then(res => {
+      if (res.rows.length > 0) {
+        const titulo: Titulo = {
+          idTitulo: res.rows.item(0).idTitulo,
+          idTipoTitulo: res.rows.item(0).idTipoTitulo,
+          nombre: res.rows.item(0).nombre,
+          sinopsis: res.rows.item(0).sinopsis,
+          duracion: res.rows.item(0).duracion,
+          URLImagen: res.rows.item(0).URLImagen,
+          URLTrailer: res.rows.item(0).URLTrailer,
+          fechaEstreno: res.rows.item(0).fechaEstreno
+        };
+        return titulo;
+      } else {
+        return null;
+      }
+    }).catch(e => {
+      console.error("Error al consultar el título por ID", e);
+      return null;
     });
   }
 
@@ -300,23 +324,66 @@ export class ServicebdService {
     });
   }
 
-  insertarNoticia(noticia: Noticia): Promise<any> {
-    const query = `
-      INSERT INTO Noticia (titulo, contenido, autor, fechaPublicacion, imagenUrl, categoria)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `;
+  eliminarTitulo(idTitulo: string): Promise<any> {
+    const query = "DELETE FROM Titulo WHERE idTitulo = ?";
+    return this.database.executeSql(query, [idTitulo])
+      .then(res => {
+        if (res.rowsAffected > 0) {
+          return { success: true };
+        } else {
+          return { success: false, message: "No se encontró el título con el ID especificado." };
+        }
+      })
+      .catch(e => {
+        console.error("Error al eliminar el título", e);
+        return { success: false, error: e };
+      });
+  }
 
-    return this.database.executeSql(query, [
-      noticia.titulo,
-      noticia.contenido,
-      noticia.autor,
-      noticia.fechaPublicacion,
-      noticia.imagenUrl,
-    ]).then(res => {
-      return { success: true, id: res.insertId };
-    }).catch(e => {
-      console.error("Error al insertar noticia", e);
-      return { success: false, error: e };
-    });
+  eliminarUsuario(idUsuario: string): Promise<any> {
+    const query = "DELETE FROM Usuario WHERE idUsuario = ?";
+    return this.database.executeSql(query, [idUsuario])
+      .then(res => {
+        if (res.rowsAffected > 0) {
+          return { success: true };
+        } else {
+          return { success: false, message: "No se encontró el usuario con el ID especificado." };
+        }
+      })
+      .catch(e => {
+        console.error("Error al eliminar el usuario", e);
+        return { success: false, error: e };
+      });
+  }
+
+  eliminarMarcador(idMarcador: string): Promise<any> {
+    const query = "DELETE FROM Marcador WHERE idMarcador = ?";
+    return this.database.executeSql(query, [idMarcador])
+      .then(res => {
+        if (res.rowsAffected > 0) {
+          return { success: true };
+        } else {
+          return { success: false, message: "No se encontró el marcador con el ID especificado." };
+        }
+      })
+      .catch(e => {
+        console.error("Error al eliminar el marcador", e);
+        return { success: false, error: e };
+      });
+  }
+  eliminarResenna(idResenna: string): Promise<any> {
+    const query = "DELETE FROM Resenna WHERE idResenna = ?";
+    return this.database.executeSql(query, [idResenna])
+      .then(res => {
+        if (res.rowsAffected > 0) {
+          return { success: true };
+        } else {
+          return { success: false, message: "No se encontró la reseña con el ID especificado." };
+        }
+      })
+      .catch(e => {
+        console.error("Error al eliminar la reseña", e);
+        return { success: false, error: e };
+      });
   }
 }

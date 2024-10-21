@@ -74,7 +74,11 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: 'home'
+  },  {
+    path: 'pelicula-detalle',
+    loadChildren: () => import('./peliculas/pelicula-detalle/pelicula-detalle.module').then( m => m.PeliculaDetallePageModule)
   }
+
 ];
 
 @NgModule({
