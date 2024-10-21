@@ -498,8 +498,8 @@ export const marcadores: Marcador[] = [
 ];
 
 export const insertRol: string = `INSERT INTO rol (idRol, nombre) VALUES
-('0', 'Usuario'),
-('1', 'Administrador');`
+('1', 'Usuario'),
+('2', 'Administrador');`
 
 export const insertTipoTitulo: string = `INSERT INTO tipoTitulo (idTipo, nombre) VALUES
 ('1', 'Películas'),
@@ -507,8 +507,9 @@ export const insertTipoTitulo: string = `INSERT INTO tipoTitulo (idTipo, nombre)
 ('3', 'Documentales');`
 
 export const insertUsuario: string = `INSERT INTO usuario (idUsuario, nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) VALUES
-('1', 'Juan', 'Pérez', 'juan.perez@example.com', 'password123', '1990-05-15', 'https://example.com/avatar-juan.jpg', '123456789', 4.5, 0),
-('2', 'Juan', 'Gómez', 'juan.gomez@example.com', 'securepassword456', '1985-11-23', 'https://example.com/avatar-ana.jpg', '987654321', 5.0, 1);`
+('1', 'Juan', 'Pérez', 'juan.perez@example.com', 'password123', '1990-05-15', 'https://example.com/avatar-juan.jpg', '123456789', 4.5, 1),
+('2', 'Juan', 'Gómez', 'juan.gomez@example.com', 'securepassword456', '1985-11-23', 'https://example.com/avatar-ana.jpg', '987654321', 5.0, 2),
+('3', 'Franco', 'Nunez', 'fr.nuneza@duocuc.cl', 'Admin@1234', '1998-04-23', 'https://www.meme-arsenal.com/memes/78dc258bdba4e61d685b2e98adb8b0c2.jpg', '11112222', 5.0, 2);`
 
 export const insertTitulo: string = `INSERT INTO titulo (idTitulo, idTipoTitulo, nombre, sinopsis, duracion, URLImagen, URLTrailer, fechaEstreno, puntuacion) VALUES
 ('1', '1', 'Inception', 'Un ladrón que roba secretos corporativos a través del uso de tecnología de sueños compartidos se le da la tarea inversa: plantar una idea en la mente de un CEO.', '148 min', 'https://placehold.co/100x170', 'https://example.com/inception-trailer.mp4', '2010-07-16', 4.8),

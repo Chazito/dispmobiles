@@ -9,6 +9,7 @@ import { Titulo } from './titulo';
 import { Resenna } from './resenna';
 import { Marcador } from './marcador';
 import { insertMarcador, insertResenna, insertRol, insertTipoTitulo, insertTitulo, insertUsuario } from 'src/assets/datos';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class ServicebdService {
   listaCriticados = new BehaviorSubject<Titulo[]>([]);
   listaMejor = new BehaviorSubject<Titulo[]>([]);
 
-  constructor(private sqlite: SQLite, private platform: Platform, private alertController: AlertController) {
+  constructor(private sqlite: SQLite, private platform: Platform, private alertController: AlertController, private storage : Storage) {
     this.crearBD();
   }
 
@@ -75,14 +76,17 @@ export class ServicebdService {
   }
 
   //Home
+  //Retorna los 10 titulos mas recientes
   fetchDestacados(): Observable<Titulo[]> {
     return this.listaDestacados.asObservable();
   }
 
+  //Retorna los 10 titulos con mayor numero de reseñas
   fetchCriticados(): Observable<Titulo[]> {
     return this.listaCriticados.asObservable();
   }
 
+  //Retorna los 10 titulos con mayor puntuacion
   fetchMejor(): Observable<Titulo[]> {
     return this.listaMejor.asObservable();
   }
@@ -104,26 +108,9 @@ export class ServicebdService {
         location: 'default'
       }).then(async (bd: SQLiteObject) => {
         this.database = bd;
-        await this.crearTablas()
-        await this.database.executeSql(insertRol)
-          .then(res => this.presentAlert('query', JSON.stringify(res)))
-          .catch(e => this.presentAlert('Error al ejecutar insertar Rol', JSON.stringify(e)))
-        await this.database.executeSql(insertTipoTitulo)
-          .then(res => this.presentAlert('query', JSON.stringify(res)))
-          .catch(e => this.presentAlert('Error al ejecutar insertar Tipo Título', JSON.stringify(e)));
-        await this.database.executeSql(insertUsuario)
-          .then(res => this.presentAlert('query', JSON.stringify(res)))
-          .catch(e => this.presentAlert('Error al ejecutar insertar Usuario', JSON.stringify(e)));
-        await this.database.executeSql(insertTitulo)
-          .then(res => this.presentAlert('query', JSON.stringify(res)))
-          .catch(e => this.presentAlert('Error al ejecutar insertar Título', JSON.stringify(e)));
-        await this.database.executeSql(insertResenna)
-          .then(res => this.presentAlert('query', JSON.stringify(res)))
-          .catch(e => this.presentAlert('Error al ejecutar insertar Reseña', JSON.stringify(e)));
-        await this.database.executeSql(insertMarcador)
-          .then(res => this.presentAlert('query', JSON.stringify(res)))
-          .catch(e => this.presentAlert('Error al ejecutar insertar Marcador', JSON.stringify(e)));
-
+        await this.crearTablas();
+        
+        await this.crearDatosIniciales();
         this.isDbReady.next(true);
       }).catch(e => {
         this.presentAlert('Creación de BD', 'Error: ' + JSON.stringify(e));
@@ -133,7 +120,36 @@ export class ServicebdService {
     });
   }
 
+  async crearDatosIniciales(){
+    let initialized = await this.storage.get('initialized');
+    if(initialized) return;
+    try{
+      //Limpiar
+      await this.database.executeSql("DELETE FROM marcador",[]);
+      await this.database.executeSql("DELETE FROM resenna",[]);
+      await this.database.executeSql("DELETE FROM titulo",[]);
+      await this.database.executeSql("DELETE FROM usuario",[]);
+      await this.database.executeSql("DELETE FROM tipotitulo",[]);
+      await this.database.executeSql("DELETE FROM rol",[]);
+
+      //Datos Iniciales
+      await this.database.executeSql(insertRol, []);
+      await this.database.executeSql(insertTipoTitulo,[]);
+      await this.database.executeSql(insertUsuario,[]);
+      await this.database.executeSql(insertTitulo,[]);
+      await this.database.executeSql(insertResenna,[]);
+      await this.database.executeSql(insertMarcador,[]);
+
+      await this.storage.set('initialized',true);
+    }catch(e){
+      console.log(JSON.stringify(e));
+      this.presentAlert('Creación de Tablas', 'Error: ' + JSON.stringify(e));
+    }
+  }
+
   async crearTablas() {
+    let initialized = await this.storage.get('initialized');
+    if(initialized) return;
     try {
       await this.database.executeSql(this.tablaRol, []);
       await this.database.executeSql(this.tablaTipoTitulo, []);
@@ -156,7 +172,6 @@ export class ServicebdService {
   selectDestacados() {
     //Por ahora son los recientes
     return this.database.executeSql("SELECT * FROM titulo ORDER BY fechaEstreno DESC", []).then(res => {
-      this.presentAlert('Select destacados', JSON.stringify(res))
       let items: Titulo[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
