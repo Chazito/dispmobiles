@@ -32,10 +32,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/perfil-preferencias/general/general.module').then(m => m.GeneralPageModule)
   },
   {
-    path: 'entry',
-    loadChildren: () => import('./pages/entry/entry.module').then(m => m.EntryPageModule)
-  },
-  {
     path: 'noticias',
     loadChildren: () => import('./pages/noticias/noticias.module').then(m => m.NoticiasPageModule)
   },
@@ -74,9 +70,10 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: 'home'
-  },  {
-    path: 'pelicula-detalle',
-    loadChildren: () => import('./peliculas/pelicula-detalle/pelicula-detalle.module').then( m => m.PeliculaDetallePageModule)
+  },
+  {
+    path: 'peliculas/:id',
+    loadChildren: () => import('./pages/peliculas/pelicula-detalle/pelicula-detalle.module').then(m => m.PeliculaDetallePageModule)
   }
 
 ];
