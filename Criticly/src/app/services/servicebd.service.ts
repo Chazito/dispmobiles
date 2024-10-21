@@ -43,7 +43,7 @@ export class ServicebdService {
   listaCriticados = new BehaviorSubject<Titulo[]>([]);
   listaMejor = new BehaviorSubject<Titulo[]>([]);
 
-  constructor(private sqlite: SQLite, private platform: Platform, private alertController: AlertController, private storage : Storage) {
+  constructor(private sqlite: SQLite, private platform: Platform, private alertController: AlertController, private storage: Storage) {
     this.crearBD();
   }
 
@@ -109,7 +109,7 @@ export class ServicebdService {
       }).then(async (bd: SQLiteObject) => {
         this.database = bd;
         await this.crearTablas();
-        
+
         await this.crearDatosIniciales();
         this.isDbReady.next(true);
       }).catch(e => {
@@ -120,28 +120,28 @@ export class ServicebdService {
     });
   }
 
-  async crearDatosIniciales(){
+  async crearDatosIniciales() {
     let initialized = await this.storage.get('initialized');
-    if(initialized) return;
-    try{
+    if (initialized) return;
+    try {
       //Limpiar
-      await this.database.executeSql("DELETE FROM marcador",[]);
-      await this.database.executeSql("DELETE FROM resenna",[]);
-      await this.database.executeSql("DELETE FROM titulo",[]);
-      await this.database.executeSql("DELETE FROM usuario",[]);
-      await this.database.executeSql("DELETE FROM tipotitulo",[]);
-      await this.database.executeSql("DELETE FROM rol",[]);
+      await this.database.executeSql("DELETE FROM marcador", []);
+      await this.database.executeSql("DELETE FROM resenna", []);
+      await this.database.executeSql("DELETE FROM titulo", []);
+      await this.database.executeSql("DELETE FROM usuario", []);
+      await this.database.executeSql("DELETE FROM tipotitulo", []);
+      await this.database.executeSql("DELETE FROM rol", []);
 
       //Datos Iniciales
       await this.database.executeSql(insertRol, []);
-      await this.database.executeSql(insertTipoTitulo,[]);
-      await this.database.executeSql(insertUsuario,[]);
-      await this.database.executeSql(insertTitulo,[]);
-      await this.database.executeSql(insertResenna,[]);
-      await this.database.executeSql(insertMarcador,[]);
+      await this.database.executeSql(insertTipoTitulo, []);
+      await this.database.executeSql(insertUsuario, []);
+      await this.database.executeSql(insertTitulo, []);
+      await this.database.executeSql(insertResenna, []);
+      await this.database.executeSql(insertMarcador, []);
 
-      await this.storage.set('initialized',true);
-    }catch(e){
+      await this.storage.set('initialized', true);
+    } catch (e) {
       console.log(JSON.stringify(e));
       this.presentAlert('Creación de Tablas', 'Error: ' + JSON.stringify(e));
     }
@@ -149,7 +149,7 @@ export class ServicebdService {
 
   async crearTablas() {
     let initialized = await this.storage.get('initialized');
-    if(initialized) return;
+    if (initialized) return;
     try {
       await this.database.executeSql(this.tablaRol, []);
       await this.database.executeSql(this.tablaTipoTitulo, []);
@@ -479,11 +479,11 @@ export class ServicebdService {
     const query = "SELECT * FROM rol WHERE idRol = ?";
     return this.database.executeSql(query, [idRol]).then(res => {
       if (res.rows.length > 0) {
-        const titulo: Rol = {
+        const rol: Rol = {
           idRol: res.rows.item(0).idRol,
           nombre: res.rows.item(0).nombre,
         };
-        return titulo;
+        return rol;
       } else {
         return null;
       }
@@ -492,7 +492,23 @@ export class ServicebdService {
       return null;
     });
   }
-
+  selectTipoPorId(idTipo: string) {
+    const query = "SELECT * FROM tipoTitulo WHERE idTitulo = ?";
+    return this.database.executeSql(query, [idTipo]).then(res => {
+      if (res.rows.length > 0) {
+        const tipo: TipoTitulo = {
+          idTipo: res.rows.item(0).idTipo,
+          nombre: res.rows.item(0).nombre,
+        };
+        return tipo;
+      } else {
+        return null;
+      }
+    }).catch(e => {
+      console.error("Error al consultar el tipo por ID", e);
+      return null;
+    });
+  }
   eliminarTitulo(idTitulo: string): Promise<any> {
     const query = "DELETE FROM Titulo WHERE idTitulo = ?";
     return this.database.executeSql(query, [idTitulo])
@@ -623,9 +639,9 @@ export class ServicebdService {
     })
   }
 
-  insertarTipoTitulo(tipo: TipoTitulo) {
+  insertarTipoTitulo(nombre: string) {
     let insertSql = "INSERT INTO TipoTitulo(nombre) values(?)";
-    this.database.executeSql(insertSql, [tipo.nombre]).then(res => {
+    this.database.executeSql(insertSql, [nombre]).then(res => {
       this.presentAlert("Nuevo Tipo", "Nuevo tipo ingresado correctamente.");
 
       this.selectTipoTitulo();

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ServicebdService } from 'src/app/services/servicebd.service';
+import { TipoTitulo } from 'src/app/services/tipo-titulo';
+import { tiposTitulo } from 'src/assets/datos';
 
 @Component({
   selector: 'app-admin-lista-tipos',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminListaTiposPage implements OnInit {
 
-  constructor() { }
+  tipos: TipoTitulo[] = [...tiposTitulo]
+
+  constructor(private bd: ServicebdService) { }
 
   ngOnInit() {
+    this.bd.dbState().subscribe(res => {
+      this.bd.selectTipoTitulo();
+      if (res) {
+        //subscribirme al observable del select
+        this.bd.fetchRol().subscribe(data => {
+          this.tipos = data;
+        })
+      }
+    });
   }
 
+  eliminar(x: any) {
+    this.bd.eliminarRol(x.idRol);
+  }
 }

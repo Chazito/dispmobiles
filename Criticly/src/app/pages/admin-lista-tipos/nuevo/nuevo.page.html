@@ -1,13 +1,30 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-title>nuevo</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tipos"></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">nuevo</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div id="container" style="height: auto;">
+    <div>
+      <form>
+        <ion-item class="input-container">
+          <ion-label position="stacked">Nombre del Tipo de título</ion-label>
+          <ion-input placeholder="Nombre" [(ngModel)]="tipo.nombre" name="nombre" class="rounded-input">
+            <ion-icon name="people-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
+      </form>
+
+    </div>
+    <ion-footer class="ion-no-border">
+      <ion-toolbar class="ion-no-border">
+        <ion-button (click)="agregarTipo()" expand="full" id="guardar" color="secondary" shape="round">
+          <strong>Guardar</strong>
+        </ion-button>
+      </ion-toolbar>
+    </ion-footer>
+  </div>
 </ion-content>

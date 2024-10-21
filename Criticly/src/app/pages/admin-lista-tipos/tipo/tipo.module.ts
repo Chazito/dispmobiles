@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
 import { TipoPageRoutingModule } from './tipo-routing.module';
-
 import { TipoPage } from './tipo.page';
 
 @NgModule({
@@ -17,4 +14,4 @@ import { TipoPage } from './tipo.page';
   ],
   declarations: [TipoPage]
 })
-export class TipoPageModule {}
+export class TipoPageModule { }

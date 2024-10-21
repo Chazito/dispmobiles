@@ -13,9 +13,7 @@ export class AdminListaRolesPage implements OnInit {
 
   roles: Rol[] = []
 
-  constructor(private bd: ServicebdService, private router: Router) {
-
-  }
+  constructor(private bd: ServicebdService, private router: Router) { }
 
   ngOnInit() {
     this.bd.dbState().subscribe(res => {
@@ -29,21 +27,7 @@ export class AdminListaRolesPage implements OnInit {
     });
   }
 
-  modificar(x: any) {
-    let navigationExtras: NavigationExtras = {
-      state: {
-        rol: x
-      }
-    }
-    this.router.navigate(['/admin-editar-rol'], navigationExtras);
-  }
-
   eliminar(x: any) {
     this.bd.eliminarRol(x.idRol);
   }
-
-  irAgregar() {
-    this.router.navigate(['/admin-editar-rol']);
-  }
-
 }
