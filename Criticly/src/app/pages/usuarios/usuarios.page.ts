@@ -7,7 +7,7 @@ import { Usuario } from 'src/app/services/usuario';
   styleUrls: ['./usuarios.page.scss'],
 })
 export class UsuariosPage implements OnInit {
-usuario: Usuario = {}
+  usuarios: Usuario[] = []
   constructor() { }
 
   ngOnInit() {

@@ -1,41 +1,34 @@
-<ion-content [fullscreen]="true">
-  <div >
-    <ion-header collapse="condense">
-      <ion-toolbar>
-        <ion-title size="large">Administrar Roles</ion-title>
-      </ion-toolbar>
-    </ion-header>
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
 
-    <ion-list>
-      <ion-title size="large">Administrar Roles</ion-title>
-
-      <ion-item-sliding *ngFor="let x of arregloRoles">
-        <ion-item>
-          <div class="id-rol">{{ x.idRol }}</div>
-          <ion-label class="role-name">{{ x.nombre }}</ion-label>
-        </ion-item>
-
-        <ion-item-options side="end">
-          <ion-item-option (click)="modificar(x)">
-            <ion-icon slot="icon-only" name="pencil"></ion-icon>
-          </ion-item-option>
-          <ion-item-option color="danger" (click)="eliminar(x)">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-      <ion-fab-button (click)="irAgregar()">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+<ion-content [fullscreen]="true" style="height: 100vh;">
+  <div id="container">
+    <div class="h5Container">
+      <h5><strong>Roles</strong></h5>
+    </div>
+    <div id="usersContainer" class="ion-text-start">
+      <ion-button shape="round" [routerLink]="['/nuevo']">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+      <ion-button *ngFor="let rol of roles" expand="false" fill="clear" class="config-button">
+        <div id="userContainer">
+          <p id="nombreRol">{{ rol.nombre||"Nombre de usuario"}}</p>
+        </div>
+        <div class="button-wrapper">
+          <ion-button color="primary" fill="solid" class="small-button" [routerLink]="[rol.idRol]">
+            <ion-icon name="create-outline" size="large" color="light"></ion-icon>
+          </ion-button>
+          <ion-button color="danger" fill="solid" class="small-button">
+            <ion-icon name="trash-outline" size="large" color="light"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-button>
+    </div>
   </div>
-
 </ion-content>

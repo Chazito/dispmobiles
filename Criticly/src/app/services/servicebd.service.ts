@@ -247,21 +247,21 @@ export class ServicebdService {
     })
   }
 
-  modificarRol(x : Rol){
-    return this.database.executeSql("UPDATE rol SET nombre = ? WHERE idRol = ?",[x.nombre, x.idRol]).then(res =>{
-      this.presentAlert("Rol","Rol modificado correctamente");
+  modificarRol(x: Rol) {
+    return this.database.executeSql("UPDATE rol SET nombre = ? WHERE idRol = ?", [x.nombre, x.idRol]).then(res => {
+      this.presentAlert("Rol", "Rol modificado correctamente");
       this.selectRol();
-    }).catch(e=>{
-      this.presentAlert("Rol","Error al modificar: " + JSON.stringify(e));
+    }).catch(e => {
+      this.presentAlert("Rol", "Error al modificar: " + JSON.stringify(e));
     })
   }
 
-  insertarRol(x : Rol){
-    return this.database.executeSql("INSERT INTO rol(nombre) values(?)",[x.nombre]).then(res =>{
-      this.presentAlert("Rol","Rol agregado correctamente");
+  insertarRol(nombre: string) {
+    return this.database.executeSql("INSERT INTO rol(nombre) values(?)", [nombre]).then(res => {
+      this.presentAlert("Rol", "Rol agregado correctamente");
       this.selectRol();
-    }).catch(e=>{
-      this.presentAlert("Rol","Error al agregar: " + JSON.stringify(e));
+    }).catch(e => {
+      this.presentAlert("Rol", "Error al agregar: " + JSON.stringify(e));
     })
   }
 
@@ -456,6 +456,24 @@ export class ServicebdService {
       }
     }).catch(e => {
       console.error("Error al consultar el título por ID", e);
+      return null;
+    });
+  }
+
+  selectRolPorId(idRol: string) {
+    const query = "SELECT * FROM rol WHERE idRol = ?";
+    return this.database.executeSql(query, [idRol]).then(res => {
+      if (res.rows.length > 0) {
+        const titulo: Rol = {
+          idRol: res.rows.item(0).idRol,
+          nombre: res.rows.item(0).nombre,
+        };
+        return titulo;
+      } else {
+        return null;
+      }
+    }).catch(e => {
+      console.error("Error al consultar el rol por ID", e);
       return null;
     });
   }
