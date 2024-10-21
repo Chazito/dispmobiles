@@ -18,7 +18,7 @@
 
     </div>
     <div id="usersContainer" class="ion-text-start">
-      <ion-button expand="false" fill="clear" class="config-button">
+      <ion-button *ngFor="let usuario of usuarios" expand="false" fill="clear" class="config-button">
         <div id="userContainer">
           <p id="nombreUsuario">{{ usuario.nombre + " " + usuario.apellido||"Nombre de usuario"}}</p>
           <p class="email">{{ usuario.correo + "" }}</p>

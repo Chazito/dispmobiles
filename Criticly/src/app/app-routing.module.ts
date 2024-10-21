@@ -75,36 +75,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/recuperar/recuperar.module').then(m => m.RecuperarPageModule)
   },
   {
-    path: 'admin-lista-roles',
+    path: 'roles',
     loadChildren: () => import('./pages/admin-lista-roles/admin-lista-roles.module').then(m => m.AdminListaRolesPageModule)
   },
   {
-    path: 'admin-lista-tipos',
+    path: 'tipos',
     loadChildren: () => import('./pages/admin-lista-tipos/admin-lista-tipos.module').then(m => m.AdminListaTiposPageModule)
   },
   {
-    path: 'admin-lista-usuarios',
-    loadChildren: () => import('./pages/admin-lista-usuarios/admin-lista-usuarios.module').then(m => m.AdminListaUsuariosPageModule)
-  },
-  {
-    path: 'admin-lista-titulos',
-    loadChildren: () => import('./pages/admin-lista-titulos/admin-lista-titulos.module').then(m => m.AdminListaTitulosPageModule)
-  },
-  {
-    path: 'admin-lista-resennas',
+    path: 'resennas',
     loadChildren: () => import('./pages/admin-lista-resennas/admin-lista-resennas.module').then(m => m.AdminListaResennasPageModule)
-  },
-  {
-    path: 'admin-editar-titulo',
-    loadChildren: () => import('./pages/admin-editar-titulo/admin-editar-titulo.module').then(m => m.AdminEditarTituloPageModule)
-  },
-  {
-    path: 'admin-editar-rol',
-    loadChildren: () => import('./pages/admin-editar-rol/admin-editar-rol.module').then(m => m.AdminEditarRolPageModule)
-  },
-  {
-    path: 'admin-editar-resenna',
-    loadChildren: () => import('./pages/admin-editar-resenna/admin-editar-resenna.module').then(m => m.AdminEditarResennaPageModule)
   },
   {
     path: '**',

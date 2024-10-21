@@ -7,11 +7,16 @@ const routes: Routes = [
   {
     path: '',
     component: AdminListaResennasPage
+  },
+  {
+    path: ':id',
+    loadChildren: () => import('./resenna/resenna.module').then(m => m.ResennaPageModule)
   }
+
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminListaResennasPageRoutingModule {}
+export class AdminListaResennasPageRoutingModule { }

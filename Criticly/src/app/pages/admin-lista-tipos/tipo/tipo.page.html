@@ -1,0 +1,37 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tipos"></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <div id="container" style="height: auto;">
+    <div>
+      <form>
+        <ion-item class="input-container">
+          <ion-label position="stacked">ID Tipo</ion-label>
+          <ion-input placeholder="ID Tipo" [value]="tipo.idTipo" disabled class="rounded-input"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-container">
+          <ion-label position="stacked">Nombre del Tipo</ion-label>
+          <ion-input placeholder="Nombre del Tipo" [(ngModel)]="tipo.nombre" name="nombre" class="rounded-input">
+            <ion-icon name="people-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
+      </form>
+
+    </div>
+    <ion-footer class="ion-no-border">
+      <ion-toolbar class="ion-no-border">
+        <ion-button (click)="modificarTipo()" expand="full" id="guardar" color="secondary" shape="round">
+          <strong>Guardar</strong>
+        </ion-button>
+      </ion-toolbar>
+    </ion-footer>
+  </div>
+</ion-content>

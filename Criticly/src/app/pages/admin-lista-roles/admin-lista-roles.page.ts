@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { Rol } from 'src/app/services/rol';
 import { ServicebdService } from 'src/app/services/servicebd.service';
+import { roles } from 'src/assets/datos';
 
 @Component({
   selector: 'app-admin-lista-roles',
@@ -9,44 +11,23 @@ import { ServicebdService } from 'src/app/services/servicebd.service';
 })
 export class AdminListaRolesPage implements OnInit {
 
-  arregloRoles : any = [
-    {
-      idRol : "",
-      nombre : ""
-    }
-  ]
+  roles: Rol[] = []
 
-  constructor(private bd : ServicebdService, private router : Router) { 
-
-  }
+  constructor(private bd: ServicebdService, private router: Router) { }
 
   ngOnInit() {
-    this.bd.dbState().subscribe(res=>{
+    this.bd.dbState().subscribe(res => {
       this.bd.selectRol();
-      if(res){
+      if (res) {
         //subscribirme al observable del select
-        this.bd.fetchRol().subscribe(data=>{
-          this.arregloRoles = data;
+        this.bd.fetchRol().subscribe(data => {
+          this.roles = data;
         })
       }
     });
   }
 
-  modificar(x:any){
-    let navigationExtras : NavigationExtras = {
-      state :{
-        rol : x
-      }
-    }
-    this.router.navigate(['/admin-editar-rol'],navigationExtras);
-  }
-
-  eliminar(x:any){
+  eliminar(x: any) {
     this.bd.eliminarRol(x.idRol);
   }
-
-  irAgregar(){
-    this.router.navigate(['/admin-editar-rol']);
-  }
-
 }
