@@ -20,7 +20,7 @@ export class ServicebdService {
   tablaTipoTitulo: string = "CREATE TABLE IF NOT EXISTS TipoTitulo (idTipo INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL);";
 
   tablaUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, apellido TEXT NOT NULL, correo TEXT NOT NULL UNIQUE, clave TEXT NOT NULL, fechaNacimiento DATE, avatar TEXT, telefono TEXT, reputacion REAL, id_rol INTEGER NOT NULL, FOREIGN KEY (id_rol) REFERENCES Rol(idRol));";
-  tablaTitulo: string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT,puntuacion RE, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
+  tablaTitulo: string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT,puntuacion REAL, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
 
   tablaResenna: string = "CREATE TABLE IF NOT EXISTS Resenna (idResenna INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL,titulo TEXT, comentario TEXT, fechaPublicacion DATE, calificacion REAL, esVisible INTEGER, fechaEliminada DATE, motivoEliminacion TEXT, URLImagen TEXT, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (id_titulo) REFERENCES Titulo(idTitulo));";
   tablaMarcador: string = "CREATE TABLE IF NOT EXISTS Marcador (idMarcador INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, fechaMarcado DATE, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
@@ -348,7 +348,7 @@ export class ServicebdService {
           reputacion: res.rows.item(0).reputacion,
           id_rol: res.rows.item(0).id_rol
         };
-          return usuario;
+        return usuario;
       } else {
         return null;
       }
@@ -545,4 +545,104 @@ export class ServicebdService {
       this.presentAlert("Nuevo Tipo", "Error: " + JSON.stringify(err));
     })
   }
+
+  modificarUsuario(usuario: Usuario): Promise<boolean> {
+    const query = `
+      UPDATE Usuario
+      SET nombre = ?,
+          apellido = ?,
+          correo = ?,
+          clave = ?,
+          fechaNacimiento = ?,
+          avatar = ?,
+          telefono = ?,
+          reputacion = ?,
+          id_rol = ?
+      WHERE idUsuario = ?
+    `;
+
+    const params = [
+      usuario.nombre,
+      usuario.apellido,
+      usuario.correo,
+      usuario.clave,
+      usuario.fechaNacimiento,
+      usuario.avatar,
+      usuario.telefono,
+      usuario.reputacion,
+      usuario.id_rol,
+      usuario.idUsuario
+    ];
+
+    return this.database.executeSql(query, params)
+      .then(res => {
+        if (res.rowsAffected > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .catch(error => {
+        console.error("Error al modificar el usuario", error);
+        return false;
+      });
+  }
+
+  modificarTituloPorId(idTitulo: string, nuevoTitulo: Titulo): Promise<boolean> {
+    const query = `
+      UPDATE Titulo
+      SET idTipoTitulo = ?, nombre = ?, sinopsis = ?, puntuacion = ?, duracion = ?,
+          URLImagen = ?, URLTrailer = ?, fechaEstreno = ?
+      WHERE idTitulo = ?;
+    `;
+    const params = [
+      nuevoTitulo.idTipoTitulo,
+      nuevoTitulo.nombre,
+      nuevoTitulo.sinopsis,
+      nuevoTitulo.puntuacion,
+      nuevoTitulo.duracion,
+      nuevoTitulo.URLImagen,
+      nuevoTitulo.URLTrailer,
+      nuevoTitulo.fechaEstreno,
+      idTitulo
+    ];
+
+    return this.database.executeSql(query, params).then(res => {
+      return res.rowsAffected > 0;
+    }).catch(error => {
+      console.error("Error al modificar el título por id", error);
+      return false;
+    });
+  }
+
+  modificarResennaPorId(idResenna: string, nuevaResenna: Resenna): Promise<boolean> {
+    const query = `
+    UPDATE Resenna
+    SET idUsuario = ?, idTitulo = ?, comentario = ?, fechaPublicacion = ?,
+        calificacion = ?, esVisible = ?, fechaEliminada = ?,
+        motivoEliminacion = ?, URLImagen = ?
+    WHERE idResenna = ?;
+  `;
+    const params = [
+      nuevaResenna.idUsuario,
+      nuevaResenna.idTitulo,
+      nuevaResenna.comentario,
+      nuevaResenna.fechaPublicacion,
+      nuevaResenna.calificacion,
+      nuevaResenna.esVisible,
+      nuevaResenna.fechaEliminada,
+      nuevaResenna.motivoEliminacion,
+      nuevaResenna.URLImagen,
+      idResenna
+    ];
+
+    return this.database.executeSql(query, params).then(res => {
+      return res.rowsAffected > 0;
+    }).catch(error => {
+      console.error("Error al modificar la reseña por id", error);
+      return false;
+    });
+  }
+
+
 }
