@@ -28,7 +28,7 @@ export class AppComponent {
     this.auth.isAuthObservable.subscribe((isAuth) => {
       this.isAuth = isAuth;
       this.tienePrivilegios = auth.isAdmin();
-      const usuario = auth.usuarioValue
+      const usuario = auth.usuarioValue;
       if (isAuth) {
         this.nombreApellido = `${usuario?.nombre} ${usuario?.apellido}`
         this.correo = usuario?.correo ? usuario.correo : null
