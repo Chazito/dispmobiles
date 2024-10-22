@@ -14,23 +14,25 @@
       <form>
         <ion-item class="input-container">
           <ion-label position="stacked">Nombre</ion-label>
-          <ion-input placeholder="Nombre" class="rounded-input" [(ngModel)]="user.nombre">
+          <ion-input placeholder="Nombre" class="rounded-input" name="nombre" [(ngModel)]="user.nombre">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
 
         <ion-item class="input-container">
           <ion-label position="stacked">Apellido</ion-label>
-          <ion-input placeholder="Apellido" class="rounded-input" [(ngModel)]="user.apellido">
+          <ion-input placeholder="Apellido" class="rounded-input" name="apellido" [(ngModel)]="user.apellido">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
 
         <ion-item class="input-container">
           <ion-label position="stacked">Correo electrónico</ion-label>
-          <ion-input readonly type="email" placeholder="correo@ejemplo.com" class="rounded-input" value={{user.correo}}>
+          <ion-input readonly type="email" placeholder="correo@ejemplo.com" name="email" class="rounded-input"
+            [(ngModel)]="user.correo">
             <ion-icon name="mail-outline" slot="start"></ion-icon>
           </ion-input>
+
         </ion-item>
 
         <strong>Cambiar contraseña</strong>
