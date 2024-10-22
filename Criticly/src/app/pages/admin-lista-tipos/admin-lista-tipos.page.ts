@@ -19,7 +19,7 @@ export class AdminListaTiposPage implements OnInit {
       this.bd.selectTipoTitulo();
       if (res) {
         //subscribirme al observable del select
-        this.bd.fetchRol().subscribe(data => {
+        this.bd.fetchTipoTitulo().subscribe(data => {
           this.tipos = data;
         })
       }

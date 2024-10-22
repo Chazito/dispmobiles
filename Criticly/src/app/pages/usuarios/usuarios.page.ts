@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Usuario } from 'src/app/services/usuario';
 
 @Component({
@@ -8,9 +9,21 @@ import { Usuario } from 'src/app/services/usuario';
 })
 export class UsuariosPage implements OnInit {
   usuarios: Usuario[] = []
-  constructor() { }
+  constructor(private bd: ServicebdService) { }
 
   ngOnInit() {
+    this.bd.dbState().subscribe(res => {
+      this.bd.selectUsuario();
+      if (res) {
+        //subscribirme al observable del select
+        this.bd.fetchUsuario().subscribe(data => {
+          this.usuarios = data;
+        })
+      }
+    });
   }
 
+  eliminar(idUsuario: string) {
+    this.bd.eliminarUsuario(idUsuario);
+  }
 }

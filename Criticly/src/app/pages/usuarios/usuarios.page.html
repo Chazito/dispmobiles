@@ -22,7 +22,7 @@
           <ion-button color="primary" fill="solid" class="small-button" [routerLink]="[ usuario.idUsuario]">
             <ion-icon name="create-outline" size="large" color="light"></ion-icon>
           </ion-button>
-          <ion-button color="danger" fill="solid" class="small-button">
+          <ion-button (click)="eliminar(usuario.idUsuario!)" color="danger" fill="solid" class="small-button">
             <ion-icon name="trash-outline" size="large" color="light"></ion-icon>
           </ion-button>
         </div>

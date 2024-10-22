@@ -372,6 +372,7 @@ export class ServicebdService {
             idResenna: res.rows.item(i).idResenna,
             idUsuario: res.rows.item(i).idUsuario,
             idTitulo: res.rows.item(i).idTitulo,
+            titulo: res.rows.item(i).titulo,
             comentario: res.rows.item(i).comentario,
             fechaPublicacion: res.rows.item(i).fechaPublicacion,
             calificacion: res.rows.item(i).calificacion,
@@ -381,8 +382,7 @@ export class ServicebdService {
           });
         }
       }
-
-      this.listaUsuario.next(items as any);
+      this.listaResenna.next(items as any);
     });
   }
 

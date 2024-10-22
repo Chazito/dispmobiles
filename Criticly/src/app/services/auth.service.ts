@@ -19,7 +19,7 @@ export class AuthService {
   async init() {
     await this.storage.create();
     const storedAuth = await this.storage.get('isAuth');
-  
+
     this.sqlService.dbState().subscribe(async res => {
       if (res) {
         if (storedAuth === true) {
@@ -61,8 +61,8 @@ export class AuthService {
     this.isAuthSubject.next(false);
   }
 
-  isAdmin(){
-    return this.usuario?.id_rol == 2;
+  isAdmin() {
+    return this.usuario?.id_rol === 2;
   }
 
   async isAuthenticated(): Promise<boolean> {

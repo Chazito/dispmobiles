@@ -51,6 +51,6 @@ export class PeliculaDetallePage implements OnInit {
 
 
   get ratingPorcentaje(): number {
-    return (this.pelicula!.puntuacion! / 5) * 100 || 0;
+    return (this.pelicula!.puntuacion! / 5) * 100;
   }
 }
