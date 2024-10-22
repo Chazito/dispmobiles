@@ -557,6 +557,7 @@ export class ServicebdService {
     const query = "DELETE FROM Titulo WHERE idTitulo = ?";
     return this.database.executeSql(query, [idTitulo])
       .then(res => {
+        this.selectTitulo()
         if (res.rowsAffected > 0) {
           return { success: true };
         } else {
@@ -573,6 +574,7 @@ export class ServicebdService {
     const query = "DELETE FROM Usuario WHERE idUsuario = ?";
     return this.database.executeSql(query, [idUsuario])
       .then(res => {
+        this.selectUsuario()
         if (res.rowsAffected > 0) {
           return { success: true };
         } else {
@@ -589,6 +591,7 @@ export class ServicebdService {
     const query = "DELETE FROM TipoTiutulo WHERE idTipo = ?";
     return this.database.executeSql(query, [idTipo])
       .then(res => {
+        this.selectTipoTitulo()
         if (res.rowsAffected > 0) {
           return { success: true };
         } else {
@@ -605,6 +608,7 @@ export class ServicebdService {
     const query = "DELETE FROM Marcador WHERE idMarcador = ?";
     return this.database.executeSql(query, [idMarcador])
       .then(res => {
+        this.selectMarcado()
         if (res.rowsAffected > 0) {
           return { success: true };
         } else {
@@ -620,6 +624,7 @@ export class ServicebdService {
     const query = "DELETE FROM Resenna WHERE idResenna = ?";
     return this.database.executeSql(query, [idResenna])
       .then(res => {
+        this.selectResenna()
         if (res.rowsAffected > 0) {
           return { success: true };
         } else {

@@ -21,7 +21,7 @@ export class AppComponent {
       if (e && e.url) {
         this.mostrarToolbar = !(e.url.includes('/buscar') || e.url.includes('/perfil-inicio') || e.url.includes('/login')
           || e.url.includes('/perfil-preferencias') || e.url.includes('/peliculas/') || e.url.includes('/usuarios') || e.url.includes('/nuevo-editar-titulo')
-          || e.url.includes('/recuperar') || e.url.includes('/registro') || e.url.includes('/recuperar') || e.url.includes('/escribir-resenia'))
+          || e.url.includes('/recuperar') || e.url.includes('/registro') || e.url.includes('/recuperar') || e.url.includes('/escribir-resenia') || e.url.includes('/nuevo') || e.url.includes('/editar'))
       }
     })
     this.auth.isAuthObservable.subscribe((isAuth) => {
