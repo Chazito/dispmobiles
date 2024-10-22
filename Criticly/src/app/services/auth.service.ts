@@ -61,6 +61,10 @@ export class AuthService {
     this.isAuthSubject.next(false);
   }
 
+  isAdmin(){
+    return this.usuario?.id_rol == 2;
+  }
+
   async isAuthenticated(): Promise<boolean> {
     const isAuth = await this.storage.get('isAuth');
     return isAuth === true;
