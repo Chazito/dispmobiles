@@ -24,7 +24,6 @@ export class PerfilInicioPage implements OnInit {
 
   ngOnInit() {
     this.user = this.auth.usuarioValue!;
-    this.presentAlert("User Data", this.user.nombre + " : " + this.user.apellido);
   }
 
   async presentAlert(titulo: string, msj: string) {
