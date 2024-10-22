@@ -13,8 +13,9 @@ import { peliculas, resenias } from 'src/assets/datos';
 })
 export class PeliculaDetallePage implements OnInit {
 
-  pelicula?: Titulo = peliculas[0]
+  pelicula: Titulo = peliculas[0]
   resenias: Resenna[] = [];
+  usuariosResena : any = [];
   isAuth: boolean = false;
   tienePrivilegios: boolean = false
   constructor(
@@ -27,12 +28,15 @@ export class PeliculaDetallePage implements OnInit {
       const id = params.get('id');
       if (id) {
         this.sqlService.selectTituloPorId(id).then((pelicula: any) => {
-          if (pelicula) this.pelicula = pelicula;
+          if (pelicula) {
+            this.pelicula = pelicula;
+            this.cargarResenias()
+          }
         }).catch(() => {
           return peliculas.find(pelicula => pelicula.idTitulo === id);
         });
       }
-      this.cargarResenias()
+      
     });
     this.auth.isAuthObservable.subscribe((isAuth) => {
       this.isAuth = isAuth;
@@ -48,7 +52,6 @@ export class PeliculaDetallePage implements OnInit {
       this.resenias = resenias.filter(resenia => resenia.idTitulo === this.pelicula?.idTitulo)
     });
   }
-
 
   get ratingPorcentaje(): number {
     return (this.pelicula!.puntuacion! / 5) * 100 || 0;
