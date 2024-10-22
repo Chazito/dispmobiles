@@ -13,7 +13,7 @@ export class NoticiasPage implements OnInit {
 
   ngOnInit() {
     this.http.get("https://newsapi.org/v2/everything?q=película&language=es&apiKey=" + API_KEY).subscribe((res: any) => {
-      this.noticias = res.articles.filter((f: any) => f.author !== null).slice(0, 10)
+      this.noticias = res.articles.filter((f: any) => f.author !== null).slice(0, 20)
     })
   }
 
