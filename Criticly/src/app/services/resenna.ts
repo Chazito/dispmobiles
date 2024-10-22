@@ -10,4 +10,5 @@ export interface Resenna {
   fechaEliminada?: Date;
   motivoEliminacion?: string;
   URLImagen?: string;
+  nombreUsuario?:string;
 }

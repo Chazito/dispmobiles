@@ -444,7 +444,7 @@ export class ServicebdService {
   }
 
   selectResennaPorIdTitulo(idTitulo: string): Promise<Resenna[]> {
-    const query = "SELECT * FROM Resenna WHERE idTitulo = ?";
+    const query = "SELECT resenna.*, usuario.nombre || ' ' || usuario.apellido as nombreUsuario FROM Resenna JOIN usuario on resenna.idUsuario = usuario.idUsuario WHERE idTitulo = ?";
     return this.database.executeSql(query, [idTitulo]).then(res => {
       let items: Resenna[] = [];
       if (res.rows.length > 0) {
@@ -458,7 +458,8 @@ export class ServicebdService {
             calificacion: res.rows.item(i).calificacion,
             esVisible: res.rows.item(i).esVisible,
             fechaEliminada: res.rows.item(i).fechaEliminada,
-            motivoEliminacion: res.rows.item(i).motivoEliminacion
+            motivoEliminacion: res.rows.item(i).motivoEliminacion,
+            nombreUsuario: res.rows.item(i).nombreUsuario
           });
         }
       }
@@ -675,7 +676,7 @@ export class ServicebdService {
 
   insertarResenna(resenna: Resenna) {
     let insertSql = "INSERT INTO resenna(idUsuario , idTitulo ,titulo, comentario , fechaPublicacion , calificacion , esVisible , fechaEliminada , motivoEliminacion) values(?,?,?,?,?,?,?,?,?)";
-    return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.idTitulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, resenna.esVisible, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
+    return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.idTitulo, resenna.titulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, resenna.esVisible, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
       this.presentAlert("Nueva Reseña", "Reseña ingresada correctamente.");
 
     }).catch(err => {
