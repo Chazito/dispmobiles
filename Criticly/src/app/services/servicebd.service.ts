@@ -676,7 +676,7 @@ export class ServicebdService {
 
   insertarResenna(resenna: Resenna) {
     let insertSql = "INSERT INTO resenna(idUsuario , idTitulo ,titulo, comentario , fechaPublicacion , calificacion , esVisible , fechaEliminada , motivoEliminacion) values(?,?,?,?,?,?,?,?,?)";
-    return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.idTitulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, resenna.esVisible, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
+    return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.idTitulo, resenna.titulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, resenna.esVisible, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
       this.presentAlert("Nueva Reseña", "Reseña ingresada correctamente.");
 
     }).catch(err => {

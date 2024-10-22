@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Resenna } from 'src/app/services/resenna';
 import { ServicebdService } from 'src/app/services/servicebd.service';
@@ -15,7 +16,7 @@ export class EscribirReseniaPage implements OnInit {
   reseniaForm!: FormGroup;
   URLImagen: string | undefined;
   idTitulo?: string;
-  constructor(private fb: FormBuilder, private sqlService: ServicebdService, private route: ActivatedRoute, private auth: AuthService) { }
+  constructor(private fb: FormBuilder, private sqlService: ServicebdService, private route: ActivatedRoute, private auth: AuthService, private navController : NavController) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -55,7 +56,8 @@ export class EscribirReseniaPage implements OnInit {
   publicarResenia() {
     if (this.reseniaForm.valid) {
       const datosForm: Resenna = {
-        idTitulo: this.idTitulo, idUsuario: this.auth.usuarioValue?.idUsuario,
+        idTitulo: this.idTitulo, 
+        idUsuario: this.auth.usuarioValue?.idUsuario,
         titulo: this.reseniaForm.get('titulo')?.value,
         comentario: this.reseniaForm.get('resenia')?.value,
         calificacion: this.reseniaForm.get('rating')?.value,
@@ -63,7 +65,8 @@ export class EscribirReseniaPage implements OnInit {
         fechaPublicacion: new Date(),
         esVisible: 1
       };
-      this.sqlService.insertarResenna(datosForm)
+      this.sqlService.insertarResenna(datosForm);
+      this.navController.back();
     }
   }
 }
