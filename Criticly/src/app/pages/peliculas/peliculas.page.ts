@@ -21,7 +21,7 @@ export class PeliculasPage implements OnInit {
 
   ngOnInit() {
     this.auth.isAuthObservable.subscribe(() => {
-      if (this.auth.usuarioValue?.id_rol === 1) { this.tienePrivilegios = true } else { this.tienePrivilegios = false }
+      if (this.auth.usuarioValue?.id_rol === 2) { this.tienePrivilegios = true } else { this.tienePrivilegios = false }
     })
     this.sqlService.selectDestacados()
     this.sqlService.fetchDestacados().subscribe(res => {
