@@ -14,21 +14,21 @@
       <form>
         <ion-item class="input-container">
           <ion-label position="stacked">Nombre</ion-label>
-          <ion-input placeholder="Nombre" class="rounded-input">
+          <ion-input placeholder="Nombre" class="rounded-input" [(ngModel)]="user.nombre">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
 
         <ion-item class="input-container">
           <ion-label position="stacked">Apellido</ion-label>
-          <ion-input placeholder="Apellido" class="rounded-input">
+          <ion-input placeholder="Apellido" class="rounded-input" [(ngModel)]="user.apellido">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
 
         <ion-item class="input-container">
           <ion-label position="stacked">Correo electrónico</ion-label>
-          <ion-input type="email" placeholder="correo@ejemplo.com" class="rounded-input">
+          <ion-input readonly type="email" placeholder="correo@ejemplo.com" class="rounded-input" [(ngModel)]="user.correo">
             <ion-icon name="mail-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
@@ -49,7 +49,7 @@
           </ion-input>
         </ion-item>
         <div style="display: flex; justify-content: end;">
-          <ion-button expand="default" id="guardarContrasena" color="secondary" shape="round">
+          <ion-button expand="default" id="guardarContrasena" color="secondary" shape="round" (click)="cambiarPass()">
             <ion-icon name="save-outline" slot="start"></ion-icon>
             <strong>Guardar contraseña</strong>
           </ion-button>
@@ -58,7 +58,7 @@
     </div>
     <ion-footer class="ion-no-border">
       <ion-toolbar class="ion-no-border">
-        <ion-button expand="full" id="guardar" color="primary" shape="round">
+        <ion-button expand="full" id="guardar" color="primary" shape="round" (click)="guardarCambios()">
           <strong>Guardar</strong>
         </ion-button>
       </ion-toolbar>
