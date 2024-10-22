@@ -470,7 +470,7 @@ export class ServicebdService {
     });
   }
 
-  selectResennaPorId(idResenna: string): Promise<Resenna[]> {
+  selectResennaPorId(idResenna: string): Promise<Resenna | null> {
     const query = "SELECT * FROM Resenna WHERE idResenna = ?";
     return this.database.executeSql(query, [idResenna]).then(res => {
       let items: Resenna[] = [];
@@ -480,6 +480,7 @@ export class ServicebdService {
             idResenna: res.rows.item(i).idResenna,
             idUsuario: res.rows.item(i).idUsuario,
             idTitulo: res.rows.item(i).idTitulo,
+            titulo: res.rows.item(i).titulo,
             comentario: res.rows.item(i).comentario,
             fechaPublicacion: res.rows.item(i).fechaPublicacion,
             calificacion: res.rows.item(i).calificacion,
@@ -489,10 +490,10 @@ export class ServicebdService {
           });
         }
       }
-      return items;
+      return items[0];
     }).catch(e => {
-      console.error("Error al consultar reseñas por ID", e);
-      return [];
+      console.error("Error al consultar reseña por ID", e);
+      return null;
     });
   }
 
