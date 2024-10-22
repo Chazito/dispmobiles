@@ -507,7 +507,8 @@ export class ServicebdService {
           duracion: res.rows.item(0).duracion,
           URLImagen: res.rows.item(0).URLImagen,
           URLTrailer: res.rows.item(0).URLTrailer,
-          fechaEstreno: res.rows.item(0).fechaEstreno
+          fechaEstreno: res.rows.item(0).fechaEstreno,
+          puntuacion: res.rows.item(0).puntuacion
         };
         return titulo;
       } else {
