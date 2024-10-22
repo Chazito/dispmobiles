@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServicebdService } from '../services/servicebd.service';
 import { Titulo } from '../services/titulo';
 import { peliculas } from 'src/assets/datos';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomePage implements OnInit {
   arregloCriticados: Titulo[] = []
   arregloMejores: Titulo[] = []
 
-  constructor(private db: ServicebdService) {
+  constructor(private db: ServicebdService, private router : Router) {
 
   }
 
@@ -39,7 +40,7 @@ export class HomePage implements OnInit {
   }
 
   clickOnEntry(x: any) {
-    console.log("Woops");
+    this.router.navigate(['/titulo/'+x.idTitulo])
   }
 
 }
