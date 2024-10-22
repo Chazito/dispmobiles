@@ -12,49 +12,15 @@
     </h6>
   </div>
   <div class="noticiasContainer">
-    <div class="noticia"
-      style="background: transparent url('https://m.media-amazon.com/images/M/MV5BM2UwMDkzZjgtYmFmMy00YjgwLTk4ZGItMGY4ZTY4ZDAzM2E2XkEyXkFqcGc@._V1_FMjpg_UX1800_.jpg') no-repeat center top; background-size: cover;">
+    <a class="noticia" *ngFor="let noticia of noticias" [href]="noticia.url" routerLinkActive="router-link-active"
+      style="background: transparent url({{noticia.urlToImage}}) no-repeat center top; background-size: cover;">
       <div style="width: 100%; background-color: rgba(0, 0, 0, 0.5);">
         <div class="titleContainer">
-          <p class="title">Lorem ipsum</p>
-          <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus turpis erat, sed
-            mollis mi bibendum eu. Ut suscipit venenatis diam ac faucibus. Etiam convallis risus nec placerat tincidunt.
+          <p class="title">{{noticia.title}}</p>
+          <p class="subtitle">{{noticia.description}}
           </p>
         </div>
       </div>
-    </div>
-    <div class="noticia"
-      style="background: transparent url('https://m.media-amazon.com/images/M/MV5BM2UwMDkzZjgtYmFmMy00YjgwLTk4ZGItMGY4ZTY4ZDAzM2E2XkEyXkFqcGc@._V1_FMjpg_UX1800_.jpg') no-repeat center top; background-size: cover;">
-      <div style="width: 100%; background-color: rgba(0, 0, 0, 0.5);">
-        <div class="titleContainer">
-          <p class="title">Lorem ipsum</p>
-          <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus turpis erat, sed
-            mollis mi bibendum eu. Ut suscipit venenatis diam ac faucibus. Etiam convallis risus nec placerat tincidunt.
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="noticia"
-      style="background: transparent url('https://m.media-amazon.com/images/M/MV5BM2UwMDkzZjgtYmFmMy00YjgwLTk4ZGItMGY4ZTY4ZDAzM2E2XkEyXkFqcGc@._V1_FMjpg_UX1800_.jpg') no-repeat center top; background-size: cover;">
-      <div style="width: 100%; background-color: rgba(0, 0, 0, 0.5);">
-        <div class="titleContainer">
-          <p class="title">Lorem ipsum</p>
-          <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus turpis erat, sed
-            mollis mi bibendum eu. Ut suscipit venenatis diam ac faucibus. Etiam convallis risus nec placerat tincidunt.
-          </p>
-        </div>
-      </div>
-    </div>>
-    <div class="noticia"
-      style="background: transparent url('https://m.media-amazon.com/images/M/MV5BM2UwMDkzZjgtYmFmMy00YjgwLTk4ZGItMGY4ZTY4ZDAzM2E2XkEyXkFqcGc@._V1_FMjpg_UX1800_.jpg') no-repeat center top; background-size: cover;">
-      <div style="width: 100%; background-color: rgba(0, 0, 0, 0.5);">
-        <div class="titleContainer">
-          <p class="title">Lorem ipsum</p>
-          <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus turpis erat, sed
-            mollis mi bibendum eu. Ut suscipit venenatis diam ac faucibus. Etiam convallis risus nec placerat tincidunt.
-          </p>
-        </div>
-      </div>
-    </div>
+    </a>
   </div>
 </ion-content>

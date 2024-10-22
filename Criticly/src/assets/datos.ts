@@ -380,7 +380,7 @@ export const insertTipoTitulo: string = `INSERT INTO tipoTitulo (idTipo, nombre)
 
 export const insertUsuario: string = `INSERT INTO usuario (idUsuario, nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) VALUES
 ('1', 'Juan', 'Pérez', 'juan.perez@example.com', 'password123', '1990-05-15', 'https://example.com/avatar-juan.jpg', '123456789', 4.5, 1),
-('2', 'Juan', 'Gómez', 'juan.gomez@example.com', 'securepassword456', '1985-11-23', 'https://example.com/avatar-ana.jpg', '987654321', 5.0, 2),
+('2', 'Juan', 'Gómez', 'juan.gomez@example.com', '123', '1985-11-23', 'https://example.com/avatar-ana.jpg', '987654321', 5.0, 2),
 ('3', 'Franco', 'Nunez', 'fr.nuneza@duocuc.cl', 'Admin@1234', '1998-04-23', 'https://www.meme-arsenal.com/memes/78dc258bdba4e61d685b2e98adb8b0c2.jpg', '11112222', 5.0, 2);`
 
 export const insertTitulo: string = `INSERT INTO titulo (idTitulo, idTipoTitulo, nombre, sinopsis, duracion, URLImagen, URLTrailer, fechaEstreno, puntuacion) VALUES

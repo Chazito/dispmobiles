@@ -36,7 +36,7 @@ export class PeliculaDetallePage implements OnInit {
     });
     this.auth.isAuthObservable.subscribe((isAuth) => {
       this.isAuth = isAuth;
-      this.tienePrivilegios = this.auth.usuarioValue?.id_rol == 1;
+      this.tienePrivilegios = this.auth.usuarioValue?.id_rol == 2;
     });
   }
 
