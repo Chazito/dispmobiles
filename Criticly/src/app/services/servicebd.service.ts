@@ -666,7 +666,7 @@ export class ServicebdService {
     if (newUser.correo == "fr.nuneza@duocuc.cl") {
       newUser.id_rol = 2;
     }
-    return this.database.executeSql(insertSql, [newUser.nombre, newUser.apellido, newUser.correo, newUser.clave, newUser.fechaNacimiento, newUser.avatar, newUser.telefono, newUser.reputacion, newUser.id_rol]).then(res => {
+    return this.database.executeSql(insertSql, [newUser.nombre, newUser.apellido, newUser.correo, newUser.clave, newUser.fechaNacimiento, newUser.avatar, newUser.telefono, newUser.reputacion, newUser.id_rol || 1]).then(res => {
       //this.presentAlert("Registro", "Nuevo usuario creado con éxito.");
 
       this.selectUsuario();

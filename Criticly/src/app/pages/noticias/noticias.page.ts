@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { API_KEY } from 'enviroment';
+import { API_KEY } from 'environment';
 
 @Component({
   selector: 'app-noticias',

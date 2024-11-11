@@ -19,8 +19,7 @@ export class AuthService {
   async init() {
     await this.storage.create();
     const storedAuth = await this.storage.get('isAuth');
-
-    this.sqlService.dbState().subscribe(async res => {
+    this.sqlService.dbState().subscribe(async (res: any) => {
       if (res) {
         if (storedAuth === true) {
           const userID = await this.storage.get('userID'); // Await the userID
