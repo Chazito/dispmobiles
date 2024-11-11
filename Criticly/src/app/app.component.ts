@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { register } from 'swiper/element/bundle';
 import { AuthService } from './services/auth.service';
+import emailjs from '@emailjs/browser';
+import { MAIL_KEY } from 'environment';
 register();
 @Component({
   selector: 'app-root',
@@ -36,7 +38,11 @@ export class AppComponent {
         this.nombreApellido = null;
         this.correo = null;
       }
+      emailjs.init({
+        publicKey: MAIL_KEY,
+      })
     });
+
   }
 
   urlPerfil(): string {

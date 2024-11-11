@@ -507,8 +507,8 @@ export class ServicebdService {
           nombre: res.rows.item(0).nombre,
           sinopsis: res.rows.item(0).sinopsis,
           duracion: res.rows.item(0).duracion,
-          URLImagen: res.rows.item(0).URLImagen,
-          URLTrailer: res.rows.item(0).URLTrailer,
+          URLImagen: res.rows.item(0).URLImagen || "",
+          URLTrailer: res.rows.item(0).URLTrailer || "",
           fechaEstreno: res.rows.item(0).fechaEstreno,
           puntuacion: res.rows.item(0).puntuacion
         };
@@ -517,7 +517,7 @@ export class ServicebdService {
         return null;
       }
     }).catch(e => {
-      console.error("Error al consultar el título por ID", e);
+      this.presentAlert("Consultar título", e)
       return null;
     });
   }

@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Titulo } from 'src/app/services/titulo';
-import { peliculas } from 'src/assets/datos';
 
 @Component({
   selector: 'app-editar-titulo',
@@ -12,7 +11,7 @@ import { peliculas } from 'src/assets/datos';
 })
 export class EditarTituloPage implements OnInit {
   titulo: Titulo = {}
-  editarTituloForm!: FormGroup;
+  editarTituloForm: FormGroup = this.fb.group({});
   constructor(private route: ActivatedRoute, private sqlService: ServicebdService, private fb: FormBuilder) { }
 
   ngOnInit() {

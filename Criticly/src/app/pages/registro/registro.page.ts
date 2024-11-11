@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ServicebdService } from 'src/app/services/servicebd.service';
+import emailjs from '@emailjs/browser';
 
 @Component({
   selector: 'app-registro',
@@ -23,14 +23,12 @@ export class RegistroPage {
     private router: Router,
     private alertController: AlertController,
     private db: ServicebdService
-  ) {}
+  ) { }
 
-  // Check if passwords match
   passwordsMatch(): boolean {
     return this.inputPass === this.inputPass2;
   }
 
-  // Validation checks for each field
   isValidName(name: string): boolean {
     return this.nameRegex.test(name);
   }
@@ -57,16 +55,17 @@ export class RegistroPage {
         correo: this.inputEmail,
         clave: this.inputPass,
       };
+      this.db.insertarUsuario(user).then(() => emailjs.send("service_0wgkgxo", "template_gqf4zyi", { to_name: user.nombre, to_email: user.correo })
+      ).then(() => {
+        this.presentAlert(
+          'Registro exitoso',
+          'Enviamos un correo de confirmación a su email',
+          'Volver al login'
+        );
+      });
 
-      this.db.insertarUsuario(user);
-      this.presentAlert(
-        'Registro completo',
-        'Recibirá un correo de confirmación al email introducido',
-        'Volver al Login'
-      );
       this.router.navigate(['/login']);
     } else {
-      // Handle validation errors
       this.presentAlert('Error', 'Por favor, revisa los datos ingresados.', 'OK');
     }
   }
