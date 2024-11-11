@@ -14,19 +14,20 @@
       <form>
         <ion-item class="input-container">
           <ion-label position="stacked">Nombre del Rol</ion-label>
-          <ion-input placeholder="Nombre del Rol" [(ngModel)]="rol.nombre" name="nombre" class="rounded-input">
+          <ion-input placeholder="Nombre del Rol" required [(ngModel)]="rol.nombre" name="nombre" class="rounded-input">
             <ion-icon name="people-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
       </form>
-
     </div>
     <ion-footer class="ion-no-border">
       <ion-toolbar class="ion-no-border">
-        <ion-button (click)="agregarRol()" expand="full" id="guardar" color="secondary" shape="round">
+        <ion-button (click)="agregarRol()" expand="full" id="guardar" color="secondary" shape="round"
+          [disabled]="!rol.nombre">
           <strong>Guardar</strong>
         </ion-button>
       </ion-toolbar>
     </ion-footer>
   </div>
+
 </ion-content>

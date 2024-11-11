@@ -13,18 +13,18 @@
       <h5><strong>Roles</strong></h5>
     </div>
     <div id="usersContainer" class="ion-text-start">
-      <ion-button shape="round" [routerLink]="['/nuevo']">
+      <ion-button shape="round" [routerLink]="['nuevo']">
         <ion-icon slot="icon-only" name="add"></ion-icon>
       </ion-button>
       <ion-button *ngFor="let rol of roles" expand="false" fill="clear" class="config-button">
         <div id="userContainer">
-          <p id="nombreRol">{{ rol.nombre||"Nombre de usuario"}}</p>
+          <p id="nombreRol">{{ rol.nombre }}</p>
         </div>
         <div class="button-wrapper">
           <ion-button color="primary" fill="solid" class="small-button" [routerLink]="[rol.idRol]">
             <ion-icon name="create-outline" size="large" color="light"></ion-icon>
           </ion-button>
-          <ion-button color="danger" fill="solid" class="small-button">
+          <ion-button disabled color="danger" fill="solid" class="small-button">
             <ion-icon name="trash-outline" size="large" color="light"></ion-icon>
           </ion-button>
         </div>
