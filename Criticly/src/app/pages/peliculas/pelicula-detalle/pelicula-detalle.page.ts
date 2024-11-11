@@ -13,9 +13,9 @@ import { peliculas, resenias } from 'src/assets/datos';
 })
 export class PeliculaDetallePage implements OnInit {
 
-  pelicula: Titulo = peliculas[0]
+  pelicula?: Titulo
   resenias: Resenna[] = [];
-  usuariosResena : any = [];
+  usuariosResena: any = [];
   isAuth: boolean = false;
   tienePrivilegios: boolean = false
   constructor(
@@ -36,7 +36,7 @@ export class PeliculaDetallePage implements OnInit {
           return peliculas.find(pelicula => pelicula.idTitulo === id);
         });
       }
-      
+
     });
     this.auth.isAuthObservable.subscribe((isAuth) => {
       this.isAuth = isAuth;

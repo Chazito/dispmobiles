@@ -36,8 +36,8 @@
 
         <ion-item class="input-container">
           <ion-label position="stacked">Comentario</ion-label>
-          <ion-textarea placeholder="Comentario" [(ngModel)]="resenna.comentario" name="comentario"
-            class="rounded-input"></ion-textarea>
+          <ion-textarea placeholder="Comentario" autoGrow style="--padding-bottom: 18px;"
+            [(ngModel)]="resenna.comentario" name="comentario" class="rounded-input"></ion-textarea>
         </ion-item>
 
         <ion-item class="input-container">
@@ -55,22 +55,22 @@
         <ion-item class="input-container">
           <ion-label position="stacked">Visible</ion-label>
           <ion-select [(ngModel)]="resenna.esVisible" name="esVisible" class="rounded-input">
-            <ion-select-option value="1">Visible</ion-select-option>
-            <ion-select-option value="0">Oculto</ion-select-option>
+            <ion-select-option [value]="1">Visible</ion-select-option>
+            <ion-select-option [value]="0">Oculto</ion-select-option>
           </ion-select>
         </ion-item>
 
         <ion-item class="input-container">
           <ion-label position="stacked">Fecha Eliminación</ion-label>
-          <ion-input [value]="resenna.fechaPublicacion | date:'dd/MM/yyyy'" disabled name="fechaPublicacion"
+          <ion-input [value]="resenna.fechaEliminada | date:'dd/MM/yyyy'" disabled name="fechaEliminación"
             class="rounded-input"></ion-input>
 
         </ion-item>
 
         <ion-item class="input-container">
-          <ion-label position="stacked">Motivo Eliminación</ion-label>
-          <ion-textarea placeholder="Motivo de la eliminación" [(ngModel)]="resenna.motivoEliminacion"
-            name="motivoEliminacion" class="rounded-input"></ion-textarea>
+          <ion-label position="stacked">Motivo de eliminación</ion-label>
+          <ion-textarea autoGrow style="--padding-bottom: 18px;" placeholder="Motivo de la eliminación"
+            [(ngModel)]="resenna.motivoEliminacion" name="motivoEliminacion" class="rounded-input"></ion-textarea>
         </ion-item>
 
         <ion-item class="input-container">

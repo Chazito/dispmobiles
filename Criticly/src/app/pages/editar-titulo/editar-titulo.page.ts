@@ -23,15 +23,16 @@ export class EditarTituloPage implements OnInit {
           if (titulo) this.titulo = titulo;
         });
       }
+      this.editarTituloForm = this.fb.group({
+        titulo: [this.titulo.nombre, [Validators.required]],
+        sinopsis: [this.titulo.sinopsis, [Validators.required]],
+        fechaEstreno: [this.sqlService.formatFechaSQLite(String(this.titulo.fechaEstreno!)), [Validators.required]],
+        duracion: [this.titulo.duracion, [Validators.required]],
+        urlImagen: [this.titulo.URLImagen, [Validators.required]],
+        urlTrailer: [this.titulo.URLTrailer, [Validators.required]]
+      });
     });
-    this.editarTituloForm = this.fb.group({
-      titulo: [this.titulo.nombre, [Validators.required]],  // Valor dinámico
-      sinopsis: [this.titulo.sinopsis, [Validators.required]],
-      fechaEstreno: [this.titulo.fechaEstreno, [Validators.required]],
-      duracion: [this.titulo.duracion, [Validators.required]],
-      urlImagen: [this.titulo.URLImagen, [Validators.required]],
-      urlTrailer: [this.titulo.URLTrailer, [Validators.required]]
-    });
+
   }
 
   modificarTitulo() {

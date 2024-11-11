@@ -24,7 +24,8 @@
 
         <ion-item class="input-container">
           <ion-label position="stacked">Sinopsis</ion-label>
-          <ion-textarea class="rounded-input" formControlName="sinopsis"></ion-textarea>
+          <ion-textarea class="rounded-input" formControlName="sinopsis" autoGrow
+            style="--padding-bottom: 18px;"></ion-textarea>
         </ion-item>
         <div *ngIf="editarTituloForm.get('sinopsis')!.invalid && editarTituloForm.get('sinopsis')!.touched"
           class="error-message">

@@ -833,5 +833,12 @@ export class ServicebdService {
     });
   }
 
+  formatFechaSQLite(fechaSQLite: string): string {
+    const fecha = new Date(fechaSQLite);
+    const year = fecha.getFullYear();
+    const month = String(fecha.getMonth() + 1).padStart(2, '0'); // Mes necesita +1, ya que va de 0 a 11
+    const day = String(fecha.getDate()).padStart(2, '0');
 
+    return `${year}-${month}-${day}`;
+  }
 }
