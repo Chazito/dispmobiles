@@ -24,7 +24,6 @@ export class EditarTituloPage implements OnInit {
         });
       }
     });
-    this.titulo = peliculas[0]
     this.editarTituloForm = this.fb.group({
       titulo: [this.titulo.nombre, [Validators.required]],  // Valor dinámico
       sinopsis: [this.titulo.sinopsis, [Validators.required]],

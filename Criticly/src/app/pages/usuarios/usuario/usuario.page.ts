@@ -19,7 +19,6 @@ export class UsuarioPage implements OnInit {
       if (id) {
         this.sqlService.selectUsuarioPorId(id).then((usuario: Usuario | null) => {
           if (usuario) this.usuario = usuario;
-          this.usuario.id_rol = String(this.usuario.id_rol)
         });
       }
     });
@@ -28,5 +27,4 @@ export class UsuarioPage implements OnInit {
   modificarUsuario() {
     this.sqlService.modificarUsuario(this.usuario)
   }
-
 }
