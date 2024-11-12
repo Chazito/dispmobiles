@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import emailjs from '@emailjs/browser';
+import { Usuario } from 'src/app/services/usuario';
 
 @Component({
   selector: 'app-registro',
@@ -41,7 +42,7 @@ export class RegistroPage {
     return this.StrongPasswordRegx.test(password);
   }
 
-  onRegistroClick() {
+  async onRegistroClick() {
     if (
       this.isValidName(this.inputNombre) &&
       this.isValidName(this.inputApellido) &&
@@ -49,13 +50,13 @@ export class RegistroPage {
       this.isValidPassword(this.inputPass) &&
       this.passwordsMatch()
     ) {
-      let user: any = {
+      let user: Usuario = {
         nombre: this.inputNombre,
         apellido: this.inputApellido,
         correo: this.inputEmail,
         clave: this.inputPass,
       };
-      this.db.insertarUsuario(user).then(() => emailjs.send("service_0wgkgxo", "template_gqf4zyi", { to_name: user.nombre, to_email: user.correo })
+      await this.db.insertarUsuario(user).then(() => emailjs.send("service_0wgkgxo", "template_gqf4zyi", { to_name: user.nombre, to_email: user.correo })
       ).then(() => {
         this.presentAlert(
           'Registro exitoso',
@@ -63,8 +64,7 @@ export class RegistroPage {
           'Volver al login'
         );
       });
-
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
     } else {
       this.presentAlert('Error', 'Por favor, revisa los datos ingresados.', 'OK');
     }

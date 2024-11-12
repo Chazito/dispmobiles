@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 import { AlertController, Platform } from '@ionic/angular';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, retry } from 'rxjs';
 import { Rol } from './rol';
 import { TipoTitulo } from './tipo-titulo';
 import { Usuario } from './usuario';
@@ -438,10 +438,37 @@ export class ServicebdService {
         return null;
       }
     }).catch(error => {
+      console.error("Error al consultar el usuario por id", error);
+      return null;
+    });
+  }
+
+  selectUsuarioPorEmail(idUsuario: string): Promise<Usuario | null> {
+    const query = "SELECT * FROM Usuario WHERE correo = ?";
+    return this.database.executeSql(query, [idUsuario]).then(res => {
+      if (res.rows.length > 0) {
+        const usuario: Usuario = {
+          idUsuario: res.rows.item(0).idUsuario,
+          nombre: res.rows.item(0).nombre,
+          apellido: res.rows.item(0).apellido,
+          correo: res.rows.item(0).correo,
+          clave: res.rows.item(0).clave,
+          fechaNacimiento: res.rows.item(0).fechaNacimiento,
+          avatar: res.rows.item(0).avatar,
+          telefono: res.rows.item(0).telefono,
+          reputacion: res.rows.item(0).reputacion,
+          id_rol: res.rows.item(0).id_rol
+        };
+        return usuario;
+      } else {
+        return null;
+      }
+    }).catch(error => {
       console.error("Error al consultar el usuario por email", error);
       return null;
     });
   }
+
 
   selectResennaPorIdTitulo(idTitulo: string): Promise<Resenna[]> {
     const query = "SELECT resenna.*, usuario.nombre || ' ' || usuario.apellido as nombreUsuario FROM Resenna JOIN usuario on resenna.idUsuario = usuario.idUsuario WHERE idTitulo = ?";
@@ -763,6 +790,25 @@ export class ServicebdService {
           return false;
         }
       })
+      .catch(error => {
+        console.error("Error al modificar el usuario", error);
+        return false;
+      });
+  }
+
+  modificarPassword(usuario: Usuario): Promise<boolean> {
+    const query = `
+      UPDATE Usuario
+      SET clave = ?
+      WHERE idUsuario = ?
+    `;
+
+    const params = [
+      usuario.clave,
+      usuario.idUsuario
+    ];
+
+    return this.database.executeSql(query, params).then(() => { return true })
       .catch(error => {
         console.error("Error al modificar el usuario", error);
         return false;

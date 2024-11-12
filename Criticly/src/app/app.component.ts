@@ -4,6 +4,7 @@ import { register } from 'swiper/element/bundle';
 import { AuthService } from './services/auth.service';
 import emailjs from '@emailjs/browser';
 import { MAIL_KEY } from 'environment';
+import { MenuController } from '@ionic/angular';
 register();
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent {
   nombreApellido: string | null = null;
   correo: string | null = null;
 
-  constructor(private router: Router, private auth: AuthService) {
+  constructor(private router: Router, private auth: AuthService, private menu: MenuController) {
     this.router.events.subscribe((e: any) => {
       if (e && e.url) {
         this.mostrarToolbar = !(e.url.includes('/buscar') || e.url.includes('/perfil-inicio') || e.url.includes('/login')
@@ -29,7 +30,7 @@ export class AppComponent {
     })
     this.auth.isAuthObservable.subscribe((isAuth) => {
       this.isAuth = isAuth;
-      this.tienePrivilegios = auth.isAdmin();
+      this.tienePrivilegios = this.auth.isAdmin();
       const usuario = auth.usuarioValue;
       if (isAuth) {
         this.nombreApellido = `${usuario?.nombre} ${usuario?.apellido}`
@@ -51,5 +52,6 @@ export class AppComponent {
 
   logout() {
     this.auth.logout()
+    this.menu.close()
   }
 }

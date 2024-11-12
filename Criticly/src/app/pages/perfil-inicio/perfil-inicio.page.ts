@@ -3,7 +3,6 @@ import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Usuario } from 'src/app/services/usuario';
-import { usuarios } from 'src/assets/datos';
 
 @Component({
   selector: 'app-perfil-inicio',
