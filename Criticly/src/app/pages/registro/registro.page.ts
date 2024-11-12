@@ -20,6 +20,7 @@ export class RegistroPage {
   inputPass: string = '';
   inputPass2: string = '';
 
+  btnDisabled: boolean = false
   constructor(
     private router: Router,
     private alertController: AlertController,
@@ -43,6 +44,7 @@ export class RegistroPage {
   }
 
   async onRegistroClick() {
+    this.btnDisabled = true
     if (
       this.isValidName(this.inputNombre) &&
       this.isValidName(this.inputApellido) &&
@@ -66,6 +68,7 @@ export class RegistroPage {
       });
       this.router.navigate(['/home']);
     } else {
+      this.btnDisabled = false
       this.presentAlert('Error', 'Por favor, revisa los datos ingresados.', 'OK');
     }
   }

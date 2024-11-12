@@ -13,6 +13,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RecuperarPage implements OnInit {
   email: string = "";
   resetForm!: FormGroup;
+  btnDisabled: boolean = false
+  tiempoRestante: number = 30;
+  intervalo: any;
+  temporizadorHabilitado: boolean = false;
+
   constructor(private sqlService: ServicebdService, private alertController: AlertController, private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -22,11 +27,27 @@ export class RecuperarPage implements OnInit {
   }
 
   async enviarEmail() {
+    this.btnDisabled = true
     const nuevaPassword = this.generarPassword();
     const usuario = await this.sqlService.selectUsuarioPorEmail(this.resetForm.get('email')?.value) as Usuario
     await this.sqlService.modificarPassword({ ...usuario, clave: nuevaPassword })
     await emailjs.send("service_0wgkgxo", "template_n19qbr8", { password: nuevaPassword, to_email: usuario.correo }).catch(e => this.presentAlert("Error", JSON.stringify(e)))
+    this.iniciarTemporizador()
     this.presentAlert("Recuperar contraseña", "Se ha enviado un correo con su nueva contraseña")
+  }
+
+  iniciarTemporizador() {
+    this.temporizadorHabilitado = true
+    this.tiempoRestante = 30;
+    this.intervalo = setInterval(() => {
+      if (this.tiempoRestante > 0) {
+        this.tiempoRestante--;
+      } else {
+        clearInterval(this.intervalo);
+        this.temporizadorHabilitado = false
+        this.btnDisabled = false
+      }
+    }, 1000);
   }
 
   generarPassword(): string {

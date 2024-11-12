@@ -13,7 +13,7 @@
     </div>
     <div class="login-input-container">
       <p>Ingresa tus datos:</p>
-    
+
       <!-- Nombre -->
       <ion-item class="input-container">
         <ion-label position="stacked">Nombre</ion-label>
@@ -22,7 +22,7 @@
       <div *ngIf="inputNombre && !isValidName(inputNombre)">
         <p>Nombre inválido. Solo letras (máx. 20).</p>
       </div>
-    
+
       <!-- Apellido -->
       <ion-item class="input-container">
         <ion-label position="stacked">Apellido</ion-label>
@@ -31,25 +31,27 @@
       <div *ngIf="inputApellido && !isValidName(inputApellido)">
         <p>Apellido inválido. Solo letras (máx. 20).</p>
       </div>
-    
+
       <!-- Correo electrónico -->
       <ion-item class="input-container">
         <ion-label position="stacked">Correo electrónico</ion-label>
-        <ion-input [(ngModel)]="inputEmail" placeholder="email@email.com" class="rounded-input" type="email"></ion-input>
+        <ion-input [(ngModel)]="inputEmail" placeholder="email@email.com" class="rounded-input"
+          type="email"></ion-input>
       </ion-item>
       <div *ngIf="inputEmail && !isValidEmail(inputEmail)">
         <p>Correo electrónico inválido.</p>
       </div>
-    
+
       <!-- Contraseña -->
       <ion-item class="input-container">
         <ion-label position="stacked">Contraseña</ion-label>
         <ion-input [(ngModel)]="inputPass" placeholder="***********" class="rounded-input" type="password"></ion-input>
       </ion-item>
       <div *ngIf="inputPass && !isValidPassword(inputPass)">
-        <p>Contraseña inválida. Debe tener entre 8-20 caracteres, al menos una letra mayúscula, una minúscula, un número y un caracter especial.</p>
+        <p>Contraseña inválida. Debe tener entre 8-20 caracteres, al menos una letra mayúscula, una minúscula, un número
+          y un caracter especial.</p>
       </div>
-    
+
       <!-- Confirmar contraseña -->
       <ion-item class="input-container">
         <ion-label position="stacked">Confirmar contraseña</ion-label>
@@ -58,7 +60,7 @@
       <div *ngIf="inputPass2 && !passwordsMatch()">
         <p>Las contraseñas no coinciden.</p>
       </div>
-    
+
       <!-- Términos y condiciones -->
       <br />
       <div class="title-container" style="margin: 0;">
@@ -67,12 +69,13 @@
           <a>términos y condiciones.</a>
         </p>
       </div>
-    
+
       <!-- Botón de registro -->
       <br />
       <ion-footer class="ion-no-border">
         <ion-toolbar class="ion-no-border">
-          <ion-button expand="full" color="secondary" shape="round" (click)="onRegistroClick()">
+          <ion-button [disabled]="btnDisabled" expand="full" color="secondary" shape="round"
+            (click)="onRegistroClick()">
             <strong class="ion-margin">Registrarse</strong>
           </ion-button>
         </ion-toolbar>
