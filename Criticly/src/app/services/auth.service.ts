@@ -11,9 +11,9 @@ import { usuarios } from 'src/assets/datos';
   providedIn: 'root',
 })
 export class AuthService {
-  private isAuthSubject = new BehaviorSubject<boolean>(true);
+  private isAuthSubject = new BehaviorSubject<boolean>(false);
   isAuthObservable = this.isAuthSubject.asObservable();
-  private usuario: Usuario | null = usuarios[1];
+  private usuario: Usuario | null = null;
 
   constructor(private storage: Storage, private sqlService: ServicebdService, private toastController: ToastController, private router: Router) {
     this.init();

@@ -1,12 +1,18 @@
 <ion-header [translucent]="true" class="ion-no-border">
-  <ion-toolbar>
+  <ion-toolbar color="tertiary" mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref=""></ion-back-button>
+      <ion-back-button text="" defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title></ion-title>
+    <ion-title>
+      <ion-img src="assets/images/logo.svg" alt="logo" id="logo"></ion-img>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/buscar']">
+        <ion-img id="searchIcon" src="../../../assets/icon/search.svg" alt="Buscar"></ion-img>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true" class="ion-padding-vertical">
   <ion-button *ngIf="tienePrivilegios" class="titleButton ion-no-padding" fill="solid" size="small" color="transparent"
     [routerLink]="['editar']">

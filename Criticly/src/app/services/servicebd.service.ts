@@ -691,10 +691,10 @@ export class ServicebdService {
           });
         }
       }
-      return items; // Retorna el array de marcadores
+      return items;
     }).catch(e => {
       console.error("Error al consultar marcadores por ID de usuario", e);
-      return []; // Retorna un array vacío en caso de error
+      return [];
     });
   }
 
