@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ServicebdService } from 'src/app/services/servicebd.service';
+import emailjs from '@emailjs/browser';
+import { Usuario } from 'src/app/services/usuario';
 
 @Component({
   selector: 'app-registro',
@@ -19,18 +20,17 @@ export class RegistroPage {
   inputPass: string = '';
   inputPass2: string = '';
 
+  btnDisabled: boolean = false
   constructor(
     private router: Router,
     private alertController: AlertController,
     private db: ServicebdService
-  ) {}
+  ) { }
 
-  // Check if passwords match
   passwordsMatch(): boolean {
     return this.inputPass === this.inputPass2;
   }
 
-  // Validation checks for each field
   isValidName(name: string): boolean {
     return this.nameRegex.test(name);
   }
@@ -43,7 +43,8 @@ export class RegistroPage {
     return this.StrongPasswordRegx.test(password);
   }
 
-  onRegistroClick() {
+  async onRegistroClick() {
+    this.btnDisabled = true
     if (
       this.isValidName(this.inputNombre) &&
       this.isValidName(this.inputApellido) &&
@@ -51,22 +52,23 @@ export class RegistroPage {
       this.isValidPassword(this.inputPass) &&
       this.passwordsMatch()
     ) {
-      let user: any = {
+      let user: Usuario = {
         nombre: this.inputNombre,
         apellido: this.inputApellido,
         correo: this.inputEmail,
         clave: this.inputPass,
       };
-
-      this.db.insertarUsuario(user);
-      this.presentAlert(
-        'Registro completo',
-        'Recibirá un correo de confirmación al email introducido',
-        'Volver al Login'
-      );
-      this.router.navigate(['/login']);
+      await this.db.insertarUsuario(user).then(() => emailjs.send("service_0wgkgxo", "template_gqf4zyi", { to_name: user.nombre, to_email: user.correo })
+      ).then(() => {
+        this.presentAlert(
+          'Registro exitoso',
+          'Enviamos un correo de confirmación a su email',
+          'Volver al login'
+        );
+      });
+      this.router.navigate(['/home']);
     } else {
-      // Handle validation errors
+      this.btnDisabled = false
       this.presentAlert('Error', 'Por favor, revisa los datos ingresados.', 'OK');
     }
   }

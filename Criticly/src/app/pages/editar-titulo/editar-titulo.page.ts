@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Titulo } from 'src/app/services/titulo';
-import { peliculas } from 'src/assets/datos';
 
 @Component({
   selector: 'app-editar-titulo',
@@ -12,7 +11,7 @@ import { peliculas } from 'src/assets/datos';
 })
 export class EditarTituloPage implements OnInit {
   titulo: Titulo = {}
-  editarTituloForm!: FormGroup;
+  editarTituloForm: FormGroup = this.fb.group({});
   constructor(private route: ActivatedRoute, private sqlService: ServicebdService, private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -23,16 +22,16 @@ export class EditarTituloPage implements OnInit {
           if (titulo) this.titulo = titulo;
         });
       }
+      this.editarTituloForm = this.fb.group({
+        titulo: [this.titulo.nombre, [Validators.required]],
+        sinopsis: [this.titulo.sinopsis, [Validators.required]],
+        fechaEstreno: [this.sqlService.formatFechaSQLite(String(this.titulo.fechaEstreno!)), [Validators.required]],
+        duracion: [this.titulo.duracion, [Validators.required]],
+        urlImagen: [this.titulo.URLImagen, [Validators.required]],
+        urlTrailer: [this.titulo.URLTrailer, [Validators.required]]
+      });
     });
-    this.titulo = peliculas[0]
-    this.editarTituloForm = this.fb.group({
-      titulo: [this.titulo.nombre, [Validators.required]],  // Valor dinámico
-      sinopsis: [this.titulo.sinopsis, [Validators.required]],
-      fechaEstreno: [this.titulo.fechaEstreno, [Validators.required]],
-      duracion: [this.titulo.duracion, [Validators.required]],
-      urlImagen: [this.titulo.URLImagen, [Validators.required]],
-      urlTrailer: [this.titulo.URLTrailer, [Validators.required]]
-    });
+
   }
 
   modificarTitulo() {

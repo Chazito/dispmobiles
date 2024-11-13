@@ -24,8 +24,8 @@
 
         <ion-item class="input-container">
           <ion-label position="stacked">Sinopsis</ion-label>
-          <ion-textarea class="rounded-input" formControlName="sinopsis"></ion-textarea>
-        </ion-item>
+          <ion-textarea autoGrow class="rounded-input" formControlName="sinopsis"
+            style="--padding-bottom: 18px;"></ion-textarea> </ion-item>
         <div *ngIf="agregarTituloForm.get('sinopsis')!.invalid && agregarTituloForm.get('sinopsis')!.touched"
           class="error-message">
           La sinopsis es requerida.

@@ -129,19 +129,19 @@ export const usuarios: Usuario[] = [
     avatar: 'https://example.com/avatar-juan.jpg',
     telefono: '123456789',
     reputacion: 4.5,
-    id_rol: 0 // Rol de usuario estándar
+    id_rol: 1 // Rol de usuario estándar
   },
   {
     idUsuario: '2',
-    nombre: 'Ana',
+    nombre: 'Juan',
     apellido: 'Gómez',
-    correo: 'ana.gomez@example.com',
+    correo: 'juan.gomez@example.com',
     clave: 'securepassword456',
     fechaNacimiento: new Date('1985-11-23'),
-    avatar: 'https://example.com/avatar-ana.jpg',
+    avatar: 'https://example.com/avatar-juan.jpg',
     telefono: '987654321',
     reputacion: 5.0,
-    id_rol: 1 // Rol de administrador
+    id_rol: 2 // Rol de administrador
   }
 ];
 

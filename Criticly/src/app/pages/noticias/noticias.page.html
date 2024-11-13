@@ -5,20 +5,22 @@
 </ion-header>
 <ion-content [fullscreen]="true">
   <div class="ion-text-center">
-    <h6>
-      <strong>
-        Noticias
-      </strong>
-    </h6>
+    <h6><strong>Noticias</strong></h6>
   </div>
+
+  <div class="spinner-overlay" *ngIf="cargandoNoticias">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
   <div class="noticiasContainer">
-    <a class="noticia" *ngFor="let noticia of noticias" [href]="noticia.url" routerLinkActive="router-link-active"
+    <a class="noticia" *ngFor="let noticia of noticias" (click)="navegarANoticia(noticia.url)"
+      routerLinkActive="router-link-active"
       style="background: transparent url({{noticia.urlToImage}}) no-repeat center top; background-size: cover;">
+      <img [src]="noticia.urlToImage" style="display: none;" (load)="imagenCargada()" />
       <div style="width: 100%; background-color: rgba(0, 0, 0, 0.5);">
         <div class="titleContainer">
           <p class="title">{{noticia.title}}</p>
-          <p class="subtitle">{{noticia.description}}
-          </p>
+          <p class="subtitle">{{noticia.description}}</p>
         </div>
       </div>
     </a>

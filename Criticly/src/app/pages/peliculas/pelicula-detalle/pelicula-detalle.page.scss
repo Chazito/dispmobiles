@@ -68,3 +68,29 @@ ion-item {
   justify-content: start;
   align-items: center;
 }
+
+#logo {
+  display: block;
+  height: 30px;
+  width: auto;
+}
+
+ion-toolbar {
+  --min-height: 61px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 20px;
+}
+
+ion-header {
+  --border-radius: 20px;
+  --placeholder-color: #686868 !important;
+  --placeholder-font-weight: 400
+}
+
+#searchIcon {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}

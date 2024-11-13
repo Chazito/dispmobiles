@@ -10,17 +10,27 @@
     <div class="h5Container">
       <h5><strong>Recuperar contraseña</strong></h5>
     </div>
-    <ion-item class="input-container">
-      <ion-label position="stacked">Ingresa tu correo electrónico:</ion-label>
-      <ion-input type="email" placeholder="correo@ejemplo.com" class="rounded-input">
-        <ion-icon name="mail-outline" slot="start"></ion-icon>
-      </ion-input>
-    </ion-item>
+    <form [formGroup]="resetForm">
+      <ion-item class="input-container">
+        <ion-label position="stacked">Ingresa tu correo electrónico:</ion-label>
+        <ion-input formControlName="email" type="email" placeholder="correo@ejemplo.com" color="light"
+          class="rounded-input">
+          <ion-icon name="mail-outline" slot="start"></ion-icon>
+        </ion-input>
+      </ion-item>
 
-    <div style="display: flex; justify-content: end;">
-      <ion-button style="font-size: .9rem;" expand="default" id="guardarContrasena" color="secondary" shape="round">
-        <strong>Enviar correo</strong>
-      </ion-button>
-    </div>
+      <ion-text color="danger" *ngIf="resetForm.get('email')?.invalid && resetForm.get('email')?.touched">
+        <small>Por favor ingresa un correo electrónico válido.</small>
+      </ion-text>
+      <ion-text color="medium" *ngIf="temporizadorHabilitado">
+        <small>Podremos enviarte un nuevo correo en {{ tiempoRestante }} segundos</small>
+      </ion-text>
+      <div style="display: flex; justify-content: end;">
+        <ion-button (click)="enviarEmail()" [disabled]="resetForm.invalid || btnDisabled" style="font-size: .9rem;"
+          expand="default" id="guardarContrasena" color="secondary" shape="round">
+          <strong>Enviar correo</strong>
+        </ion-button>
+      </div>
+    </form>
   </div>
 </ion-content>

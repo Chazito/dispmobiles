@@ -27,5 +27,4 @@ export class UsuarioPage implements OnInit {
   modificarUsuario() {
     this.sqlService.modificarUsuario(this.usuario)
   }
-
 }

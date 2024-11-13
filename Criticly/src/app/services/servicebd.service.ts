@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 import { AlertController, Platform } from '@ionic/angular';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, retry } from 'rxjs';
 import { Rol } from './rol';
 import { TipoTitulo } from './tipo-titulo';
 import { Usuario } from './usuario';
@@ -257,8 +257,8 @@ export class ServicebdService {
     })
   }
 
-  modificarRol(x: Rol) {
-    return this.database.executeSql("UPDATE rol SET nombre = ? WHERE idRol = ?", [x.nombre, x.idRol]).then(res => {
+  modificarRol(rol: Rol) {
+    return this.database.executeSql("UPDATE rol SET nombre = ? WHERE idRol = ?", [rol.nombre, rol.idRol]).then(res => {
       this.presentAlert("Rol", "Rol modificado correctamente");
       this.selectRol();
     }).catch(e => {
@@ -438,10 +438,37 @@ export class ServicebdService {
         return null;
       }
     }).catch(error => {
+      console.error("Error al consultar el usuario por id", error);
+      return null;
+    });
+  }
+
+  selectUsuarioPorEmail(idUsuario: string): Promise<Usuario | null> {
+    const query = "SELECT * FROM Usuario WHERE correo = ?";
+    return this.database.executeSql(query, [idUsuario]).then(res => {
+      if (res.rows.length > 0) {
+        const usuario: Usuario = {
+          idUsuario: res.rows.item(0).idUsuario,
+          nombre: res.rows.item(0).nombre,
+          apellido: res.rows.item(0).apellido,
+          correo: res.rows.item(0).correo,
+          clave: res.rows.item(0).clave,
+          fechaNacimiento: res.rows.item(0).fechaNacimiento,
+          avatar: res.rows.item(0).avatar,
+          telefono: res.rows.item(0).telefono,
+          reputacion: res.rows.item(0).reputacion,
+          id_rol: res.rows.item(0).id_rol
+        };
+        return usuario;
+      } else {
+        return null;
+      }
+    }).catch(error => {
       console.error("Error al consultar el usuario por email", error);
       return null;
     });
   }
+
 
   selectResennaPorIdTitulo(idTitulo: string): Promise<Resenna[]> {
     const query = "SELECT resenna.*, usuario.nombre || ' ' || usuario.apellido as nombreUsuario FROM Resenna JOIN usuario on resenna.idUsuario = usuario.idUsuario WHERE idTitulo = ?";
@@ -507,8 +534,8 @@ export class ServicebdService {
           nombre: res.rows.item(0).nombre,
           sinopsis: res.rows.item(0).sinopsis,
           duracion: res.rows.item(0).duracion,
-          URLImagen: res.rows.item(0).URLImagen,
-          URLTrailer: res.rows.item(0).URLTrailer,
+          URLImagen: res.rows.item(0).URLImagen || "",
+          URLTrailer: res.rows.item(0).URLTrailer || "",
           fechaEstreno: res.rows.item(0).fechaEstreno,
           puntuacion: res.rows.item(0).puntuacion
         };
@@ -517,7 +544,7 @@ export class ServicebdService {
         return null;
       }
     }).catch(e => {
-      console.error("Error al consultar el título por ID", e);
+      this.presentAlert("Consultar título", e)
       return null;
     });
   }
@@ -562,6 +589,8 @@ export class ServicebdService {
       .then(res => {
         this.selectTitulo()
         if (res.rowsAffected > 0) {
+          this.presentAlert("Eliminación de título", "Título eliminado correctamente.");
+          this.selectTitulo();
           return { success: true };
         } else {
           return { success: false, message: "No se encontró el título con el ID especificado." };
@@ -579,6 +608,8 @@ export class ServicebdService {
       .then(res => {
         this.selectUsuario()
         if (res.rowsAffected > 0) {
+          this.presentAlert("Eliminación de usuario ", "Usuario eliminado correctamente.");
+          this.selectUsuario();
           return { success: true };
         } else {
           return { success: false, message: "No se encontró el usuario con el ID especificado." };
@@ -591,11 +622,13 @@ export class ServicebdService {
   }
 
   eliminarTipo(idTipo: string): Promise<any> {
-    const query = "DELETE FROM TipoTiutulo WHERE idTipo = ?";
+    const query = "DELETE FROM TipoTitulo WHERE idTipo = ?";
     return this.database.executeSql(query, [idTipo])
       .then(res => {
         this.selectTipoTitulo()
         if (res.rowsAffected > 0) {
+          this.presentAlert("Eliminación de tipo de título ", "Tipo de título eliminado correctamente.");
+          this.selectTipoTitulo();
           return { success: true };
         } else {
           return { success: false, message: "No se encontró el tipo con el ID especificado." };
@@ -613,6 +646,8 @@ export class ServicebdService {
       .then(res => {
         this.selectMarcado()
         if (res.rowsAffected > 0) {
+          this.presentAlert("Eliminación de marcador", "Marcador eliminado correctamente.");
+          this.selectMarcado();
           return { success: true };
         } else {
           return { success: false, message: "No se encontró el marcador con el ID especificado." };
@@ -629,6 +664,8 @@ export class ServicebdService {
       .then(res => {
         this.selectResenna()
         if (res.rowsAffected > 0) {
+          this.presentAlert("Eliminación de reseña", "Reseña eliminada correctamente.");
+          this.selectResenna();
           return { success: true };
         } else {
           return { success: false, message: "No se encontró la reseña con el ID especificado." };
@@ -654,10 +691,10 @@ export class ServicebdService {
           });
         }
       }
-      return items; // Retorna el array de marcadores
+      return items;
     }).catch(e => {
       console.error("Error al consultar marcadores por ID de usuario", e);
-      return []; // Retorna un array vacío en caso de error
+      return [];
     });
   }
 
@@ -666,9 +703,8 @@ export class ServicebdService {
     if (newUser.correo == "fr.nuneza@duocuc.cl") {
       newUser.id_rol = 2;
     }
-    return this.database.executeSql(insertSql, [newUser.nombre, newUser.apellido, newUser.correo, newUser.clave, newUser.fechaNacimiento, newUser.avatar, newUser.telefono, newUser.reputacion, newUser.id_rol]).then(res => {
+    return this.database.executeSql(insertSql, [newUser.nombre, newUser.apellido, newUser.correo, newUser.clave, newUser.fechaNacimiento, newUser.avatar, newUser.telefono, newUser.reputacion, newUser.id_rol || 1]).then(res => {
       //this.presentAlert("Registro", "Nuevo usuario creado con éxito.");
-
       this.selectUsuario();
     }).catch(err => {
       this.presentAlert("Registro", "Error: " + JSON.stringify(err));
@@ -700,7 +736,6 @@ export class ServicebdService {
     let insertSql = "INSERT INTO marcador(idUsuario , idTitulo , fechaMarcado) values(?,?,?)";
     return this.database.executeSql(insertSql, [marcador.idMarcador, marcador.idUsuario, marcador.idTitulo, marcador.fechaMarcado]).then(res => {
       this.presentAlert("Nuevo Marcador", "Marcador guardado.");
-
       this.selectMarcado();
     }).catch(err => {
       this.presentAlert("Nuevo Marcador", "Error: " + JSON.stringify(err));
@@ -711,7 +746,6 @@ export class ServicebdService {
     let insertSql = "INSERT INTO TipoTitulo(nombre) values(?)";
     this.database.executeSql(insertSql, [nombre]).then(res => {
       this.presentAlert("Nuevo Tipo", "Nuevo tipo ingresado correctamente.");
-
       this.selectTipoTitulo();
     }).catch(err => {
       this.presentAlert("Nuevo Tipo", "Error: " + JSON.stringify(err));
@@ -749,11 +783,32 @@ export class ServicebdService {
     return this.database.executeSql(query, params)
       .then(res => {
         if (res.rowsAffected > 0) {
+          this.presentAlert("Modificación de usuario", "Usuario modificado correctamente");
+          this.selectUsuario();
           return true;
         } else {
           return false;
         }
       })
+      .catch(error => {
+        console.error("Error al modificar el usuario", error);
+        return false;
+      });
+  }
+
+  modificarPassword(usuario: Usuario): Promise<boolean> {
+    const query = `
+      UPDATE Usuario
+      SET clave = ?
+      WHERE idUsuario = ?
+    `;
+
+    const params = [
+      usuario.clave,
+      usuario.idUsuario
+    ];
+
+    return this.database.executeSql(query, params).then(() => { return true })
       .catch(error => {
         console.error("Error al modificar el usuario", error);
         return false;
@@ -780,9 +835,13 @@ export class ServicebdService {
     ];
 
     return this.database.executeSql(query, params).then(res => {
-      return res.rowsAffected > 0;
+      if (res.rowsAffected > 0) {
+        this.presentAlert("Modificación de título", "Título modificado correctamente");
+        this.selectTitulo();
+      }
+      return res.rowsAffected > 0
     }).catch(error => {
-      console.error("Error al modificar el título por id", error);
+      this.presentAlert("Error", "Título no modificado");
       return false;
     });
   }
@@ -809,12 +868,23 @@ export class ServicebdService {
     ];
 
     return this.database.executeSql(query, params).then(res => {
-      return res.rowsAffected > 0;
+      if (res.rowsAffected > 0) {
+        this.presentAlert("Modificación de reseña", "Reseña modificada correctamente");
+        this.selectResenna();
+      }
+      return res.rowsAffected > 0
     }).catch(error => {
-      console.error("Error al modificar la reseña por id", error);
+      this.presentAlert("Error", "Reseña no modificado");
       return false;
     });
   }
 
+  formatFechaSQLite(fechaSQLite: string): string {
+    const fecha = new Date(fechaSQLite);
+    const year = fecha.getFullYear();
+    const month = String(fecha.getMonth() + 1).padStart(2, '0'); // Mes necesita +1, ya que va de 0 a 11
+    const day = String(fecha.getDate()).padStart(2, '0');
 
+    return `${year}-${month}-${day}`;
+  }
 }

@@ -14,37 +14,16 @@ export class LoginPage implements OnInit {
 
   form: FormGroup;
 
-  constructor(private router: Router, private toastController: ToastController, private fb: FormBuilder, private auth: AuthService, private sqlService: ServicebdService) {
+  constructor(private fb: FormBuilder, private auth: AuthService) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  async presentToast(position: 'top' | 'middle' | 'bottom', mensaje: string, duracion: number) {
-    const toast = await this.toastController.create({
-      message: mensaje,
-      duration: duracion,
-      position: position,
-    });
-
-    await toast.present();
-  }
-
-  async login(): Promise<boolean> {
-    const usuarioEsValido = await this.auth.validarUsuarioPorEmail(this.form.get('email')?.value, this.form.get('password')?.value);
-    if (usuarioEsValido) {
-      this.auth.login();
-      this.presentToast("bottom", "Sesión iniciada correctamente", 2500);
-      this.router.navigate(['/home']);
-      return true
-    }
-    else {
-      this.presentToast("bottom", "Credenciales invalidas", 4000);
-      return false
-    }
+  async login() {
+    await this.auth.validarUsuarioPorEmail(this.form.get('email')?.value, this.form.get('password')?.value);
   }
 }
