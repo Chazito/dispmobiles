@@ -11,59 +11,76 @@
   <div id="container">
     <div>
       <h5><strong>Mi cuenta</strong></h5>
-      <form>
+      <div (click)="tomarFoto()" style="display: flex; justify-content: center; margin-top: 20px;">
+        <img [src]="user.avatar ? user.avatar : '../../assets/icon/user.svg'" alt="Avatar"
+          style="width: 100px; height: 100px; border-radius: 50%;" />
+      </div>
+      <form #datosForm="ngForm">
         <ion-item class="input-container">
           <ion-label position="stacked">Nombre</ion-label>
-          <ion-input placeholder="Nombre" class="rounded-input" name="nombre" [(ngModel)]="user.nombre">
+          <ion-input required minlength="2" maxlength="50" pattern="[A-Za-zÀ-ÿ' -]+" placeholder="Nombre"
+            class="rounded-input" name="nombre" [(ngModel)]="user.nombre" #nombreInput="ngModel">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
+          <small *ngIf="nombreInput.invalid">Nombre no válido.</small>
         </ion-item>
 
         <ion-item class="input-container">
           <ion-label position="stacked">Apellido</ion-label>
-          <ion-input placeholder="Apellido" class="rounded-input" name="apellido" [(ngModel)]="user.apellido">
+          <ion-input minlength="2" maxlength="50" pattern="[A-Za-zÀ-ÿ' -]+" placeholder="Apellido" class="rounded-input"
+            name="apellido" [(ngModel)]="user.apellido" #apellidoInput="ngModel" required>
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
+          <small *ngIf="apellidoInput.invalid">Apellido no válido.</small>
         </ion-item>
-
         <ion-item class="input-container">
           <ion-label position="stacked">Correo electrónico</ion-label>
-          <ion-input readonly type="email" placeholder="correo@ejemplo.com" name="email" class="rounded-input"
-            [(ngModel)]="user.correo">
+          <ion-input type="email" placeholder="correo@ejemplo.com" name="email" class="rounded-input"
+            [(ngModel)]="user.correo" #emailInput="ngModel" email required>
             <ion-icon name="mail-outline" slot="start"></ion-icon>
           </ion-input>
-
+          <small *ngIf="emailInput.invalid">Email no válido.</small>
         </ion-item>
-
-        <strong>Cambiar contraseña</strong>
-
+        <ion-button [disabled]="datosForm.invalid" expand="full" id="guardar" color="secondary" shape="round"
+          (click)="guardarCambios()">
+          <ion-icon name="save-outline" slot="start"></ion-icon>
+          <strong>Guardar</strong>
+        </ion-button>
+      </form>
+      <form>
+        <strong>Cambiar contraseña</strong> <br>
+        <small>La contraseña debe cumplir con los siguientes requisitos:
+          <ul>
+            <li>Entre 8 y 20 caracteres</li>
+            <li>Al menos una letra minúscula</li>
+            <li>Al menos una letra mayúscula</li>
+            <li>Al menos un carácter especial</li>
+            <li>Al menos un dígito numérico</li>
+          </ul>
+        </small>
         <ion-item class="input-container">
           <ion-label position="stacked">Nueva contraseña</ion-label>
-          <ion-input type="password" placeholder="Introduce tu contraseña" class="rounded-input">
+          <ion-input type="password" placeholder="Introduce tu contraseña" name="password" [(ngModel)]="password"
+            class="rounded-input">
             <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
-
         <ion-item class="input-container">
           <ion-label position="stacked">Confirmar contraseña</ion-label>
-          <ion-input type="password" placeholder="Confirma tu contraseña" class="rounded-input">
+          <ion-input type="password" [(ngModel)]="password2" #input="ngModel" name="password2"
+            placeholder="Confirma tu contraseña" class="rounded-input">
             <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
+        <small *ngIf="!passwordsMatch() && input.touched">Las contraseñas no coinciden.</small>
         <div style="display: flex; justify-content: end;">
-          <ion-button expand="default" id="guardarContrasena" color="secondary" shape="round" (click)="cambiarPass()">
+          <ion-button [disabled]="!isValidPassword() || !passwordsMatch()" expand="default" id="guardarContrasena"
+            color="secondary" shape="round" (click)="cambiarPass()">
             <ion-icon name="save-outline" slot="start"></ion-icon>
             <strong>Guardar contraseña</strong>
           </ion-button>
         </div>
       </form>
     </div>
-    <ion-footer class="ion-no-border">
-      <ion-toolbar class="ion-no-border">
-        <ion-button expand="full" id="guardar" color="primary" shape="round" (click)="guardarCambios()">
-          <strong>Guardar</strong>
-        </ion-button>
-      </ion-toolbar>
-    </ion-footer>
   </div>
 </ion-content>

@@ -14,9 +14,8 @@ import { ServicebdService } from 'src/app/services/servicebd.service';
 })
 export class EscribirReseniaPage implements OnInit {
   reseniaForm!: FormGroup;
-  URLImagen: string | undefined;
   idTitulo?: string;
-  constructor(private fb: FormBuilder, private sqlService: ServicebdService, private route: ActivatedRoute, private auth: AuthService, private navController : NavController) { }
+  constructor(private fb: FormBuilder, private sqlService: ServicebdService, private route: ActivatedRoute, private auth: AuthService, private navController: NavController) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -30,33 +29,10 @@ export class EscribirReseniaPage implements OnInit {
     });
   }
 
-  enSubirFoto(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.reseniaForm.patchValue({
-        imagen: file
-      });
-    }
-  }
-
-  async tomarFoto() {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera
-    });
-
-    this.URLImagen = image.dataUrl;
-    this.reseniaForm.patchValue({
-      image: image.dataUrl
-    });
-  }
-
   publicarResenia() {
     if (this.reseniaForm.valid) {
       const datosForm: Resenna = {
-        idTitulo: this.idTitulo, 
+        idTitulo: this.idTitulo,
         idUsuario: this.auth.usuarioValue?.idUsuario,
         titulo: this.reseniaForm.get('titulo')?.value,
         comentario: this.reseniaForm.get('resenia')?.value,

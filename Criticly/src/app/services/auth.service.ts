@@ -5,7 +5,6 @@ import { Usuario } from './usuario';
 import { ServicebdService } from './servicebd.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { usuarios } from 'src/assets/datos';
 
 @Injectable({
   providedIn: 'root',
@@ -57,7 +56,7 @@ export class AuthService {
     await this.storage.set('isAuth', true);
     await this.storage.set('userID', this.usuario?.idUsuario)
     this.isAuthSubject.next(true);
-    const usuarioEsValido = this.usuario?.idUsuario!!;
+    const usuarioEsValido = !!this.usuario?.idUsuario;
     if (usuarioEsValido) {
       this.presentToast("bottom", "Sesión iniciada correctamente", 2500);
       this.router.navigate(['/home']);

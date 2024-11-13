@@ -7,11 +7,11 @@
           <ion-list id="listaMenuLateral">
             <ion-item id="itemUsuario" [routerLink]="urlPerfil()" routerLinkActive="active">
               <ion-avatar slot="start">
-                <img src="../assets/icon/user.svg" alt="Profile Picture">
+                <img [src]="usuario.avatar ? usuario.avatar : '../../assets/icon/user.svg'" alt="Profile Picture">
               </ion-avatar>
               <ion-label id="labelUsuario" *ngIf="isAuth">
                 <p id="nombreUsuario">{{nombreApellido}}</p>
-                <p class="email">{{correo}}</p>
+                <p class="email">{{usuario.correo}}</p>
               </ion-label>
               <ion-label *ngIf="!isAuth">
                 <p id="nombreUsuario">Iniciar sesión</p>

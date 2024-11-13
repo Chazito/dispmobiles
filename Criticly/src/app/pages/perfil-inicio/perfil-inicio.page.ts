@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Camera, CameraResultType } from '@capacitor/camera';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { ServicebdService } from 'src/app/services/servicebd.service';
@@ -15,7 +16,7 @@ export class PerfilInicioPage implements OnInit {
   nameRegex: RegExp = /^[A-Za-z]{1,20}$/;
 
   user: Usuario = {};
-
+  URLAvatar: string = ""
   password: string = "";
   password2: string = "";
 
@@ -23,6 +24,9 @@ export class PerfilInicioPage implements OnInit {
 
   ngOnInit() {
     this.user = this.auth.usuarioValue!;
+    if (this.user && this.user.avatar) {
+      this.URLAvatar = URL.createObjectURL(this.user.avatar!)
+    }
   }
 
   async presentAlert(titulo: string, msj: string) {
@@ -50,7 +54,7 @@ export class PerfilInicioPage implements OnInit {
   }
 
   async cambiarPass() {
-    if (this.passwordsMatch() && this.isValidPassword(this.password)) {
+    if (this.passwordsMatch() && this.isValidPassword()) {
       this.user.clave = this.password;
       let success = await this.bd.modificarUsuario(this.user);
       if (success) {
@@ -73,7 +77,30 @@ export class PerfilInicioPage implements OnInit {
     return this.nameRegex.test(name);
   }
 
-  isValidPassword(password: string): boolean {
-    return this.StrongPasswordRegx.test(password);
+  isValidPassword(): boolean {
+    return this.StrongPasswordRegx.test(this.password);
+  }
+
+  async tomarFoto() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Base64,
+    });
+
+    const avatarBlob = this.base64ToBlob(image.base64String!);
+    if (avatarBlob) {
+      await this.bd.modificarAvatar(avatarBlob, this.user.idUsuario!);
+    }
+  }
+
+  base64ToBlob(base64: string): Blob {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: 'image/png' });
   }
 }

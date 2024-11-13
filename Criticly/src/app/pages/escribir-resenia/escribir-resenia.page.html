@@ -43,16 +43,6 @@
       <ion-text color="danger" *ngIf="reseniaForm.get('rating')!.touched && reseniaForm.get('rating')!.invalid">
         <small>La puntuación es obligatoria</small>
       </ion-text>
-      <div>
-        <ion-item>
-          <ion-label>Imagen</ion-label>
-          <ion-button (click)="tomarFoto()"><ion-icon name="camera"></ion-icon></ion-button>
-        </ion-item>
-        <div *ngIf="URLImagen">
-          <img [src]="URLImagen"
-            style="width: 100px; height: 100px; border-radius: 10px; margin-top: 10px; object-fit: cover; object-position: center;">
-        </div>
-      </div>
       <ion-footer class="ion-no-border">
         <ion-toolbar class="ion-no-border">
           <ion-button expand="full" type="submit" [disabled]="reseniaForm.invalid" color="secondary"

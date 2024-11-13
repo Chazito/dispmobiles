@@ -5,6 +5,7 @@ import { AuthService } from './services/auth.service';
 import emailjs from '@emailjs/browser';
 import { MAIL_KEY } from 'environment';
 import { MenuController } from '@ionic/angular';
+import { Usuario } from './services/usuario';
 register();
 @Component({
   selector: 'app-root',
@@ -16,8 +17,8 @@ export class AppComponent {
 
   isAuth: boolean = false;
   tienePrivilegios: boolean = false;
+  usuario: Usuario = {}
   nombreApellido: string | null = null;
-  correo: string | null = null;
 
   constructor(private router: Router, private auth: AuthService, private menu: MenuController) {
     this.router.events.subscribe((e: any) => {
@@ -31,13 +32,14 @@ export class AppComponent {
     this.auth.isAuthObservable.subscribe((isAuth) => {
       this.isAuth = isAuth;
       this.tienePrivilegios = this.auth.isAdmin();
-      const usuario = auth.usuarioValue;
-      if (isAuth) {
-        this.nombreApellido = `${usuario?.nombre} ${usuario?.apellido}`
-        this.correo = usuario?.correo ? usuario.correo : null
-      } else {
-        this.nombreApellido = null;
-        this.correo = null;
+      if (auth.usuarioValue) {
+        this.usuario = auth.usuarioValue;
+        if (isAuth) {
+          this.nombreApellido = `${this.usuario?.nombre} ${this.usuario?.apellido}`
+        } else {
+          this.nombreApellido = null;
+          this.usuario = {}
+        }
       }
       emailjs.init({
         publicKey: MAIL_KEY,
