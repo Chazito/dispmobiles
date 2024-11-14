@@ -15,9 +15,9 @@
 
         <ion-item class="input-container">
           <ion-label position="stacked">Título</ion-label>
-          <ion-input class="rounded-input" formControlName="titulo"></ion-input>
+          <ion-input class="rounded-input" formControlName="nombre"></ion-input>
         </ion-item>
-        <div *ngIf="editarTituloForm.get('titulo')!.invalid && editarTituloForm.get('titulo')!.touched"
+        <div *ngIf="editarTituloForm.get('nombre')!.invalid && editarTituloForm.get('nombre')!.touched"
           class="error-message">
           El título es requerido.
         </div>
@@ -52,18 +52,18 @@
 
         <ion-item class="input-container">
           <ion-label position="stacked">URL de imagen</ion-label>
-          <ion-input class="rounded-input" formControlName="urlImagen"></ion-input>
+          <ion-input class="rounded-input" formControlName="URLImagen"></ion-input>
         </ion-item>
-        <div *ngIf="editarTituloForm.get('urlImagen')!.invalid && editarTituloForm.get('urlImagen')!.touched"
+        <div *ngIf="editarTituloForm.get('URLImagen')!.invalid && editarTituloForm.get('URLImagen')!.touched"
           class="error-message">
           La URL de la imagen es requerida.
         </div>
 
         <ion-item class="input-container">
           <ion-label position="stacked">URL del tráiler</ion-label>
-          <ion-input class="rounded-input" formControlName="urlTrailer"></ion-input>
+          <ion-input class="rounded-input" formControlName="URLTrailer"></ion-input>
         </ion-item>
-        <div *ngIf="editarTituloForm.get('urlTrailer')!.invalid && editarTituloForm.get('urlTrailer')!.touched"
+        <div *ngIf="editarTituloForm.get('URLTrailer')!.invalid && editarTituloForm.get('URLTrailer')!.touched"
           class="error-message">
           La URL del tráiler es requerida.
         </div>

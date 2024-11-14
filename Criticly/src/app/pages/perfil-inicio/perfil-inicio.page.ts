@@ -16,7 +16,6 @@ export class PerfilInicioPage implements OnInit {
   nameRegex: RegExp = /^[A-Za-z]{1,20}$/;
 
   user: Usuario = {};
-  URLAvatar: string = ""
   password: string = "";
   password2: string = "";
 
@@ -24,9 +23,6 @@ export class PerfilInicioPage implements OnInit {
 
   ngOnInit() {
     this.user = this.auth.usuarioValue!;
-    if (this.user && this.user.avatar) {
-      this.URLAvatar = URL.createObjectURL(this.user.avatar!)
-    }
   }
 
   async presentAlert(titulo: string, msj: string) {
@@ -87,20 +83,10 @@ export class PerfilInicioPage implements OnInit {
       allowEditing: true,
       resultType: CameraResultType.Base64,
     });
-
-    const avatarBlob = this.base64ToBlob(image.base64String!);
-    if (avatarBlob) {
-      await this.bd.modificarAvatar(avatarBlob, this.user.idUsuario!);
+    if (image.base64String) {
+      await this.bd.modificarAvatar(image.base64String, this.user.idUsuario!);
+      await this.auth.actualizarUsuarioActual();
+      this.user = this.auth.usuarioValue!;
     }
-  }
-
-  base64ToBlob(base64: string): Blob {
-    const byteCharacters = atob(base64);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    return new Blob([byteArray], { type: 'image/png' });
   }
 }

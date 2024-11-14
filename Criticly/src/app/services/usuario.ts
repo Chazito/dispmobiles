@@ -5,7 +5,7 @@ export interface Usuario {
   correo?: string;
   clave?: string;
   fechaNacimiento?: Date;
-  avatar?: Blob;
+  avatar?: string;
   telefono?: string;
   reputacion?: number;
   id_rol?: number | string;

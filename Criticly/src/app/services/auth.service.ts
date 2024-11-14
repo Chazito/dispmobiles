@@ -90,6 +90,10 @@ export class AuthService {
     return this.usuario
   }
 
+  async actualizarUsuarioActual() {
+    this.usuario = await this.sqlService.validarUsuarioPorEmail(this.usuario?.correo!, this.usuario?.clave!)
+  }
+
   async presentToast(position: 'top' | 'middle' | 'bottom', mensaje: string, duracion: number) {
     const toast = await this.toastController.create({
       message: mensaje,

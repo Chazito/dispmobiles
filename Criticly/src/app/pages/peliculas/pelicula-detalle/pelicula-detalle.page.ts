@@ -13,7 +13,7 @@ import { peliculas, resenias } from 'src/assets/datos';
 })
 export class PeliculaDetallePage implements OnInit {
 
-  pelicula?: Titulo
+  pelicula: Titulo = {}
   resenias: Resenna[] = [];
   usuariosResena: any = [];
   isAuth: boolean = false;

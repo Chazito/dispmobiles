@@ -378,7 +378,7 @@ export const insertTipoTitulo: string = `INSERT INTO tipoTitulo (idTipo, nombre)
 
 export const insertUsuario: string = `INSERT INTO usuario (idUsuario, nombre, apellido, correo, clave, fechaNacimiento, telefono, reputacion, id_rol) VALUES
 ('1', 'Juan', 'Pérez', 'juan.perez@example.com', 'password123', '1990-05-15',  '123456789', 4.5, 1),
-('2', 'Juan', 'Gómez', 'juan.gomez@example.com', '123', '1985-11-23', '987654321', 5.0, 2),
+('2', 'Juan', 'Gómez', '123@123.com', '123', '1985-11-23', '987654321', 5.0, 2),
 ('3', 'Franco', 'Nunez', 'fr.nuneza@duocuc.cl', 'Admin@1234', '1998-04-23', '11112222', 5.0, 2);`
 
 export const insertTitulo: string = `INSERT INTO titulo (idTitulo, idTipoTitulo, nombre, sinopsis, duracion, URLImagen, URLTrailer, fechaEstreno, puntuacion) VALUES

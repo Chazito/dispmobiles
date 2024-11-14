@@ -15,26 +15,23 @@ export class EditarTituloPage implements OnInit {
   constructor(private route: ActivatedRoute, private sqlService: ServicebdService, private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.sqlService.selectTituloPorId(id).then((titulo: Titulo | null) => {
-          if (titulo) this.titulo = titulo;
-        });
-      }
+    this.route.paramMap.subscribe(async params => {
       this.editarTituloForm = this.fb.group({
-        titulo: [this.titulo.nombre, [Validators.required]],
+        nombre: [this.titulo.nombre, [Validators.required]],
         sinopsis: [this.titulo.sinopsis, [Validators.required]],
         fechaEstreno: [this.sqlService.formatFechaSQLite(String(this.titulo.fechaEstreno!)), [Validators.required]],
         duracion: [this.titulo.duracion, [Validators.required]],
-        urlImagen: [this.titulo.URLImagen, [Validators.required]],
-        urlTrailer: [this.titulo.URLTrailer, [Validators.required]]
+        URLImagen: [this.titulo.URLImagen, [Validators.required]],
+        URLTrailer: [this.titulo.URLTrailer, [Validators.required]]
       });
+      const id = params.get('id');
+      this.titulo = await this.sqlService.selectTituloPorId(id!) as Titulo;
+      this.editarTituloForm.patchValue(this.titulo)
     });
 
   }
 
   modificarTitulo() {
-    this.sqlService.modificarTituloPorId(this.titulo)
+    this.sqlService.modificarTituloPorId({ ...this.titulo, ...this.editarTituloForm.value })
   }
 }
