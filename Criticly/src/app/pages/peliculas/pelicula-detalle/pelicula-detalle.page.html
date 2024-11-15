@@ -68,7 +68,8 @@
             stroke="#FFE500" stroke-width="5" mask="url(#rating-mask)" />
         </svg>
       </div>
-      <h6 style="text-align: center;"><strong>{{ puntuacion }}</strong>/5</h6>
+      <h6 style="text-align: center;" *ngIf="puntuacion !== -1"><strong>{{ puntuacion }}</strong>/5</h6>
+      <p style="text-align: center;" *ngIf="puntuacion === -1">¡Sé el primero en valorar este título!</p>
     </div>
     <ion-row>
       <ion-col size="12">

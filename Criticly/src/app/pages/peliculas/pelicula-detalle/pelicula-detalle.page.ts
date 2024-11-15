@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Resenna } from 'src/app/services/resenna';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Titulo } from 'src/app/services/titulo';
+import { peliculas } from 'src/assets/datos';
 
 @Component({
   selector: 'app-pelicula-detalle',
@@ -27,16 +28,17 @@ export class PeliculaDetallePage implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(async params => {
       const id = params.get('id');
-      if (id) {
-        await this.sqlService.selectTituloPorId(id).then(async (pelicula: any) => {
-          if (pelicula) {
-            this.pelicula = pelicula;
-            await this.cargarResenias()
-            await this.obtenerPuntuacion()
-          }
-        }).catch();
-      }
-
+      // if (id) {
+      //   await this.sqlService.selectTituloPorId(id).then(async (pelicula: any) => {
+      //     if (pelicula) {
+      //       this.pelicula = pelicula;
+      //       await this.cargarResenias()
+      //       await this.obtenerPuntuacion()
+      //     }
+      //   }).catch();
+      // }
+      this.pelicula = peliculas[4]
+      this.puntuacion = -1
     });
     this.auth.usuarioObservable.subscribe(usuario => {
       if (usuario && usuario.id_rol === 2) {
