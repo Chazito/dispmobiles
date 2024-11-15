@@ -15,7 +15,6 @@ register();
 export class AppComponent {
   mostrarToolbar: boolean = true;
 
-  isAuth: boolean = false;
   tienePrivilegios: boolean = false;
   usuario: Usuario = {}
   nombreApellido: string | null = null;
@@ -45,7 +44,7 @@ export class AppComponent {
   }
 
   urlPerfil(): string {
-    return this.isAuth ? '/perfil-inicio' : '/login';
+    return !!(this.usuario && this.usuario.idUsuario) ? '/perfil-inicio' : '/login';
   }
 
   logout() {
