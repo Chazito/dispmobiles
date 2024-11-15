@@ -69,7 +69,8 @@
           </ion-list>
         </ion-menu-toggle>
         <div style="display: flex; flex-direction: column;align-items: center;">
-          <ion-button (click)="logout()" [disabled]="!isAuth" slot="end" id="cerrarSesion" color="danger">
+          <ion-button (click)="logout()" [disabled]="!(usuario && usuario.idUsuario)" slot="end" id="cerrarSesion"
+            color="danger">
             <div style="display: flex; justify-content: center; align-items: center;">
               <ion-icon slot="start" name="log-out-outline" size="small"></ion-icon>
               <ion-label style="margin-left: 5px ; font-size: .9rem;">Cerrar sesión</ion-label>
