@@ -22,7 +22,10 @@ export class PerfilInicioPage implements OnInit {
   constructor(private bd: ServicebdService, private auth: AuthService, private alertController: AlertController) { }
 
   ngOnInit() {
-    this.user = this.auth.usuarioValue!;
+    this.auth.usuarioObservable.subscribe(usuario => {
+      if (!usuario) return
+      this.user = usuario;
+    })
   }
 
   async presentAlert(titulo: string, msj: string) {
@@ -85,8 +88,6 @@ export class PerfilInicioPage implements OnInit {
     });
     if (image.base64String) {
       await this.bd.modificarAvatar(image.base64String, this.user.idUsuario!);
-      await this.auth.actualizarUsuarioActual();
-      this.user = this.auth.usuarioValue!;
     }
   }
 }

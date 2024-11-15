@@ -29,23 +29,19 @@ export class AppComponent {
           || e.url.includes('/editar') || e.url.includes('roles/') || e.url.includes('tipos/') || e.url.includes('usuarios/') || e.url.includes('resennas/') || e.url.includes('titulo/'))
       }
     })
-    this.auth.isAuthObservable.subscribe((isAuth) => {
-      this.isAuth = isAuth;
-      this.tienePrivilegios = this.auth.isAdmin();
-      if (auth.usuarioValue) {
-        this.usuario = auth.usuarioValue;
-        if (isAuth) {
-          this.nombreApellido = `${this.usuario?.nombre} ${this.usuario?.apellido}`
-        } else {
-          this.nombreApellido = null;
-          this.usuario = {}
-        }
+    this.auth.usuarioObservable.subscribe(async usuario => {
+      if (!usuario) {
+        this.nombreApellido = null;
+        this.usuario = {}
+        return
       }
-      emailjs.init({
-        publicKey: MAIL_KEY,
-      })
+      this.tienePrivilegios = await this.auth.isAdmin();
+      this.usuario = usuario;
+      this.nombreApellido = `${this.usuario?.nombre} ${this.usuario?.apellido}`
     });
-
+    emailjs.init({
+      publicKey: MAIL_KEY,
+    })
   }
 
   urlPerfil(): string {

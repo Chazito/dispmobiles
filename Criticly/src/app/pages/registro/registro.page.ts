@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import emailjs from '@emailjs/browser';
 import { Usuario } from 'src/app/services/usuario';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-registro',
@@ -24,7 +25,8 @@ export class RegistroPage {
   constructor(
     private router: Router,
     private alertController: AlertController,
-    private db: ServicebdService
+    private db: ServicebdService,
+    private auth: AuthService
   ) { }
 
   passwordsMatch(): boolean {
@@ -58,13 +60,15 @@ export class RegistroPage {
         correo: this.inputEmail,
         clave: this.inputPass,
       };
-      await this.db.insertarUsuario(user).then(() => emailjs.send("service_0wgkgxo", "template_gqf4zyi", { to_name: user.nombre, to_email: user.correo })
-      ).then(() => {
-        this.presentAlert(
-          'Registro exitoso',
-          'Enviamos un correo de confirmación a su email',
-          'Volver al login'
-        );
+      await this.db.insertarUsuario(user).then(async () => {
+        emailjs.send("service_0wgkgxo", "template_gqf4zyi", { to_name: user.nombre, to_email: user.correo }).then(async () => {
+          await this.presentAlert(
+            'Registro exitoso',
+            'Enviamos un correo de confirmación a su email',
+            'OK'
+          );
+          await this.auth.validarUsuarioPorEmail(user.correo!, user.clave!);
+        })
       });
       this.router.navigate(['/home']);
     } else {

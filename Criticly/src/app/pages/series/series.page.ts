@@ -18,8 +18,8 @@ export class SeriesPage implements OnInit {
 
 
   constructor(private router: Router, private sqlService: ServicebdService, private auth: AuthService) {
-    this.auth.isAuthObservable.subscribe(() => {
-      if (this.auth.usuarioValue?.id_rol === 2) { this.tienePrivilegios = true } else { this.tienePrivilegios = false }
+    this.auth.usuarioObservable.subscribe(usuario => {
+      if (usuario && usuario.id_rol === 2) { this.tienePrivilegios = true } else { this.tienePrivilegios = false }
     })
     this.sqlService.selectDestacados()
     this.sqlService.fetchDestacados().subscribe(res => {

@@ -38,10 +38,14 @@ export class PeliculaDetallePage implements OnInit {
       }
 
     });
-    this.auth.isAuthObservable.subscribe((isAuth) => {
-      this.isAuth = isAuth;
-      this.tienePrivilegios = this.auth.usuarioValue?.id_rol == 2;
-    });
+    this.auth.usuarioObservable.subscribe(usuario => {
+      if (usuario && usuario.id_rol === 2) {
+        this.isAuth = !!(usuario && usuario.idUsuario)
+        this.tienePrivilegios = true
+      } else {
+        this.tienePrivilegios = false
+      }
+    })
   }
 
   cargarResenias() {

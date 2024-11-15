@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
-import { ServicebdService } from 'src/app/services/servicebd.service';
 
 @Component({
   selector: 'app-login',

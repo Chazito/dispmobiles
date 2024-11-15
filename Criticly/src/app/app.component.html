@@ -9,11 +9,11 @@
               <ion-avatar slot="start">
                 <img [src]="usuario.avatar ? 'data:image;base64,' + usuario.avatar : '../../assets/icon/user.svg'">
               </ion-avatar>
-              <ion-label id="labelUsuario" *ngIf="isAuth">
+              <ion-label id="labelUsuario" *ngIf="!!(usuario && usuario.idUsuario)">
                 <p id="nombreUsuario">{{nombreApellido}}</p>
                 <p class="email">{{usuario.correo}}</p>
               </ion-label>
-              <ion-label *ngIf="!isAuth">
+              <ion-label *ngIf="!(usuario && usuario.idUsuario)">
                 <p id="nombreUsuario">Iniciar sesión</p>
               </ion-label>
             </ion-item>

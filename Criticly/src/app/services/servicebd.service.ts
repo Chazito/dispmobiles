@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 import { AlertController, Platform } from '@ionic/angular';
-import { BehaviorSubject, Observable, retry } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, retry } from 'rxjs';
 import { Rol } from './rol';
 import { TipoTitulo } from './tipo-titulo';
 import { Usuario } from './usuario';
@@ -10,6 +10,7 @@ import { Resenna } from './resenna';
 import { Marcador } from './marcador';
 import { insertMarcador, insertResenna, insertRol, insertTipoTitulo, insertTitulo, insertUsuario } from 'src/assets/datos';
 import { Storage } from '@ionic/storage-angular';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,7 @@ export class ServicebdService {
   listaCriticados = new BehaviorSubject<Titulo[]>([]);
   listaMejor = new BehaviorSubject<Titulo[]>([]);
 
-  constructor(private sqlite: SQLite, private platform: Platform, private alertController: AlertController, private storage: Storage) {
+  constructor(private sqlite: SQLite, private auth: AuthService, private platform: Platform, private alertController: AlertController, private storage: Storage) {
     this.crearBD();
   }
 
@@ -414,6 +415,11 @@ export class ServicebdService {
       console.error("Error al consultar el usuario por email", error);
       return null;
     });
+  }
+
+  async selectUsuarioActual() {
+    const usuario = await firstValueFrom(this.auth.usuarioObservable)
+    this.selectUsuarioPorId(usuario?.idUsuario!)
   }
 
   selectUsuarioPorId(idUsuario: string): Promise<Usuario | null> {
