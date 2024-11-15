@@ -417,11 +417,6 @@ export class ServicebdService {
     });
   }
 
-  async selectUsuarioActual() {
-    const usuario = await firstValueFrom(this.auth.usuarioObservable)
-    this.selectUsuarioPorId(usuario?.idUsuario!)
-  }
-
   selectUsuarioPorId(idUsuario: string): Promise<Usuario | null> {
     const query = "SELECT * FROM Usuario WHERE idUsuario = ?";
     return this.database.executeSql(query, [idUsuario]).then(res => {
@@ -811,9 +806,8 @@ export class ServicebdService {
     const params = [avatar, idUsuario];
 
     return this.database.executeSql(query, params)
-      .then(res => {
+      .then(async res => {
         if (res.rowsAffected > 0) {
-          console.log("Avatar actualizado correctamente");
           return true;
         } else {
           console.warn("No se pudo actualizar el avatar");

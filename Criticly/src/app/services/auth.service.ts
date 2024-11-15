@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  private usuarioSubject = new BehaviorSubject<Usuario | null>(null);
+  usuarioSubject = new BehaviorSubject<Usuario | null>(null);
   usuarioObservable = this.usuarioSubject.asObservable();
 
   constructor(private storage: Storage, private sqlService: ServicebdService, private toastController: ToastController, private router: Router) {
@@ -37,12 +37,13 @@ export class AuthService {
       const usuarioData = await this.sqlService.validarUsuarioPorEmail(email, password);
       if (usuarioData) {
         this.usuarioSubject.next(usuarioData);
-        if (!await this.storage.get('userID')) {
+        if (!(await this.storage.get('userID'))) {
           await this.login()
         }
         return usuarioData;
       } else {
         this.usuarioSubject.next(null);
+        this.presentToast("bottom", "Credenciales inválidas", 4000);
         return null;
       }
     } catch (error) {
@@ -55,10 +56,8 @@ export class AuthService {
   async login() {
     const usuario = await firstValueFrom(this.usuarioObservable)
     if (!usuario || !usuario.idUsuario) {
-      this.presentToast("bottom", "Credenciales inválidas", 4000);
       return false
     }
-    await this.storage.set('isAuth', true);
     await this.storage.set('userID', usuario.idUsuario)
     this.presentToast("bottom", "Sesión iniciada correctamente", 2500);
     this.router.navigate(['/home']);
@@ -67,7 +66,7 @@ export class AuthService {
 
   async logout() {
     this.router.navigate(['../home']);
-    await this.storage.set('isAuth', false);
+    await this.storage.set('userID', null);
     this.usuarioSubject.next(null);
     this.presentToast("bottom", "Sesión finalizada", 4000);
   }

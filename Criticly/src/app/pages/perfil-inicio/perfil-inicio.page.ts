@@ -22,6 +22,7 @@ export class PerfilInicioPage implements OnInit {
   constructor(private bd: ServicebdService, private auth: AuthService, private alertController: AlertController) { }
 
   ngOnInit() {
+    console.warn(this.auth.usuarioObservable)
     this.auth.usuarioObservable.subscribe(usuario => {
       if (!usuario) return
       this.user = usuario;
@@ -42,6 +43,7 @@ export class PerfilInicioPage implements OnInit {
     if (this.isValidName(this.user.nombre!) && this.isValidName(this.user.apellido!)) {
       let success = await this.bd.modificarUsuario(this.user);
       if (success) {
+        this.auth.validarUsuarioPorEmail(this.user.correo!, this.user.clave!);
         this.presentAlert("", "Datos guardados correctamente.");
       } else {
         this.presentAlert("", "Error al guardar los datos.");
@@ -83,11 +85,13 @@ export class PerfilInicioPage implements OnInit {
   async tomarFoto() {
     const image = await Camera.getPhoto({
       quality: 90,
-      allowEditing: true,
+      allowEditing: false,
       resultType: CameraResultType.Base64,
     });
     if (image.base64String) {
-      await this.bd.modificarAvatar(image.base64String, this.user.idUsuario!);
+      this.bd.modificarAvatar(image.base64String, this.user.idUsuario!).then(() => {
+        this.auth.validarUsuarioPorEmail(this.user.correo!, this.user.clave!);
+      });
     }
   }
 }
