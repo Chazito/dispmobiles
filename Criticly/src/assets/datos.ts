@@ -15,7 +15,6 @@ export const peliculas: Titulo[] = [
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/inception-trailer.mp4',
     fechaEstreno: new Date('2010-07-16'),
-    puntuacion: 4.8
   },
   {
     idTitulo: '2',
@@ -26,7 +25,6 @@ export const peliculas: Titulo[] = [
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/matrix-trailer.mp4',
     fechaEstreno: new Date('1999-03-31'),
-    puntuacion: 4.7
   },
   {
     idTitulo: '3',
@@ -37,7 +35,6 @@ export const peliculas: Titulo[] = [
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/nemo-trailer.mp4',
     fechaEstreno: new Date('2003-05-30'),
-    puntuacion: 4.5
   },
   {
     idTitulo: '4',
@@ -48,7 +45,6 @@ export const peliculas: Titulo[] = [
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/interstellar-trailer.mp4',
     fechaEstreno: new Date('2014-11-07'),
-    puntuacion: 4.6
   },
   {
     idTitulo: '5',
@@ -59,7 +55,6 @@ export const peliculas: Titulo[] = [
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/dark-knight-trailer.mp4',
     fechaEstreno: new Date('2008-07-18'),
-    puntuacion: 4.9
   },
   {
     idTitulo: '6',
@@ -70,7 +65,6 @@ export const peliculas: Titulo[] = [
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/avatar-trailer.mp4',
     fechaEstreno: new Date('2009-12-18'),
-    puntuacion: 4.4
   },
   {
     idTitulo: '7',
@@ -81,7 +75,6 @@ export const peliculas: Titulo[] = [
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/titanic-trailer.mp4',
     fechaEstreno: new Date('1997-12-19'),
-    puntuacion: 4.7
   },
   {
     idTitulo: '8',
@@ -92,7 +85,6 @@ export const peliculas: Titulo[] = [
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/jurassic-park-trailer.mp4',
     fechaEstreno: new Date('1993-06-11'),
-    puntuacion: 4.6
   },
   {
     idTitulo: '9',
@@ -103,7 +95,6 @@ export const peliculas: Titulo[] = [
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/gladiator-trailer.mp4',
     fechaEstreno: new Date('2000-05-05'),
-    puntuacion: 4.8
   },
   {
     idTitulo: '10',
@@ -114,8 +105,7 @@ export const peliculas: Titulo[] = [
     URLImagen: 'https://placehold.co/100x170',
     URLTrailer: 'https://example.com/shawshank-trailer.mp4',
     fechaEstreno: new Date('1994-09-23'),
-    puntuacion: 4.9
-  },
+  }
 ];
 
 export const usuarios: Usuario[] = [
@@ -381,17 +371,17 @@ export const insertUsuario: string = `INSERT INTO usuario (idUsuario, nombre, ap
 ('2', 'Juan', 'Gómez', '123@123.com', '123', '1985-11-23', '987654321', 5.0, 2),
 ('3', 'Franco', 'Nunez', 'fr.nuneza@duocuc.cl', 'Admin@1234', '1998-04-23', '11112222', 5.0, 2);`
 
-export const insertTitulo: string = `INSERT INTO titulo (idTitulo, idTipoTitulo, nombre, sinopsis, duracion, URLImagen, URLTrailer, fechaEstreno, puntuacion) VALUES
-('1', '1', 'Inception', 'Un ladrón que roba secretos corporativos a través del uso de tecnología de sueños compartidos se le da la tarea inversa: plantar una idea en la mente de un CEO.', '148 min', 'https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg', 'https://www.youtube.com/watch?v=YoHD9XEInc0', '2010-07-16', 4.8),
-('2', '1', 'The Matrix', 'Un hacker aprende la impactante verdad sobre su realidad y su papel en la guerra contra sus controladores.', '136 min', 'https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg', 'https://www.youtube.com/watch?v=vKQi3bBA1y8', '1999-03-31', 4.7),
-('3', '1', 'Buscando a Nemo', 'Un pez payaso llamado Marlin, junto con una pez cirujano azul llamada Dory, busca a su hijo Nemo que ha sido capturado por unos buzos.', '100 min', 'https://image.tmdb.org/t/p/w500/2zLqSbnT8usDMQt3aFlAqBdMAB1.jpg', 'https://www.youtube.com/watch?v=wZdpNglLbt8', '2003-05-30', 4.5),
-('4', '1', 'Interstellar', 'Un grupo de astronautas viaja a través de un agujero de gusano en busca de un nuevo hogar para la humanidad.', '169 min', 'https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg', 'https://www.youtube.com/watch?v=zSWdZVtXT7E', '2014-11-07', 4.6),
-('5', '1', 'The Dark Knight', 'Batman enfrenta al Joker, un villano anárquico que desata el caos en Gotham mientras desafía las creencias del héroe.', '152 min', 'https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg', 'https://www.youtube.com/watch?v=EXeTwQWrcwY', '2008-07-18', 4.9),
-('6', '1', 'Avatar', 'Un ex-marine se adentra en un mundo alienígena y toma partido en la lucha entre los colonizadores humanos y los nativos Na’vi.', '162 min', 'https://image.tmdb.org/t/p/w500/jRXYjXNq0Cs2TcJjLkki24MLp7u.jpg', 'https://www.youtube.com/watch?v=5PSNL1qE6VY', '2009-12-18', 4.4),
-('7', '1', 'Titanic', 'Una historia de amor entre Jack y Rose a bordo del desafortunado Titanic que se hunde tras chocar con un iceberg.', '195 min', 'https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg', 'https://www.youtube.com/watch?v=2e-eXJ6HgkQ', '1997-12-19', 4.7),
-('8', '1', 'Jurassic Park', 'Un grupo de visitantes lucha por sobrevivir en un parque temático donde dinosaurios clonados escapan de sus jaulas.', '127 min', 'https://image.tmdb.org/t/p/w500/9i3plLl89DHMz7mahksDaAo7HIS.jpg', 'https://www.youtube.com/watch?v=lc0UehYemQA', '1993-06-11', 4.6),
-('9', '1', 'Gladiator', 'Un general romano es traicionado y reducido a la esclavitud, buscando venganza contra el emperador que lo traicionó.', '155 min', 'https://image.tmdb.org/t/p/w500/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg', 'https://www.youtube.com/watch?v=owK1qxDselE', '2000-05-05', 4.8),
-('10', '1', 'The Shawshank Redemption', 'Dos hombres en una prisión encuentran amistad y redención mientras intentan sobrevivir en un entorno brutal.', '142 min', 'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg', 'https://www.youtube.com/watch?v=6hB3S9bIaco', '1994-09-23', 4.9);
+export const insertTitulo: string = `INSERT INTO titulo (idTitulo, idTipoTitulo, nombre, sinopsis, duracion, URLImagen, URLTrailer, fechaEstreno) VALUES
+('1', '1', 'Inception', 'Un ladrón que roba secretos corporativos a través del uso de tecnología de sueños compartidos se le da la tarea inversa: plantar una idea en la mente de un CEO.', '148 min', 'https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg', 'https://www.youtube.com/watch?v=YoHD9XEInc0', '2010-07-16'),
+('2', '1', 'The Matrix', 'Un hacker aprende la impactante verdad sobre su realidad y su papel en la guerra contra sus controladores.', '136 min', 'https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg', 'https://www.youtube.com/watch?v=vKQi3bBA1y8', '1999-03-31'),
+('3', '1', 'Buscando a Nemo', 'Un pez payaso llamado Marlin, junto con una pez cirujano azul llamada Dory, busca a su hijo Nemo que ha sido capturado por unos buzos.', '100 min', 'https://image.tmdb.org/t/p/w500/2zLqSbnT8usDMQt3aFlAqBdMAB1.jpg', 'https://www.youtube.com/watch?v=wZdpNglLbt8', '2003-05-30'),
+('4', '1', 'Interstellar', 'Un grupo de astronautas viaja a través de un agujero de gusano en busca de un nuevo hogar para la humanidad.', '169 min', 'https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg', 'https://www.youtube.com/watch?v=zSWdZVtXT7E', '2014-11-07'),
+('5', '1', 'The Dark Knight', 'Batman enfrenta al Joker, un villano anárquico que desata el caos en Gotham mientras desafía las creencias del héroe.', '152 min', 'https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg', 'https://www.youtube.com/watch?v=EXeTwQWrcwY', '2008-07-18'),
+('6', '1', 'Avatar', 'Un ex-marine se adentra en un mundo alienígena y toma partido en la lucha entre los colonizadores humanos y los nativos Na’vi.', '162 min', 'https://image.tmdb.org/t/p/w500/jRXYjXNq0Cs2TcJjLkki24MLp7u.jpg', 'https://www.youtube.com/watch?v=5PSNL1qE6VY', '2009-12-18'),
+('7', '1', 'Titanic', 'Una historia de amor entre Jack y Rose a bordo del desafortunado Titanic que se hunde tras chocar con un iceberg.', '195 min', 'https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg', 'https://www.youtube.com/watch?v=2e-eXJ6HgkQ', '1997-12-19'),
+('8', '1', 'Jurassic Park', 'Un grupo de visitantes lucha por sobrevivir en un parque temático donde dinosaurios clonados escapan de sus jaulas.', '127 min', 'https://image.tmdb.org/t/p/w500/9i3plLl89DHMz7mahksDaAo7HIS.jpg', 'https://www.youtube.com/watch?v=lc0UehYemQA', '1993-06-11'),
+('9', '1', 'Gladiator', 'Un general romano es traicionado y reducido a la esclavitud, buscando venganza contra el emperador que lo traicionó.', '155 min', 'https://image.tmdb.org/t/p/w500/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg', 'https://www.youtube.com/watch?v=owK1qxDselE', '2000-05-05'),
+('10', '1', 'The Shawshank Redemption', 'Dos hombres en una prisión encuentran amistad y redención mientras intentan sobrevivir en un entorno brutal.', '142 min', 'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg', 'https://www.youtube.com/watch?v=6hB3S9bIaco', '1994-09-23');
 `
 
 export const insertResenna = `INSERT INTO resenna (idResenna, idUsuario, idTitulo, titulo, comentario, fechaPublicacion, calificacion, esVisible) VALUES

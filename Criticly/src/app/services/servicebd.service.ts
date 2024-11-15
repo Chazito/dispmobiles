@@ -23,7 +23,7 @@ export class ServicebdService {
   tablaTipoTitulo: string = "CREATE TABLE IF NOT EXISTS tipoTitulo (idTipo INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL UNIQUE);";
 
   tablaUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, apellido TEXT NOT NULL, correo TEXT NOT NULL UNIQUE, clave TEXT NOT NULL, fechaNacimiento DATE, avatar TEXT, telefono TEXT, reputacion REAL, id_rol INTEGER NOT NULL, FOREIGN KEY (id_rol) REFERENCES Rol(idRol));";
-  tablaTitulo: string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT,puntuacion REAL, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
+  tablaTitulo: string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
 
   tablaResenna: string = "CREATE TABLE IF NOT EXISTS Resenna (idResenna INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL,titulo TEXT, comentario TEXT, fechaPublicacion DATE, calificacion REAL, esVisible INTEGER, fechaEliminada DATE, motivoEliminacion TEXT, URLImagen TEXT, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
   tablaMarcador: string = "CREATE TABLE IF NOT EXISTS Marcador (idMarcador INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, fechaMarcado DATE, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
@@ -44,7 +44,7 @@ export class ServicebdService {
   listaCriticados = new BehaviorSubject<Titulo[]>([]);
   listaMejor = new BehaviorSubject<Titulo[]>([]);
 
-  constructor(private sqlite: SQLite, private auth: AuthService, private platform: Platform, private alertController: AlertController, private storage: Storage) {
+  constructor(private sqlite: SQLite, private platform: Platform, private alertController: AlertController, private storage: Storage) {
     this.crearBD();
   }
 
@@ -537,7 +537,6 @@ export class ServicebdService {
           URLImagen: res.rows.item(0).URLImagen || "",
           URLTrailer: res.rows.item(0).URLTrailer || "",
           fechaEstreno: res.rows.item(0).fechaEstreno,
-          puntuacion: res.rows.item(0).puntuacion
         };
         return titulo;
       } else {
@@ -842,7 +841,7 @@ export class ServicebdService {
   modificarTituloPorId(nuevoTitulo: Titulo): Promise<boolean> {
     const query = `
       UPDATE Titulo
-      SET idTipoTitulo = ?, nombre = ?, sinopsis = ?, puntuacion = ?, duracion = ?,
+      SET idTipoTitulo = ?, nombre = ?, sinopsis = ?, duracion = ?,
           URLImagen = ?, URLTrailer = ?, fechaEstreno = ?
       WHERE idTitulo = ?;
     `;
@@ -850,7 +849,6 @@ export class ServicebdService {
       nuevoTitulo.idTipoTitulo,
       nuevoTitulo.nombre,
       nuevoTitulo.sinopsis,
-      nuevoTitulo.puntuacion,
       nuevoTitulo.duracion,
       nuevoTitulo.URLImagen,
       nuevoTitulo.URLTrailer,
@@ -910,4 +908,25 @@ export class ServicebdService {
 
     return `${year}-${month}-${day}`;
   }
+
+  obtenerPuntuacionPromedioPorId(idTitulo: string): Promise<number> {
+    const query = `
+      SELECT AVG(calificacion) as promedio
+      FROM Resenna
+      WHERE idTitulo = ?
+    `;
+
+    return this.database.executeSql(query, [idTitulo])
+      .then(res => {
+        if (res.rows.length > 0 && res.rows.item(0).promedio !== null) {
+          return Math.round(res.rows.item(0).promedio * 10) / 10;
+        }
+        return -1;
+      })
+      .catch(error => {
+        console.error('Error al obtener la puntuación promedio', error);
+        throw error;
+      });
+  }
+
 }

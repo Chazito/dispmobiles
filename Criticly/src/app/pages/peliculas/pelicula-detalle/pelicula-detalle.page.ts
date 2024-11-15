@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Resenna } from 'src/app/services/resenna';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Titulo } from 'src/app/services/titulo';
-import { peliculas, resenias } from 'src/assets/datos';
 
 @Component({
   selector: 'app-pelicula-detalle',
@@ -16,6 +15,8 @@ export class PeliculaDetallePage implements OnInit {
   pelicula: Titulo = {}
   resenias: Resenna[] = [];
   usuariosResena: any = [];
+  puntuacionPorcentaje?: number
+  puntuacion?: number
   isAuth: boolean = false;
   tienePrivilegios: boolean = false
   constructor(
@@ -24,17 +25,16 @@ export class PeliculaDetallePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe(async params => {
       const id = params.get('id');
       if (id) {
-        this.sqlService.selectTituloPorId(id).then((pelicula: any) => {
+        await this.sqlService.selectTituloPorId(id).then(async (pelicula: any) => {
           if (pelicula) {
             this.pelicula = pelicula;
-            this.cargarResenias()
+            await this.cargarResenias()
+            await this.obtenerPuntuacion()
           }
-        }).catch(() => {
-          return peliculas.find(pelicula => pelicula.idTitulo === id);
-        });
+        }).catch();
       }
 
     });
@@ -48,16 +48,14 @@ export class PeliculaDetallePage implements OnInit {
     })
   }
 
-  cargarResenias() {
-    this.sqlService.selectResennaPorIdTitulo(this.pelicula?.idTitulo!).then((res: any) => {
+  async cargarResenias() {
+    await this.sqlService.selectResennaPorIdTitulo(this.pelicula?.idTitulo!).then((res: any) => {
       this.resenias = res;
-    }).catch((error: any) => {
-      console.error('Error al cargar reseñas:', error);
-      this.resenias = resenias.filter(resenia => resenia.idTitulo === this.pelicula?.idTitulo)
-    });
+    }).catch();
   }
 
-  get ratingPorcentaje(): number {
-    return (this.pelicula!.puntuacion! / 5) * 100;
+  async obtenerPuntuacion() {
+    this.puntuacion = await this.sqlService.obtenerPuntuacionPromedioPorId(this.pelicula.idTitulo!)
+    this.puntuacionPorcentaje = this.puntuacion * 2 * 10
   }
 }

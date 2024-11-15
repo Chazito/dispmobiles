@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, take } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { Storage } from '@ionic/storage-angular';
 import { Usuario } from './usuario';
 import { ServicebdService } from './servicebd.service';

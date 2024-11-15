@@ -56,7 +56,8 @@
         <svg width="100%" viewBox="0 0 870 134" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <mask id="rating-mask">
-              <rect attr.width="{{ratingPorcentaje + '%'}}" height="100%" fill="white" />
+              <rect attr.width="{{(puntuacionPorcentaje ? puntuacionPorcentaje : 0)  + '%'}}" height="100%"
+                fill="white" />
             </mask>
           </defs>
           <path
@@ -67,7 +68,7 @@
             stroke="#FFE500" stroke-width="5" mask="url(#rating-mask)" />
         </svg>
       </div>
-      <h6 style="text-align: center;"><strong>{{ pelicula!.puntuacion }}</strong>/5</h6>
+      <h6 style="text-align: center;"><strong>{{ puntuacion }}</strong>/5</h6>
     </div>
     <ion-row>
       <ion-col size="12">

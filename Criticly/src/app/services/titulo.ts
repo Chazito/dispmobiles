@@ -7,5 +7,4 @@ export interface Titulo {
   URLImagen?: string;
   URLTrailer?: string;
   fechaEstreno?: Date;
-  puntuacion?: number;
 }
