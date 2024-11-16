@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Usuario } from 'src/app/services/usuario';
-import emailjs from '@emailjs/browser';
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 import { AlertController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -31,7 +31,7 @@ export class RecuperarPage implements OnInit {
     const nuevaPassword = this.generarPassword();
     const usuario = await this.sqlService.selectUsuarioPorEmail(this.resetForm.get('email')?.value) as Usuario
     await this.sqlService.modificarPassword({ ...usuario, clave: nuevaPassword })
-    await emailjs.send("service_0wgkgxo", "template_n19qbr8", { password: nuevaPassword, to_email: usuario.correo }).catch(e => this.presentAlert("Error", JSON.stringify(e)))
+    await emailjs.send("service_l6fu4hb", "template_n19qbr8", { password: nuevaPassword, to_email: usuario.correo }).catch((e: EmailJSResponseStatus) => this.presentAlert("Error", e.status + e.text))
     this.iniciarTemporizador()
     this.presentAlert("Recuperar contraseña", "Se ha enviado un correo con su nueva contraseña")
   }

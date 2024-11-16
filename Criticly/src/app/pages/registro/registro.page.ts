@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ServicebdService } from 'src/app/services/servicebd.service';
-import emailjs from '@emailjs/browser';
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 import { Usuario } from 'src/app/services/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -41,8 +41,35 @@ export class RegistroPage {
     return /\S+@\S+\.\S+/.test(email);
   }
 
-  isValidPassword(password: string): boolean {
-    return this.StrongPasswordRegx.test(password);
+  hasMinLength(): boolean {
+    return this.inputPass.length >= 8 && this.inputPass.length <= 20;
+  }
+
+  hasLowerCase(): boolean {
+    return /[a-z]/.test(this.inputPass);
+  }
+
+  hasUpperCase(): boolean {
+    return /[A-Z]/.test(this.inputPass);
+  }
+
+  hasSpecialChar(): boolean {
+    return /[!@#$%^&*(),.?":{}|<>]/.test(this.inputPass);
+  }
+
+  hasNumber(): boolean {
+    return /\d/.test(this.inputPass);
+  }
+
+  // Verifica si la contraseña es válida
+  isValidPassword(): boolean {
+    return (
+      this.hasMinLength() &&
+      this.hasLowerCase() &&
+      this.hasUpperCase() &&
+      this.hasSpecialChar() &&
+      this.hasNumber()
+    );
   }
 
   async onRegistroClick() {
@@ -51,7 +78,7 @@ export class RegistroPage {
       this.isValidName(this.inputNombre) &&
       this.isValidName(this.inputApellido) &&
       this.isValidEmail(this.inputEmail) &&
-      this.isValidPassword(this.inputPass) &&
+      this.isValidPassword() &&
       this.passwordsMatch()
     ) {
       let user: Usuario = {
@@ -61,13 +88,13 @@ export class RegistroPage {
         clave: this.inputPass,
       };
       await this.db.insertarUsuario(user).then(async () => {
-        emailjs.send("service_0wgkgxo", "template_gqf4zyi", { to_name: user.nombre, to_email: user.correo }).then(async () => {
+        await this.auth.validarUsuarioPorEmail(user.correo!, user.clave!);
+        emailjs.send("service_l6fu4hb", "template_gqf4zyi", { to_name: user.nombre, to_email: user.correo }).then(async () => {
           await this.presentAlert(
             'Registro exitoso',
             'Enviamos un correo de confirmación a su email',
             'OK'
-          );
-          await this.auth.validarUsuarioPorEmail(user.correo!, user.clave!);
+          ).catch(e => this.presentAlert("ERROR EMAILJS", (e as EmailJSResponseStatus).text, "OK"));
         })
       });
       this.router.navigate(['/home']);

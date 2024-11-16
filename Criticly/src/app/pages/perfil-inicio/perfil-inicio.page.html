@@ -40,8 +40,8 @@
           </ion-input>
           <small *ngIf="emailInput.invalid">Email no válido.</small>
         </ion-item>
-        <ion-button [disabled]="datosForm.invalid" expand="full" id="guardar" color="secondary" shape="round"
-          (click)="guardarCambios()">
+        <ion-button [disabled]="datosForm.invalid || datosForm.untouched" expand="full" id="guardar" color="secondary"
+          shape="round" (click)="guardarCambios()">
           <ion-icon name="save-outline" slot="start"></ion-icon>
           <strong>Guardar</strong>
         </ion-button>

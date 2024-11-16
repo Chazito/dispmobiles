@@ -17,7 +17,7 @@ export class PeliculasPage implements OnInit {
   mejores: Titulo[] = []
 
 
-  constructor(private router: Router, private sqlService: ServicebdService, private auth: AuthService) { }
+  constructor(private sqlService: ServicebdService, private auth: AuthService) { }
 
   ngOnInit() {
     this.auth.usuarioObservable.subscribe(usuario => {

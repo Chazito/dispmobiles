@@ -11,55 +11,82 @@
     <div class="logo-container">
       <ion-img class="logo" src="assets/images/logo.png"></ion-img>
     </div>
-    <div class="login-input-container">
+    <form #registroForm="ngForm" class="login-input-container">
       <p>Ingresa tus datos:</p>
 
       <!-- Nombre -->
       <ion-item class="input-container">
         <ion-label position="stacked">Nombre</ion-label>
-        <ion-input [(ngModel)]="inputNombre" placeholder="Pedro" class="rounded-input" type="text"></ion-input>
+        <ion-input required minlength="2" maxlength="50" pattern="[A-Za-zÀ-ÿ' -]+" placeholder="Nombre"
+          class="rounded-input" name="nombre" [(ngModel)]="inputNombre" #nombreInput="ngModel">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+        </ion-input>
+        <small *ngIf="nombreInput.invalid && nombreInput.touched">
+          <p>Nombre inválido</p>
+        </small>
       </ion-item>
-      <div *ngIf="inputNombre && !isValidName(inputNombre)">
-        <p>Nombre inválido. Solo letras (máx. 20).</p>
-      </div>
-
       <!-- Apellido -->
       <ion-item class="input-container">
         <ion-label position="stacked">Apellido</ion-label>
-        <ion-input [(ngModel)]="inputApellido" placeholder="Gonzalez" class="rounded-input" type="text"></ion-input>
+        <ion-input required minlength="2" maxlength="50" pattern="[A-Za-zÀ-ÿ' -]+" placeholder="Apellido"
+          class="rounded-input" name="apellido" [(ngModel)]="inputApellido" #apellidoInput="ngModel">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+        </ion-input>
+        <small *ngIf="apellidoInput.invalid && apellidoInput.touched">
+          <p>Apellido inválido</p>
+        </small>
       </ion-item>
-      <div *ngIf="inputApellido && !isValidName(inputApellido)">
-        <p>Apellido inválido. Solo letras (máx. 20).</p>
-      </div>
 
       <!-- Correo electrónico -->
       <ion-item class="input-container">
         <ion-label position="stacked">Correo electrónico</ion-label>
-        <ion-input [(ngModel)]="inputEmail" placeholder="email@email.com" class="rounded-input"
-          type="email"></ion-input>
+        <ion-input type="email" placeholder="correo@ejemplo.com" name="email" class="rounded-input"
+          [(ngModel)]="inputEmail" #emailInput="ngModel" email required>
+          <ion-icon name="mail-outline" slot="start"></ion-icon>
+        </ion-input>
+        <small *ngIf="emailInput.invalid && emailInput.touched">Email no válido.</small>
       </ion-item>
-      <div *ngIf="inputEmail && !isValidEmail(inputEmail)">
-        <p>Correo electrónico inválido.</p>
-      </div>
 
       <!-- Contraseña -->
-      <ion-item class="input-container">
-        <ion-label position="stacked">Contraseña</ion-label>
-        <ion-input [(ngModel)]="inputPass" placeholder="***********" class="rounded-input" type="password"></ion-input>
-      </ion-item>
-      <div *ngIf="inputPass && !isValidPassword(inputPass)">
-        <p>Contraseña inválida. Debe tener entre 8-20 caracteres, al menos una letra mayúscula, una minúscula, un número
-          y un caracter especial.</p>
+      <div class="ion-margin-top">
+        <small>La contraseña debe cumplir con los siguientes requisitos:
+          <ul>
+            <li [ngStyle]="{'color': hasMinLength() ? '#19C854' : (inputPass ? '#FF3300' : 'gray')}">
+              Entre 8 y 20 caracteres
+            </li>
+            <li [ngStyle]="{'color': hasLowerCase() ? '#19C854' : (inputPass ? '#FF3300' : 'gray')}">
+              Al menos una letra minúscula
+            </li>
+            <li [ngStyle]="{'color': hasUpperCase() ? '#19C854' : (inputPass ? '#FF3300' : 'gray')}">
+              Al menos una letra mayúscula
+            </li>
+            <li [ngStyle]="{'color': hasSpecialChar() ? '#19C854' : (inputPass ? '#FF3300' : 'gray')}">
+              Al menos un carácter especial
+            </li>
+            <li [ngStyle]="{'color': hasNumber() ? '#19C854' : (inputPass ? '#FF3300' : 'gray')}">
+              Al menos un dígito numérico
+            </li>
+          </ul>
+        </small>
       </div>
 
-      <!-- Confirmar contraseña -->
+      <ion-item class="input-container">
+        <ion-label position="stacked">Contraseña</ion-label>
+        <ion-input type="password" placeholder="Introduce tu contraseña" name="password" [(ngModel)]="inputPass"
+          class="rounded-input">
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        </ion-input>
+      </ion-item>
+
       <ion-item class="input-container">
         <ion-label position="stacked">Confirmar contraseña</ion-label>
-        <ion-input [(ngModel)]="inputPass2" placeholder="***********" class="rounded-input" type="password"></ion-input>
+        <ion-input type="password" [(ngModel)]="inputPass2" #input="ngModel" name="password2"
+          placeholder="Confirma tu contraseña" class="rounded-input">
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        </ion-input>
       </ion-item>
-      <div *ngIf="inputPass2 && !passwordsMatch()">
-        <p>Las contraseñas no coinciden.</p>
-      </div>
+      <small *ngIf="!passwordsMatch() && input.touched">Las contraseñas no coinciden.</small>
+
 
       <!-- Términos y condiciones -->
       <br />
@@ -74,12 +101,12 @@
       <br />
       <ion-footer class="ion-no-border">
         <ion-toolbar class="ion-no-border">
-          <ion-button [disabled]="btnDisabled" expand="full" color="secondary" shape="round"
+          <ion-button [disabled]="btnDisabled || registroForm.invalid" expand="full" color="secondary" shape="round"
             (click)="onRegistroClick()">
             <strong class="ion-margin">Registrarse</strong>
           </ion-button>
         </ion-toolbar>
       </ion-footer>
-    </div>
+    </form>
   </div>
 </ion-content>
