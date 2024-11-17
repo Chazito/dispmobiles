@@ -97,7 +97,7 @@ export class RegistroPage {
           ).catch(e => this.presentAlert("ERROR EMAILJS", (e as EmailJSResponseStatus).text, "OK"));
         })
       });
-      this.router.navigate(['/home']);
+      this.router.navigate(['/login']);
     } else {
       this.btnDisabled = false
       this.presentAlert('Error', 'Por favor, revisa los datos ingresados.', 'OK');
