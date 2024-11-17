@@ -36,6 +36,8 @@
 }
 
 .noticia {
+  color: white;
+  text-decoration: none;
   display: flex;
   border-radius: 10px;
   align-items: end;
@@ -56,4 +58,5 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: rgba(255, 255, 255, 0.7);
 }

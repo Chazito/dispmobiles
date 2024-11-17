@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { API_KEY } from 'enviroment';
+import { API_KEY } from 'environment';
 import { Browser } from '@capacitor/browser';
 
 @Component({
@@ -22,7 +22,6 @@ export class NoticiasPage implements OnInit {
       this.totalImagenes = this.noticias.length;
       this.imagenesCargadas = 0;
     })
-
   }
 
   imagenCargada() {
