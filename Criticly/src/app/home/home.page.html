@@ -11,7 +11,8 @@
         [slidesOffsetBefore]="20" [slidesOffsetAfter]="20" free-mode="true">
         <swiper-slide *ngFor="let pelicula of arregloDestacados">
           <div
-            style="width: 100px; height: 170px; background: transparent url('{{ pelicula.URLImagen }}') no-repeat center center; background-size: cover;" (click)="clickOnEntry(pelicula)">
+            style="width: 100px; height: 170px; background: transparent url('{{ pelicula.URLImagen }}') no-repeat center center; background-size: cover;"
+            (click)="clickOnEntry(pelicula)">
           </div>
         </swiper-slide>
       </swiper-container>
@@ -23,36 +24,24 @@
         [slidesOffsetBefore]="20" [slidesOffsetAfter]="20" free-mode="true">
         <swiper-slide *ngFor="let pelicula of arregloCriticados">
           <div
-            style="width: 100px; height: 170px; background: transparent url('{{ pelicula.URLImagen }}') no-repeat center center; background-size: cover;" (click)="clickOnEntry(pelicula)">
+            style="width: 100px; height: 170px; background: transparent url('{{ pelicula.URLImagen }}') no-repeat center center; background-size: cover;"
+            (click)="clickOnEntry(pelicula)">
           </div>
         </swiper-slide>
       </swiper-container>
     </div>
     <div class="noticiasContainer">
-      <div class="noticia"
-        style="background: transparent url('https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UY3600_.jpg') no-repeat center top; background-size: cover;">
+      <a class="noticia" *ngFor="let noticia of noticias" (click)="navegarANoticia(noticia.url)"
+        routerLinkActive="router-link-active"
+        style="background: transparent url({{noticia.urlToImage}}) no-repeat center top; background-size: cover;">
+        <img [src]="noticia.urlToImage" style="display: none;" />
         <div style="width: 100%; background-color: rgba(0, 0, 0, 0.5);">
           <div class="titleContainer">
-            <p class="title">Lorem ipsum</p>
-            <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus turpis erat, sed
-              mollis mi bibendum eu. Ut suscipit venenatis diam ac faucibus. Etiam convallis risus nec placerat
-              tincidunt.
-            </p>
+            <p class="title">{{noticia.title}}</p>
+            <p class="subtitle">{{noticia.description}}</p>
           </div>
         </div>
-      </div>
-      <div class="noticia"
-        style="background: transparent url('https://m.media-amazon.com/images/M/MV5BMTMzODU0NTkxMF5BMl5BanBnXkFtZTcwMjQ4MzMzMw@@._V1_FMjpg_UY2048_.jpg') no-repeat center top; background-size: cover;">
-        <div style="width: 100%; background-color: rgba(0, 0, 0, 0.5);">
-          <div class="titleContainer">
-            <p class="title">Lorem ipsum</p>
-            <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus turpis erat, sed
-              mollis mi bibendum eu. Ut suscipit venenatis diam ac faucibus. Etiam convallis risus nec placerat
-              tincidunt.
-            </p>
-          </div>
-        </div>
-      </div>
+      </a>
     </div>
     <div>
       <p class="ion-padding-horizontal">Mejor evaluado</p>
@@ -60,7 +49,8 @@
         [slidesOffsetBefore]="20" [slidesOffsetAfter]="20" free-mode="true">
         <swiper-slide *ngFor="let pelicula of arregloMejores">
           <div
-            style="width: 100px; height: 170px; background: transparent url('{{ pelicula.URLImagen }}') no-repeat center center; background-size: cover;" (click)="clickOnEntry(pelicula)">
+            style="width: 100px; height: 170px; background: transparent url('{{ pelicula.URLImagen }}') no-repeat center center; background-size: cover;"
+            (click)="clickOnEntry(pelicula)">
           </div>
         </swiper-slide>
       </swiper-container>

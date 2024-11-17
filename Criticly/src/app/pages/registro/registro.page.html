@@ -73,40 +73,38 @@
       <ion-item class="input-container">
         <ion-label position="stacked">Contraseña</ion-label>
         <ion-input type="password" placeholder="Introduce tu contraseña" name="password" [(ngModel)]="inputPass"
-          class="rounded-input">
+          required class="rounded-input">
           <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
         </ion-input>
       </ion-item>
 
       <ion-item class="input-container">
         <ion-label position="stacked">Confirmar contraseña</ion-label>
-        <ion-input type="password" [(ngModel)]="inputPass2" #input="ngModel" name="password2"
+        <ion-input type="password" [(ngModel)]="inputPass2" #input="ngModel" name="password2" required
           placeholder="Confirma tu contraseña" class="rounded-input">
           <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
         </ion-input>
       </ion-item>
       <small *ngIf="!passwordsMatch() && input.touched">Las contraseñas no coinciden.</small>
-
-
-      <!-- Términos y condiciones -->
-      <br />
-      <div class="title-container" style="margin: 0;">
-        <p>
-          Al continuar el registro, estarás aceptando los
-          <a>términos y condiciones.</a>
-        </p>
-      </div>
-
-      <!-- Botón de registro -->
-      <br />
-      <ion-footer class="ion-no-border">
-        <ion-toolbar class="ion-no-border">
-          <ion-button [disabled]="btnDisabled || registroForm.invalid" expand="full" color="secondary" shape="round" id="bRegistro"
-            (click)="onRegistroClick()">
-            <strong class="ion-margin">Registrarse</strong>
-          </ion-button>
-        </ion-toolbar>
-      </ion-footer>
     </form>
+    <!-- Términos y condiciones -->
+    <br />
+    <div class="title-container" style="margin: 0;">
+      <p>
+        Al continuar el registro, estarás aceptando los
+        <a>términos y condiciones.</a>
+      </p>
+    </div>
+
+    <!-- Botón de registro -->
+    <br />
+    <ion-footer class="ion-no-border">
+      <ion-toolbar class="ion-no-border">
+        <ion-button [disabled]="btnDisabled || registroForm.invalid || !passwordsMatch()" expand="full"
+          color="secondary" shape="round" id="bRegistro" (click)="onRegistroClick()">
+          <strong class="ion-margin">Registrarse</strong>
+        </ion-button>
+      </ion-toolbar>
+    </ion-footer>
   </div>
 </ion-content>

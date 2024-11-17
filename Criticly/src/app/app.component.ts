@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { register } from 'swiper/element/bundle';
 import { AuthService } from './services/auth.service';
 import emailjs from '@emailjs/browser';
-import { MAIL_KEY } from 'enviroment';
+import { MAIL_KEY } from 'environment';
 import { MenuController } from '@ionic/angular';
 import { Usuario } from './services/usuario';
 register();

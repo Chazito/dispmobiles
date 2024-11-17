@@ -3,6 +3,9 @@ import { ServicebdService } from '../services/servicebd.service';
 import { Titulo } from '../services/titulo';
 import { peliculas } from 'src/assets/datos';
 import { Router } from '@angular/router';
+import { Browser } from '@capacitor/browser';
+import { HttpClient } from '@angular/common/http';
+import { API_KEY } from 'environment';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +17,9 @@ export class HomePage implements OnInit {
   arregloDestacados: Titulo[] = []
   arregloCriticados: Titulo[] = []
   arregloMejores: Titulo[] = []
+  noticias: any = []
 
-  constructor(private db: ServicebdService, private router : Router) {
+  constructor(private db: ServicebdService, private router: Router, private http: HttpClient) {
 
   }
 
@@ -37,10 +41,16 @@ export class HomePage implements OnInit {
         })
       }
     })
+    this.http.get("https://newsapi.org/v2/everything?q=película&language=es&apiKey=" + API_KEY).subscribe((res: any) => {
+      this.noticias = res.articles.filter((f: any) => f.author !== null).filter((f: any, index: number) => [0, 8].includes(index))
+    })
   }
 
   clickOnEntry(x: any) {
-    this.router.navigate(['/titulo/'+x.idTitulo])
+    this.router.navigate(['/titulo/' + x.idTitulo])
   }
 
+  async navegarANoticia(url: string) {
+    await Browser.open({ url, toolbarColor: "#060B1D" })
+  }
 }
