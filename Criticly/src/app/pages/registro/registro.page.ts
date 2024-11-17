@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegistroPage {
   StrongPasswordRegx: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
-  nameRegex: RegExp = /^[A-Za-z]{1,20}$/;
+  nameRegex: RegExp = /^[A-Za-zÀ-ÿ' -]$/;
 
   inputNombre: string = '';
   inputApellido: string = '';
