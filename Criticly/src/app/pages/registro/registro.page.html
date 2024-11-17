@@ -101,7 +101,7 @@
       <br />
       <ion-footer class="ion-no-border">
         <ion-toolbar class="ion-no-border">
-          <ion-button [disabled]="btnDisabled || registroForm.invalid" expand="full" color="secondary" shape="round" id="bRegistro"
+          <ion-button [disabled]="!validData()" expand="full" color="secondary" shape="round" id="bRegistro"
             (click)="onRegistroClick()">
             <strong class="ion-margin">Registrarse</strong>
           </ion-button>

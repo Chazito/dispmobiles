@@ -21,7 +21,7 @@ export class RegistroPage {
   inputPass: string = '';
   inputPass2: string = '';
 
-  btnDisabled: boolean = false
+  btnDisabled: boolean = true
   constructor(
     private router: Router,
     private alertController: AlertController,
@@ -72,14 +72,18 @@ export class RegistroPage {
     );
   }
 
-  async onRegistroClick() {
-    this.btnDisabled = true
-    if (
-      this.isValidName(this.inputNombre) &&
+  validData() : boolean {
+    return this.isValidName(this.inputNombre) &&
       this.isValidName(this.inputApellido) &&
       this.isValidEmail(this.inputEmail) &&
       this.isValidPassword() &&
       this.passwordsMatch()
+  }
+
+  async onRegistroClick() {
+    this.btnDisabled = true
+    if (
+      this.validData()
     ) {
       let user: Usuario = {
         nombre: this.inputNombre,
