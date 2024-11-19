@@ -34,6 +34,7 @@ export class EditarTituloPage implements OnInit {
 
   modificarTitulo() {
     this.sqlService.modificarTituloPorId({ ...this.titulo, ...this.editarTituloForm.value })
+    this.editarTituloForm.markAsUntouched()
   }
 
   async tomarImagen() {

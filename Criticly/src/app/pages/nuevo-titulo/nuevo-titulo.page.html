@@ -71,7 +71,9 @@
     </div>
     <ion-footer class="ion-no-border">
       <ion-toolbar class="ion-no-border">
-        <ion-button (click)="agregarTitulo()" expand="full" id="guardar" color="secondary" shape="round">
+        <ion-button (click)="agregarTitulo()"
+          [disabled]="agregarTituloForm!.invalid || agregarTituloForm!.untouched  || !this.agregarTituloForm.get('URLImagen')?.value"
+          expand="full" id="guardar" color="secondary" shape="round">
           <strong>Guardar</strong>
         </ion-button>
       </ion-toolbar>

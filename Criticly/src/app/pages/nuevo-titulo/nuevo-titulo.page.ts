@@ -29,6 +29,7 @@ export class NuevoTituloPage implements OnInit {
 
   agregarTitulo() {
     this.sqlService.insertarTitulo(this.titulo)
+    this.agregarTituloForm.markAsUntouched()
   }
 
   async tomarImagen() {

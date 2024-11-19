@@ -300,8 +300,8 @@ export class ServicebdService {
     });
   }
 
-  selectMarcado() {
-    return this.database.executeSql("SELECT * FROM Marcador", []).then(res => {
+  selectMarcado(idUsuario: string) {
+    return this.database.executeSql("SELECT * FROM Marcador WHERE idUsuario = ?", [idUsuario]).then(res => {
       let items: Marcador[] = [];
       if (res.rows.length > 0) {
         for (let i = 0; i < res.rows.length; i++) {
@@ -309,7 +309,9 @@ export class ServicebdService {
             idMarcador: res.rows.item(i).idMarcador,
             idUsuario: res.rows.item(i).idUsuario,
             idTitulo: res.rows.item(i).idTitulo,
-            fechaMarcado: res.rows.item(i).fechaMarcado
+            fechaMarcado: res.rows.item(i).fechaMarcado,
+            nombreTitulo: res.rows.item(i).nombreTitulo,
+            URLImagen: res.rows.item(i).URLImagen
           });
         }
       }
@@ -639,14 +641,13 @@ export class ServicebdService {
       });
   }
 
-  eliminarMarcador(idMarcador: string): Promise<any> {
+  eliminarMarcador(idMarcador: string, idUsuario: string): Promise<any> {
     const query = "DELETE FROM Marcador WHERE idMarcador = ?";
     return this.database.executeSql(query, [idMarcador])
       .then(res => {
-        this.selectMarcado()
+        this.selectMarcado(idUsuario)
         if (res.rowsAffected > 0) {
           this.presentAlert("Eliminación de marcador", "Marcador eliminado correctamente.");
-          this.selectMarcado();
           return { success: true };
         } else {
           return { success: false, message: "No se encontró el marcador con el ID especificado." };
@@ -677,7 +678,18 @@ export class ServicebdService {
   }
 
   selectMarcadorPorIdUsuario(idUsuario: string): Promise<Marcador[]> {
-    const query = "SELECT * FROM Marcador WHERE idUsuario = ?";
+    const query = `
+      SELECT
+        Marcador.idMarcador,
+        Marcador.idUsuario,
+        Marcador.idTitulo,
+        Marcador.fechaMarcado,
+        Titulo.nombre AS nombreTitulo,
+        Titulo.URLImagen
+      FROM Marcador
+      JOIN Titulo ON Marcador.idTitulo = Titulo.idTitulo
+      WHERE Marcador.idUsuario = ?`;
+
     return this.database.executeSql(query, [idUsuario]).then(res => {
       let items: Marcador[] = [];
       if (res.rows.length > 0) {
@@ -686,16 +698,20 @@ export class ServicebdService {
             idMarcador: res.rows.item(i).idMarcador,
             idUsuario: res.rows.item(i).idUsuario,
             idTitulo: res.rows.item(i).idTitulo,
-            fechaMarcado: res.rows.item(i).fechaMarcado
+            fechaMarcado: res.rows.item(i).fechaMarcado,
+            nombreTitulo: res.rows.item(i).nombreTitulo,
+            URLImagen: res.rows.item(i).URLImagen
           });
         }
+        this.listaMarcador.next(items as any);
       }
       return items;
     }).catch(e => {
-      console.error("Error al consultar marcadores por ID de usuario", e);
+      this.presentAlert("Marcadores", "Hubo un error al recuperar datos");
       return [];
     });
   }
+
 
   insertarUsuario(newUser: Usuario) {
     let insertSql = "INSERT INTO usuario(nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) values(?,?,?,?,?,?,?,?,?)";
@@ -733,9 +749,8 @@ export class ServicebdService {
 
   insertarMarcador(marcador: Marcador) {
     let insertSql = "INSERT INTO marcador(idUsuario , idTitulo , fechaMarcado) values(?,?,?)";
-    return this.database.executeSql(insertSql, [marcador.idMarcador, marcador.idUsuario, marcador.idTitulo, marcador.fechaMarcado]).then(res => {
-      this.presentAlert("Nuevo Marcador", "Marcador guardado.");
-      this.selectMarcado();
+    return this.database.executeSql(insertSql, [marcador.idUsuario, marcador.idTitulo, marcador.fechaMarcado]).then(res => {
+      this.presentAlert("Nuevo Marcador", "Título guardado.");
     }).catch(err => {
       this.presentAlert("Nuevo Marcador", "Error: " + JSON.stringify(err));
     })

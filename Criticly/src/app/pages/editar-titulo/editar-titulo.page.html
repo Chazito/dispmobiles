@@ -69,7 +69,8 @@
     </div>
     <ion-footer class="ion-no-border">
       <ion-toolbar class="ion-no-border">
-        <ion-button [disabled]="editarTituloForm!.invalid || !this.editarTituloForm.get('URLImagen')?.value"
+        <ion-button
+          [disabled]="editarTituloForm!.invalid || editarTituloForm!.untouched  || !this.editarTituloForm.get('URLImagen')?.value"
           (click)="modificarTitulo()" expand="full" id="guardar" color="secondary" shape="round">
           <strong>Guardar</strong>
         </ion-button>

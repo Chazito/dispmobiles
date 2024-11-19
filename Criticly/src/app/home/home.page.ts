@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicebdService } from '../services/servicebd.service';
 import { Titulo } from '../services/titulo';
-import { peliculas } from 'src/assets/datos';
 import { Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { HttpClient } from '@angular/common/http';

@@ -3,4 +3,6 @@ export interface Marcador {
   idUsuario?: string;
   idTitulo?: string;
   fechaMarcado?: Date;
+  nombreTitulo?: string;
+  URLImagen?: string;
 }
