@@ -35,4 +35,9 @@ export class PeliculasPage implements OnInit {
     })
   }
 
+  ionViewWillEnter() {
+    this.sqlService.selectDestacados();
+    this.sqlService.selectCriticados();
+    this.sqlService.selectMejores();
+  }
 }

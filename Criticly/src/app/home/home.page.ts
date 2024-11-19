@@ -53,4 +53,10 @@ export class HomePage implements OnInit {
   async navegarANoticia(url: string) {
     await Browser.open({ url, toolbarColor: "#060B1D" })
   }
+
+  ionViewWillEnter() {
+    this.db.selectDestacados();
+    this.db.selectCriticados();
+    this.db.selectMejores();
+  }
 }

@@ -17,7 +17,7 @@ export class SeriesPage implements OnInit {
   mejores: Titulo[] = []
 
 
-  constructor(private router: Router, private sqlService: ServicebdService, private auth: AuthService) {
+  constructor(private sqlService: ServicebdService, private auth: AuthService) {
     this.auth.usuarioObservable.subscribe(usuario => {
       if (usuario && usuario.id_rol === 2) { this.tienePrivilegios = true } else { this.tienePrivilegios = false }
     })
@@ -36,4 +36,10 @@ export class SeriesPage implements OnInit {
   ngOnInit() {
   }
 
+  ionViewWillEnter() {
+    this.sqlService.selectDestacados();
+    this.sqlService.selectCriticados();
+    this.sqlService.selectMejores();
+  }
 }
+
