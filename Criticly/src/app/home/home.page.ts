@@ -41,7 +41,7 @@ export class HomePage implements OnInit {
       }
     })
     this.http.get("https://newsapi.org/v2/everything?q=película&language=es&apiKey=" + API_KEY).subscribe((res: any) => {
-      this.noticias = res.articles.filter((f: any) => f.author !== null).filter((f: any, index: number) => [0, 8].includes(index))
+      this.noticias = res.articles.filter((f: any) => f.author !== null).filter((f: any, index: number) => [0, 5].includes(index))
     })
   }
 

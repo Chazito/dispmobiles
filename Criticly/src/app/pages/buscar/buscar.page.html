@@ -1,28 +1,38 @@
-<ion-header class="ion-no-border" style="margin: 0;padding-top: 10px; background-color: var(--ion-color-tertiary);">
+<ion-header style="margin: 0;padding-top: 10px; background-color: var(--ion-color-tertiary);">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-searchbar searchIcon="../../../assets/icon/search.svg" color="primary" placeholder="Buscar..."></ion-searchbar>
+    <ion-searchbar searchIcon="../../../assets/icon/search.svg" color="primary" (ionInput)="actualizarBusqueda($event)"
+      placeholder="Buscar...">
+    </ion-searchbar>
   </ion-toolbar>
   <div class="filtros">
-    <ion-chip *ngFor="let filtro of filtros" [outline]="true" color="light">
-      <ion-label (click)="agregarFiltro(filtro)">{{ filtro }}</ion-label>
-      <ion-icon name="close" *ngIf="filtrosSelec.includes(filtro)" (click)="eliminarFiltro(filtro)"></ion-icon>
+    <ion-chip *ngFor="let filtro of filtros" [outline]="true" color="light"
+      [ngClass]="{'seleccionado': filtroSeleccionado === filtro}">
+      <ion-label (click)="seleccionarFiltro(filtro)">{{ filtro }}</ion-label>
     </ion-chip>
   </div>
 </ion-header>
-
 <ion-content [fullscreen]="true">
-  <div class="resultados">
-    <div class="resultado" *ngFor="let item of [1,2,3,4,5,6,7,8,9,0]">
-      <div class="imgContainer ion-padding">
-        <img src="https://placehold.co/80x120" alt="Poster" class="posterImg" />
+  <div class="spinner-overlay" *ngIf="cargando">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <div class="resultados" style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <div *ngIf="titulos && titulos.length === 0">
+      <p class="ion-text-center" style="color: var(--ion-color-medium);">No hay títulos que coincidan la búsqueda</p>
+    </div>
+    <div class="resultado" *ngFor="let titulo of titulos" [routerLink]="['/titulo/'+titulo.idTitulo]"
+      routerLinkActive="router-link-active" style="display: flex; align-items: center; gap: 10px;">
+      <div class="imgContainer" style="flex-shrink: 0; width: 100px; height: 150px; overflow: hidden;padding: 10px;">
+        <img [src]="titulo.URLImagen" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
       </div>
       <div class="detalles ion-padding-end">
-        <h6>Inception</h6>
-        <p>2010</p>
-        <p>Leonardo DiCaprio, Tom Hardy, Ellen Page</p>
+        <h6 style="margin: 0;">{{titulo.nombre}}</h6>
+        <p style="margin: 0">
+          {{titulo.sinopsis}}
+        </p>
       </div>
     </div>
   </div>

@@ -364,8 +364,7 @@ export const insertRol: string = `INSERT INTO rol (idRol, nombre) VALUES
 
 export const insertTipoTitulo: string = `INSERT INTO tipoTitulo (idTipo, nombre) VALUES
 ('1', 'Películas'),
-('2', 'Series'),
-('3', 'Documentales');`
+('2', 'Series')`
 
 export const insertUsuario: string = `INSERT INTO usuario (idUsuario, nombre, apellido, correo, clave, fechaNacimiento, telefono, reputacion, id_rol) VALUES
 ('1', 'Juan', 'Pérez', 'juan.perez@example.com', 'password123', '1990-05-15',  '123456789', 4.5, 1),

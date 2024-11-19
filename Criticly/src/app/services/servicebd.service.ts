@@ -10,7 +10,6 @@ import { Resenna } from './resenna';
 import { Marcador } from './marcador';
 import { insertMarcador, insertResenna, insertRol, insertTipoTitulo, insertTitulo, insertUsuario } from 'src/assets/datos';
 import { Storage } from '@ionic/storage-angular';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -549,6 +548,39 @@ export class ServicebdService {
       return null;
     });
   }
+
+  selectTitulosConBusqueda(idTipoTitulo: string | null, textoBusqueda: string): Promise<Titulo[]> {
+    let query = "SELECT idTitulo, nombre, sinopsis, URLImagen FROM Titulo WHERE 1=1";
+    const params: any[] = [];
+
+    if (idTipoTitulo) {
+      query += " AND idTipoTitulo = ?";
+      params.push(idTipoTitulo);
+    }
+
+    if (textoBusqueda) {
+      query += " AND (nombre LIKE ? OR sinopsis LIKE ?)";
+      const likeQuery = `%${textoBusqueda}%`;
+      params.push(likeQuery, likeQuery);
+    }
+
+    return this.database.executeSql(query, params).then(res => {
+      const items: Titulo[] = [];
+      for (let i = 0; i < res.rows.length; i++) {
+        items.push({
+          idTitulo: res.rows.item(i).idTitulo,
+          nombre: res.rows.item(i).nombre,
+          sinopsis: res.rows.item(i).sinopsis,
+          URLImagen: res.rows.item(i).URLImagen,
+        });
+      }
+      return items as Titulo[];
+    }).catch(e => {
+      console.error("Error al consultar títulos:", e);
+      return [];
+    });
+  }
+
 
   selectRolPorId(idRol: string) {
     const query = "SELECT * FROM rol WHERE idRol = ?";
