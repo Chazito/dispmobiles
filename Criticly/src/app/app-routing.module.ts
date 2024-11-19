@@ -93,9 +93,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/admin-lista-resennas/admin-lista-resennas.module').then(m => m.AdminListaResennasPageModule)
   },
   {
+    path: 'guardados',
+    loadChildren: () => import('./pages/guardados/guardados.module').then(m => m.GuardadosPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'home'
   },
+
+
 
 ];
 

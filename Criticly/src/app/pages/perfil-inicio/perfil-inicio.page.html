@@ -12,7 +12,7 @@
     <div>
       <h5><strong>Mi cuenta</strong></h5>
       <div (click)="tomarFoto()" style="display: flex; justify-content: center; margin-top: 20px;">
-        <img [src]="user.avatar ? 'data:image;base64,' + user.avatar : '../../assets/icon/user.svg'"
+        <img [src]="user.avatar ? user.avatar : '../../assets/icon/user.svg'"
           style=" width: 100px; height: 100px; border-radius: 50%;" />
       </div>
       <form #datosForm="ngForm">

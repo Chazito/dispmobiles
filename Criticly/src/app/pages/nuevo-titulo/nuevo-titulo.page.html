@@ -48,14 +48,13 @@
           class="error-message">
           La duración es requerida.
         </div>
-
-        <ion-item class="input-container">
-          <ion-label position="stacked">URL de imagen</ion-label>
-          <ion-input class="rounded-input" formControlName="urlImagen"></ion-input>
+        <ion-item>
+          <ion-label><small>Imagen</small></ion-label>
+          <ion-button (click)="tomarImagen()"><ion-icon name="camera"></ion-icon></ion-button>
         </ion-item>
-        <div *ngIf="agregarTituloForm.get('urlImagen')!.invalid && agregarTituloForm.get('urlImagen')!.touched"
-          class="error-message">
-          La URL de la imagen es requerida.
+        <div *ngIf="titulo.URLImagen" style="display: flex; align-items: center;justify-content: center;">
+          <img [src]="this.agregarTituloForm.get('URLImagen')?.value"
+            style="width: auto; height: 200px; margin-top: 10px; object-fit: cover; object-position: center;">
         </div>
 
         <ion-item class="input-container">
@@ -72,7 +71,9 @@
     </div>
     <ion-footer class="ion-no-border">
       <ion-toolbar class="ion-no-border">
-        <ion-button (click)="agregarTitulo()" expand="full" id="guardar" color="secondary" shape="round">
+        <ion-button (click)="agregarTitulo()"
+          [disabled]="agregarTituloForm!.invalid || agregarTituloForm!.untouched  || !this.agregarTituloForm.get('URLImagen')?.value"
+          expand="full" id="guardar" color="secondary" shape="round">
           <strong>Guardar</strong>
         </ion-button>
       </ion-toolbar>

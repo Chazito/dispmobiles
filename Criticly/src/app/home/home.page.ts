@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicebdService } from '../services/servicebd.service';
 import { Titulo } from '../services/titulo';
-import { peliculas } from 'src/assets/datos';
 import { Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { HttpClient } from '@angular/common/http';
@@ -52,5 +51,11 @@ export class HomePage implements OnInit {
 
   async navegarANoticia(url: string) {
     await Browser.open({ url, toolbarColor: "#060B1D" })
+  }
+
+  ionViewWillEnter() {
+    this.db.selectDestacados();
+    this.db.selectCriticados();
+    this.db.selectMejores();
   }
 }

@@ -25,7 +25,7 @@
   </ion-button>
   <ion-row>
     <ion-col size="12">
-      <img style="max-width: 360px; height: auto;" [src]="pelicula!.URLImagen" alt="Movie Cover" class="movie-cover">
+      <img style="max-width: 330px; height: auto;" [src]="pelicula.URLImagen" alt="Movie Cover" class="movie-cover">
     </ion-col>
   </ion-row>
   <ion-grid class="movie-container">
@@ -45,8 +45,12 @@
         <ion-button shape="round" expand="block" color="primary" [href]="pelicula!.URLTrailer">
           Ver Tráiler
         </ion-button>
-        <ion-button shape="round" expand="block" color="secondary">
+        <ion-button *ngIf="!peliculaGuardada" [disabled]="!usuario?.idUsuario" (click)="guardar()" shape="round"
+          expand="block" color="secondary">
           Añadir a mi lista
+        </ion-button>
+        <ion-button *ngIf="peliculaGuardada" (click)="eliminar()" shape="round" expand="block" color="secondary">
+          Eliminar de mi lista
         </ion-button>
       </ion-col>
     </ion-row>
