@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Titulo } from 'src/app/services/titulo';
 
@@ -30,4 +31,14 @@ export class NuevoTituloPage implements OnInit {
     this.sqlService.insertarTitulo(this.titulo)
   }
 
+  async tomarImagen() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      resultType: CameraResultType.Base64,
+      source: CameraSource.Photos,
+    });
+
+    const base64Image = `data:image/${image.format};base64,${image.base64String}`;
+    this.agregarTituloForm.get('URLImagen')?.setValue(base64Image);
+  }
 }

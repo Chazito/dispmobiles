@@ -9,11 +9,9 @@
       <p class="ion-padding-horizontal">Destacado</p>
       <swiper-container class="margin" pagination="false" space-between="20" slides-per-view="3.7"
         [slidesOffsetBefore]="20" [slidesOffsetAfter]="20" free-mode="true">
-        <swiper-slide *ngFor="let pelicula of arregloDestacados">
-          <div
-            style="width: 100px; height: 170px; background: transparent url('{{ pelicula.URLImagen }}') no-repeat center center; background-size: cover;"
-            (click)="clickOnEntry(pelicula)">
-          </div>
+        <swiper-slide *ngFor="let pelicula of arregloCriticados" [routerLink]="['../titulo/'+ pelicula.idTitulo]">
+          <img [src]="pelicula.URLImagen"
+            style="width: 100px; height: 170px; object-fit: cover; object-position: center;" />
         </swiper-slide>
       </swiper-container>
     </div>
@@ -22,11 +20,9 @@
       </p>
       <swiper-container class="margin" pagination="false" space-between="20" slides-per-view="3.7"
         [slidesOffsetBefore]="20" [slidesOffsetAfter]="20" free-mode="true">
-        <swiper-slide *ngFor="let pelicula of arregloCriticados">
-          <div
-            style="width: 100px; height: 170px; background: transparent url('{{ pelicula.URLImagen }}') no-repeat center center; background-size: cover;"
-            (click)="clickOnEntry(pelicula)">
-          </div>
+        <swiper-slide *ngFor="let pelicula of arregloCriticados" [routerLink]="['../titulo/'+ pelicula.idTitulo]">
+          <img [src]="pelicula.URLImagen"
+            style="width: 100px; height: 170px; object-fit: cover; object-position: center;" />
         </swiper-slide>
       </swiper-container>
     </div>
@@ -47,11 +43,9 @@
       <p class="ion-padding-horizontal">Mejor evaluado</p>
       <swiper-container class="margin" pagination="false" space-between="20" slides-per-view="3.7"
         [slidesOffsetBefore]="20" [slidesOffsetAfter]="20" free-mode="true">
-        <swiper-slide *ngFor="let pelicula of arregloMejores">
-          <div
-            style="width: 100px; height: 170px; background: transparent url('{{ pelicula.URLImagen }}') no-repeat center center; background-size: cover;"
-            (click)="clickOnEntry(pelicula)">
-          </div>
+        <swiper-slide *ngFor="let pelicula of arregloMejores" [routerLink]="['../titulo/'+ pelicula.idTitulo]">
+          <img [src]="pelicula.URLImagen"
+            style="width: 100px; height: 170px; object-fit: cover; object-position: center;" />
         </swiper-slide>
       </swiper-container>
     </div>

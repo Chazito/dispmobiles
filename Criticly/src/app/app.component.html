@@ -7,7 +7,7 @@
           <ion-list id="listaMenuLateral">
             <ion-item id="itemUsuario" [routerLink]="urlPerfil()" routerLinkActive="active">
               <ion-avatar slot="start">
-                <img [src]="usuario.avatar ? 'data:image;base64,' + usuario.avatar : '../../assets/icon/user.svg'">
+                <img [src]="usuario.avatar ? usuario.avatar : '../../assets/icon/user.svg'">
               </ion-avatar>
               <ion-label id="labelUsuario" *ngIf="!!(usuario && usuario.idUsuario)">
                 <p id="nombreUsuario">{{nombreApellido}}</p>

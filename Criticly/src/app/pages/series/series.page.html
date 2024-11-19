@@ -7,14 +7,13 @@
   <div class="ion-text-center">
     <h5>
       <strong>
-        Series
+        Películas
       </strong>
     </h5>
     <ion-button [routerLink]="['/titulo/nuevo']" *ngIf="tienePrivilegios" class="titleButton ion-no-padding"
       fill="solid" size="small" color="transparent">
       <div id="titleContainer">
-        <ion-icon routerLinkActive="router-link-active" name="add-circle-outline" slot="start" size="large"
-          class="add-icon"></ion-icon>
+        <ion-icon name="add-circle-outline" slot="start" size="large" class="add-icon"></ion-icon>
         <p>
           Añadir título
         </p>
@@ -27,9 +26,10 @@
       <swiper-container class="margin" pagination="false" space-between="20" slides-per-view="3.7"
         [slidesOffsetBefore]="20" [slidesOffsetAfter]="20" free-mode="true">
         <swiper-slide *ngFor="let pelicula of destacados" [routerLink]="['../titulo/'+ pelicula.idTitulo]">
-          <div
-            style="width: 100px; height: 170px; background: transparent url('{{ pelicula.URLImagen }}') no-repeat center center; background-size: cover;">
-          </div>
+          <img [src]="pelicula.URLImagen"
+            style="width: 100px; height: 170px; object-fit: cover; object-position: center;" />
+
+
         </swiper-slide>
       </swiper-container>
     </div>
@@ -38,9 +38,10 @@
       <swiper-container class="margin" pagination="false" space-between="20" slides-per-view="3.7"
         [slidesOffsetBefore]="20" [slidesOffsetAfter]="20" free-mode="true">
         <swiper-slide *ngFor="let pelicula of criticados" [routerLink]="['../titulo/'+ pelicula.idTitulo]">
-          <div
-            style="width: 100px; height: 170px; background: transparent url('{{ pelicula.URLImagen }}') no-repeat center center; background-size: cover;">
-          </div>
+          <img [src]="pelicula.URLImagen"
+            style="width: 100px; height: 170px; object-fit: cover; object-position: center;" />
+
+
         </swiper-slide>
       </swiper-container>
     </div>
@@ -49,9 +50,8 @@
         slides-per-view="1" coverflow-effect-rotate="20" coverflow-effect-stretch="0" coverflow-effect-depth="90"
         coverflow-effect-modifier="1" coverflow-effect-slide-shadows="false">
         <swiper-slide [routerLink]="['../titulo/'+ pelicula.idTitulo]" *ngFor="let pelicula of mejores">
-          <div
-            style="width: 360px; height: 170px;background: transparent url('{{ pelicula.URLImagen }}')no-repeat center top; background-size: cover;">
-          </div>
+          <img [src]="pelicula.URLImagen"
+            style="width: 360px; height: 170px; object-fit: cover; object-position: center;" />
         </swiper-slide>
       </swiper-container>
     </div>
@@ -60,9 +60,10 @@
       <swiper-container class="margin" pagination="false" space-between="20" slides-per-view="3.7"
         [slidesOffsetBefore]="20" [slidesOffsetAfter]="20" free-mode="true">
         <swiper-slide *ngFor="let pelicula of destacados" [routerLink]="['../titulo/'+ pelicula.idTitulo]">
-          <div
-            style="width: 100px; height: 170px; background: transparent url('{{ pelicula.URLImagen }}') no-repeat center center; background-size: cover;">
-          </div>
+          <img [src]="pelicula.URLImagen"
+            style="width: 100px; height: 170px; object-fit: cover; object-position: center;" />
+
+
         </swiper-slide>
       </swiper-container>
     </div>

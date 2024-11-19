@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Titulo } from 'src/app/services/titulo';
 
@@ -34,4 +35,16 @@ export class EditarTituloPage implements OnInit {
   modificarTitulo() {
     this.sqlService.modificarTituloPorId({ ...this.titulo, ...this.editarTituloForm.value })
   }
+
+  async tomarImagen() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      resultType: CameraResultType.Base64,
+      source: CameraSource.Photos,
+    });
+
+    const base64Image = `data:image/${image.format};base64,${image.base64String}`;
+    this.editarTituloForm.get('URLImagen')?.setValue(base64Image);
+  }
+
 }

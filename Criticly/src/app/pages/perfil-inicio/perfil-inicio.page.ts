@@ -88,10 +88,13 @@ export class PerfilInicioPage implements OnInit {
       allowEditing: false,
       resultType: CameraResultType.Base64,
     });
+
     if (image.base64String) {
-      this.bd.modificarAvatar(image.base64String, this.user.idUsuario!).then(() => {
+      const base64Image = `data:image/${image.format};base64,${image.base64String}`;
+      this.bd.modificarAvatar(base64Image, this.user.idUsuario!).then(() => {
         this.auth.validarUsuarioPorEmail(this.user.correo!, this.user.clave!);
       });
     }
   }
+
 }
