@@ -4,7 +4,7 @@ import { Titulo } from '../services/titulo';
 import { Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { HttpClient } from '@angular/common/http';
-import { API_KEY } from 'environment';
+import { API_KEY } from 'enviroment';
 
 @Component({
   selector: 'app-home',

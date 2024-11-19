@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegistroPage {
   StrongPasswordRegx: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
-  nameRegex: RegExp = /^[A-Za-zÀ-ÿ' -]$/;
+  nameRegex: RegExp = /^[A-Za-zÀ-ÿ\s]+$/;
 
   inputNombre: string = '';
   inputApellido: string = '';
@@ -34,7 +34,9 @@ export class RegistroPage {
   }
 
   isValidName(name: string): boolean {
-    return this.nameRegex.test(name);
+    let result = this.nameRegex.test(name);
+    //console.log("Testing name: " + name + " === " + result);
+    return result;
   }
 
   isValidEmail(email: string): boolean {
@@ -85,6 +87,7 @@ export class RegistroPage {
     if (
       this.validData()
     ) {
+      //console.log("Valid data, inserting")
       let user: Usuario = {
         nombre: this.inputNombre,
         apellido: this.inputApellido,

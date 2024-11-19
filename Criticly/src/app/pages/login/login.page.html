@@ -21,7 +21,7 @@
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
-        <div *ngIf="!form.controls['email'].valid && form.controls['email'].touched">
+        <div id="msg-error-email" *ngIf="!form.controls['email'].valid && form.controls['email'].touched">
           <p *ngIf="!form.controls['email'].valid && form.controls['email'].value! ===''">Datos no válidos</p>
         </div>
         <ion-item class="input-container">
@@ -40,7 +40,7 @@
       </div>
 
       <div class="button-container">
-        <ion-button id="login-button" class="ion-margin-bottom" (click)="login()" type="submit" [disabled]="!form.valid"
+        <ion-button id="login-button" class="ion-margin-bottom" (click)="login()" type="submit" [disabled]="!form.valid || form.controls['email'].value ==='' ||  form.controls['email'].value ===''"
           expand="full" color="secondary" shape="round">
           <strong class="ion-margin">Ingresar</strong>
         </ion-button>
