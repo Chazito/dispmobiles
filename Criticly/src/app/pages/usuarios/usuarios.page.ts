@@ -9,45 +9,67 @@ import { Usuario } from 'src/app/services/usuario';
   styleUrls: ['./usuarios.page.scss'],
 })
 export class UsuariosPage implements OnInit {
-  usuarios: Usuario[] = []
-  superAdmin : boolean = false;
-  admin : boolean = true;
-  constructor(private bd: ServicebdService, private auth : AuthService) { }
+  usuarios: Usuario[] = [];
+  superAdmin: boolean = false;
+  admin: boolean = false;
+
+  constructor(private bd: ServicebdService, private auth: AuthService) { }
 
   ngOnInit() {
+    // Obtenemos los roles del usuario actual
     this.auth.usuarioObservable.subscribe(async usuario => {
-      this.superAdmin = await this.auth.isSuperAdmin();
-      this.admin = await this.auth.isAdmin();
+      [this.superAdmin, this.admin] = await Promise.all([
+        this.auth.isSuperAdmin(),
+        this.auth.isAdmin()
+      ]);
     });
+
+    // Escuchamos los cambios en la base de datos y actualizamos los usuarios
     this.bd.dbState().subscribe(res => {
-      this.bd.selectUsuario();
       if (res) {
-        //subscribirme al observable del select
+        this.bd.selectUsuario();
         this.bd.fetchUsuario().subscribe(data => {
           this.usuarios = data;
-        })
+        });
       }
     });
   }
 
+  // Eliminar un usuario
   eliminar(idUsuario: string) {
+    if (!this.canDeleteUser()) {
+      console.warn('No tienes permiso para eliminar usuarios.');
+      return;
+    }
     this.bd.eliminarUsuario(idUsuario);
   }
 
-  canEditUser(idUsuario:string) : boolean{
-    let other = this.usuarios.find(x => x.idUsuario == idUsuario);
-    if(this.superAdmin && other?.id_rol == 1){ //Super admin no pueden cambiarse entre ellos
+  // Verificar si se puede editar un usuario
+  canEditUser(idUsuario: string): boolean {
+    const currentUser = this.auth.usuarioSubject.value; // Usuario actual
+    const otherUser = this.usuarios.find(x => x.idUsuario == idUsuario); // Usuario objetivo
+
+    if (!otherUser || !currentUser) return false;
+
+    const isSuperAdmin = currentUser.id_rol === 1; // Rol 1 = Super admin
+    const isAdmin = currentUser.id_rol === 3; // Rol 3 = Admin
+
+    if (isSuperAdmin && otherUser.id_rol === 1) {
+      // Superadmins no editan a otros superadmins
       return false;
     }
-    else if(this.auth.usuarioSubject.value?.id_rol==3 && (other?.id_rol == 1 || other?.id_rol == 3)){ //Admins no pueden editar entre ellos o al super admin
+
+    if (isAdmin && (otherUser.id_rol === 1 || otherUser.id_rol === 3)) {
+      // Admins no editan superadmins ni otros admins
       return false;
     }
-    else{
-      return true;
-    }
+
+    return true;
   }
 
-  canDeleteUser(){
-    return this.auth.isSuperAdmin();
+  // Verificar si se puede eliminar usuarios
+  canDeleteUser(): boolean {
+    return this.superAdmin; // Solo superadmins pueden eliminar
   }
+
 }
