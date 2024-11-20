@@ -55,7 +55,6 @@ const routes: Routes = [
     path: 'titulo/:id/editar',
     loadChildren: () => import('./pages/editar-titulo/editar-titulo.module').then(m => m.EditarTituloPageModule)
   },
-
   {
     path: 'noticias',
     loadChildren: () => import('./pages/noticias/noticias.module').then(m => m.NoticiasPageModule)
@@ -97,11 +96,17 @@ const routes: Routes = [
     loadChildren: () => import('./pages/guardados/guardados.module').then(m => m.GuardadosPageModule)
   },
   {
+    path: 'mis-resenias',
+    loadChildren: () => import('./pages/mis-resenias/mis-resenias.module').then(m => m.MisReseniasPageModule)
+  },
+  {
+    path: 'modificar-resenia/:id',
+    loadChildren: () => import('./pages/modificar-resenia/modificar-resenia.module').then(m => m.ModificarReseniaPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'home'
-  },
-
-
+  }
 
 ];
 

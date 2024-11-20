@@ -42,6 +42,10 @@
                 <ion-icon slot="start" name="bookmark-outline" size="large"></ion-icon>
                 <ion-label>Guardados</ion-label>
               </ion-item>
+              <ion-item [routerLink]="['/mis-resenias']" *ngIf="usuario.idUsuario" routerLinkActive="active">
+                <ion-icon slot="start" name="create-outline" size="large"></ion-icon>
+                <ion-label>Mis reseñas</ion-label>
+              </ion-item>
               <ion-item *ngIf="tienePrivilegios" [routerLink]="['/usuarios']" routerLinkActive="active">
                 <ion-icon slot="start" name="people-outline" size="large"></ion-icon>
                 <ion-label>Usuarios</ion-label>

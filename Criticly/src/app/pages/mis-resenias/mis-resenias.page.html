@@ -1,0 +1,49 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="height: 100vh;">
+  <div id="container">
+    <div class="h5Container">
+      <h5 class="ion-padding-start"><strong>Mis reseñas</strong></h5>
+    </div>
+    <div *ngIf="resenias.length === 0">
+      <p class="ion-text-center">No tienes reseñas</p>
+    </div>
+    <div *ngIf="resenias.length > 0" id="usersContainer" class="ion-text-start">
+      <ion-button class="ion-padding" routerLinkActive="router-link-active" *ngFor="let resenia of resenias"
+        expand="false" fill="clear" style="display: flex;" class="config-button">
+        <div [routerLink]="['/titulo/'+ resenia.idTitulo]" id="movieContainer" style="display: flex;">
+          <div>
+            <img [src]="resenia.URLImagen"
+              style="width:100px; max-height: 170px; margin-right: 10px; object-fit: cover; object-position: center;" />
+          </div>
+          <div
+            style="display: flex; justify-content: center;flex-direction: column; align-items: flex-start; text-align: left; padding: 5px;">
+            <small style="color: var(--ion-color-danger);" *ngIf="resenia.esVisible === 0">Suspendida</small>
+            <small style="color: var(--ion-color-medium);font-weight: 400;">{{ resenia.nombre}}</small>
+            <p id="nombreUsuario" style="color: var(--ion-color-light); font-weight: 400; padding: 5px 0;">{{
+              resenia.titulo }}</p>
+            <small style="color: var(--ion-color-medium);font-weight: 400;">{{ resenia.comentario}}</small><br>
+            <small style="color: var(--ion-color-medium);font-weight: 400;" *ngIf="resenia.esVisible === 0">Motivo de
+              suspensión:{{
+              resenia.motivoEliminacion}}</small>
+          </div>
+        </div>
+        <div class="button-wrapper" style="display: flex; flex-direction: column;">
+          <ion-button (click)="modificar(resenia.idResenna)" color="primary" fill="solid" class="small-button">
+            <ion-icon name="create-outline" size="large" color="light"></ion-icon>
+          </ion-button>
+          <ion-button (click)="eliminar(resenia.idResenna)" color="danger" fill="solid" class="small-button">
+            <ion-icon name="trash-outline" size="large" color="light"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

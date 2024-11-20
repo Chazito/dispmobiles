@@ -1,0 +1,56 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/mis-resenias"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Escribir reseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="height: 100vh;">
+  <div id="container">
+    <form [formGroup]="reseniaForm" (ngSubmit)="publicarResenia()">
+      <div class="input-container">
+        <ion-label position="stacked">Título</ion-label>
+        <ion-input formControlName="titulo" placeholder="Escribe el título de tu reseña"
+          class="rounded-input"></ion-input>
+      </div>
+      <ion-text color="danger" *ngIf="reseniaForm.get('titulo')!.touched && reseniaForm.get('titulo')!.invalid">
+        <small>El título es obligatorio</small>
+      </ion-text>
+
+      <div class="input-container">
+        <ion-label position="stacked">Reseña</ion-label>
+        <ion-textarea style="--padding-bottom: 18px;" formControlName="resenia" auto-grow="true"
+          placeholder="Escribe tu reseña aquí" class="rounded-input"></ion-textarea>
+      </div>
+      <ion-text color="danger" *ngIf="reseniaForm.get('resenia')!.touched && reseniaForm.get('resenia')!.invalid">
+        <small>La reseña es obligatoria</small>
+      </ion-text>
+
+      <div style="flex-direction: column; display: flex; align-items: center;">
+        <ion-label>Puntuación</ion-label>
+        <div style="width: 100%;">
+          <ion-range formControlName="rating" min="0" max="5" step="0.5" snaps="true" color="secondary">
+            <ion-label slot="start">0</ion-label>
+            <ion-label slot="end">5</ion-label>
+          </ion-range>
+        </div>
+        <ion-label>
+          {{ reseniaForm.get('rating')!.value }}
+        </ion-label>
+      </div>
+      <ion-text color="danger" *ngIf="reseniaForm.get('rating')!.touched && reseniaForm.get('rating')!.invalid">
+        <small>La puntuación es obligatoria</small>
+      </ion-text>
+      <ion-footer class="ion-no-border">
+        <ion-toolbar class="ion-no-border">
+          <ion-button expand="full" type="submit" [disabled]="reseniaForm.invalid" color="secondary"
+            class="ion-padding-vertical" shape="round">
+            <strong>Enviar reseña</strong>
+          </ion-button>
+        </ion-toolbar>
+      </ion-footer>
+    </form>
+  </div>
+</ion-content>

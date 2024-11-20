@@ -24,7 +24,7 @@ export class ServicebdService {
   tablaUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, apellido TEXT NOT NULL, correo TEXT NOT NULL UNIQUE, clave TEXT NOT NULL, fechaNacimiento DATE, avatar TEXT, telefono TEXT, reputacion REAL, id_rol INTEGER NOT NULL, FOREIGN KEY (id_rol) REFERENCES Rol(idRol));";
   tablaTitulo: string = "CREATE TABLE IF NOT EXISTS Titulo (idTitulo INTEGER PRIMARY KEY AUTOINCREMENT, idTipoTitulo INTEGER NOT NULL, nombre TEXT NOT NULL, sinopsis TEXT, duracion TEXT, URLImagen TEXT, URLTrailer TEXT, fechaEstreno DATE, FOREIGN KEY (idTipoTitulo) REFERENCES TipoTitulo(idTipo));";
 
-  tablaResenna: string = "CREATE TABLE IF NOT EXISTS Resenna (idResenna INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL,titulo TEXT, comentario TEXT, fechaPublicacion DATE, calificacion REAL, esVisible INTEGER, fechaEliminada DATE, motivoEliminacion TEXT, URLImagen TEXT, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
+  tablaResenna: string = "CREATE TABLE IF NOT EXISTS Resenna (idResenna INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL,titulo TEXT, comentario TEXT, fechaPublicacion DATE, calificacion REAL, esVisible INTEGER, fechaEliminada DATE, motivoEliminacion TEXT, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
   tablaMarcador: string = "CREATE TABLE IF NOT EXISTS Marcador (idMarcador INTEGER PRIMARY KEY AUTOINCREMENT, idUsuario INTEGER NOT NULL, idTitulo INTEGER NOT NULL, fechaMarcado DATE, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario), FOREIGN KEY (idTitulo) REFERENCES Titulo(idTitulo));";
 
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -760,7 +760,7 @@ export class ServicebdService {
 
   insertarResenna(resenna: Resenna) {
     let insertSql = "INSERT INTO resenna(idUsuario , idTitulo ,titulo, comentario , fechaPublicacion , calificacion , esVisible , fechaEliminada , motivoEliminacion) values(?,?,?,?,?,?,?,?,?)";
-    return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.idTitulo, resenna.titulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, resenna.esVisible, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
+    return this.database.executeSql(insertSql, [resenna.idUsuario, resenna.idTitulo, resenna.titulo, resenna.comentario, resenna.fechaPublicacion, resenna.calificacion, 1, resenna.fechaEliminada, resenna.motivoEliminacion]).then(res => {
       this.presentAlert("Nueva Reseña", "Reseña ingresada correctamente.");
 
     }).catch(err => {
@@ -919,7 +919,7 @@ export class ServicebdService {
     UPDATE Resenna
     SET idUsuario = ?, idTitulo = ?, comentario = ?, fechaPublicacion = ?,
         calificacion = ?, esVisible = ?, fechaEliminada = ?,
-        motivoEliminacion = ?, URLImagen = ?
+        motivoEliminacion = ?
     WHERE idResenna = ?;
   `;
     const params = [
@@ -931,7 +931,6 @@ export class ServicebdService {
       resenna.esVisible,
       resenna.fechaEliminada,
       resenna.motivoEliminacion,
-      resenna.URLImagen,
       resenna.idResenna
     ];
 
@@ -974,6 +973,50 @@ export class ServicebdService {
         console.error('Error al obtener la puntuación promedio', error);
         throw error;
       });
+  }
+
+  suspenderResenia(idResena: string, fechaSuspension: string, motivoSuspension: string): Promise<void> {
+    const query = `
+      UPDATE Resenna
+      SET esVisible = ?, fechaEliminada = ?, motivoEliminacion = ?
+      WHERE idResenna = ?
+    `;
+    return this.database.executeSql(query, [0, fechaSuspension, motivoSuspension, idResena])
+      .then(() => {
+        this.presentAlert("Reseña", "Reseña suspendida");
+      })
+      .catch((error) => {
+        console.error('Error al actualizar reseña:', error);
+        throw error;
+      });
+  }
+
+  selectResennaPorIdUsuario(idUsuario: string): Promise<any[]> {
+    const query = `
+      SELECT
+        r.idResenna,
+        r.idTitulo,
+        r.titulo,
+        r.comentario,
+        r.fechaPublicacion,
+        r.calificacion,
+        r.esVisible,
+        r.fechaEliminada,
+        r.motivoEliminacion,
+        t.URLImagen,
+        t.nombre
+      FROM Resenna r
+      JOIN Titulo t ON r.idTitulo = t.idTitulo
+      WHERE r.idUsuario = ?
+    `;
+
+    return this.database.executeSql(query, [idUsuario]).then((res) => {
+      let resenias: any[] = [];
+      for (let i = 0; i < res.rows.length; i++) {
+        resenias.push(res.rows.item(i));
+      }
+      return resenias;
+    });
   }
 
 }

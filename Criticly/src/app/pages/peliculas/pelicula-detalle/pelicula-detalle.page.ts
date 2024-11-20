@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Resenna } from 'src/app/services/resenna';
 import { ServicebdService } from 'src/app/services/servicebd.service';
@@ -24,7 +25,7 @@ export class PeliculaDetallePage implements OnInit {
   tienePrivilegios: boolean = false
   constructor(
     private route: ActivatedRoute,
-    private sqlService: ServicebdService, private auth: AuthService
+    private sqlService: ServicebdService, private auth: AuthService, private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -53,9 +54,12 @@ export class PeliculaDetallePage implements OnInit {
   }
 
   async cargarResenias() {
-    await this.sqlService.selectResennaPorIdTitulo(this.pelicula?.idTitulo!).then((res: any) => {
-      this.resenias = res;
-    }).catch();
+    try {
+      const res = await this.sqlService.selectResennaPorIdTitulo(this.pelicula?.idTitulo!);
+      this.resenias = res.filter((resenia: any) => resenia.esVisible === 1);
+    } catch (error) {
+      console.error('Error al cargar las reseñas:', error);
+    }
   }
 
   async obtenerPuntuacion() {
@@ -70,5 +74,45 @@ export class PeliculaDetallePage implements OnInit {
   async eliminar() {
     const idMarcador = (await this.sqlService.selectMarcadorPorIdUsuario(this.usuario?.idUsuario!)).find(res => res.idTitulo === this.pelicula.idTitulo)?.idMarcador
     this.sqlService.eliminarMarcador(idMarcador!, this.usuario?.idUsuario!).then(() => this.peliculaGuardada = false)
+  }
+
+  async suspenderResenia(idResenia: string) {
+    const alert = await this.alertController.create({
+      header: 'Suspender Reseña',
+      inputs: [
+        {
+          name: 'motivo',
+          type: 'textarea',
+          placeholder: 'Escribe el motivo de la suspensión',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirmar',
+          handler: (data) => {
+            if (data.motivo) {
+              const fechaActual = new Date().toISOString();
+              this.sqlService
+                .suspenderResenia(idResenia, fechaActual, data.motivo)
+                .then(() => {
+                  console.log('Reseña suspendida correctamente');
+                  this.cargarResenias()
+                })
+                .catch((error) => {
+                  console.error('Error al suspender la reseña:', error);
+                });
+            } else {
+              console.error('Motivo de suspensión vacío');
+            }
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 }

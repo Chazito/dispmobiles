@@ -86,6 +86,10 @@
               </ion-avatar>
               <ion-label class="ion-padding">{{ resenia.nombreUsuario }}</ion-label>
               <ion-badge color="warning" slot="end">{{ resenia.calificacion }}/5</ion-badge>
+              <ion-button (click)="suspenderResenia(resenia.idResenna!)" color="danger" fill="solid"
+                class="small-button">
+                <ion-icon name="trash-outline" size="large" color="light"></ion-icon>
+              </ion-button>
             </ion-item>
           </ion-card-header>
           <ion-card-content>

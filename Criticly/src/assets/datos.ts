@@ -142,7 +142,8 @@ export const resenias: Resenna[] = [
     comentario: 'Una experiencia visual impresionante que desafía la mente. ¡Me encantó!',
     fechaPublicacion: new Date('2023-01-15'),
     calificacion: 5,
-    esVisible: 1,
+    esVisible: 0,
+    motivoEliminacion: "ASDAFADFADFAD",
   },
   {
     idResenna: '2',
