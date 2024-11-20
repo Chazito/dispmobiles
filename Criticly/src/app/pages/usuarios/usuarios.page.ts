@@ -12,14 +12,13 @@ export class UsuariosPage implements OnInit {
   usuarios: Usuario[] = []
   superAdmin : boolean = false;
   admin : boolean = true;
-  constructor(private bd: ServicebdService, private auth : AuthService) { 
+  constructor(private bd: ServicebdService, private auth : AuthService) { }
+
+  ngOnInit() {
     this.auth.usuarioObservable.subscribe(async usuario => {
       this.superAdmin = await this.auth.isSuperAdmin();
       this.admin = await this.auth.isAdmin();
     });
-  }
-
-  ngOnInit() {
     this.bd.dbState().subscribe(res => {
       this.bd.selectUsuario();
       if (res) {

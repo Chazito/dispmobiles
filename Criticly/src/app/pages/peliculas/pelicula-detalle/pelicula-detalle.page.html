@@ -78,7 +78,7 @@
     <ion-row>
       <ion-col size="12">
         <h6>Reseñas</h6>
-        <ion-card *ngFor="let resenia of resenias">
+        <ion-card *ngFor="let resenia of resenias | slice:0:visibleCount">
           <ion-card-header class="ion-no-padding">
             <ion-item lines="none">
               <ion-avatar>
@@ -86,8 +86,7 @@
               </ion-avatar>
               <ion-label class="ion-padding">{{ resenia.nombreUsuario }}</ion-label>
               <ion-badge color="warning" slot="end">{{ resenia.calificacion }}/5</ion-badge>
-              <ion-button (click)="suspenderResenia(resenia.idResenna!)" color="danger" fill="solid"
-                class="small-button">
+              <ion-button *ngIf="tienePrivilegios" (click)="suspenderResenia(resenia.idResenna!)" color="danger" fill="solid" class="small-button">
                 <ion-icon name="trash-outline" size="large" color="light"></ion-icon>
               </ion-button>
             </ion-item>
@@ -96,7 +95,11 @@
             {{ resenia.comentario }}
           </ion-card-content>
         </ion-card>
+        <ion-button *ngIf="visibleCount < resenias.length" (click)="loadMore()" expand="full" color="primary">
+          Mostrar más
+        </ion-button>
       </ion-col>
+      
     </ion-row>
 
     <ion-row>

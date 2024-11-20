@@ -14,15 +14,17 @@ import { Usuario } from 'src/app/services/usuario';
 })
 export class PeliculaDetallePage implements OnInit {
 
-  pelicula: Titulo = {}
+  pelicula: Titulo = {};
   resenias: Resenna[] = [];
-  usuario?: Usuario
-  peliculaGuardada: boolean = false
+  usuario?: Usuario;
+  peliculaGuardada: boolean = false;
   usuariosResena: any = [];
-  puntuacionPorcentaje?: number
-  puntuacion?: number
+  puntuacionPorcentaje?: number;
+  puntuacion?: number;
   isAuth: boolean = false;
-  tienePrivilegios: boolean = false
+  tienePrivilegios: boolean = false;
+  visibleCount : number = 3;
+
   constructor(
     private route: ActivatedRoute,
     private sqlService: ServicebdService, private auth: AuthService, private alertController: AlertController
@@ -41,16 +43,18 @@ export class PeliculaDetallePage implements OnInit {
         }).catch();
       }
     });
-    this.auth.usuarioObservable.subscribe(usuario => {
-      this.usuario = usuario!
-      if (usuario && usuario.id_rol === 2) {
+    this.auth.usuarioObservable.subscribe(async usuario => {
+      this.usuario = usuario!;
+      this.tienePrivilegios = await this.auth.isAdmin();
+      if (usuario) {
         this.isAuth = !!(usuario && usuario.idUsuario)
-        this.tienePrivilegios = true
-      } else {
-        this.tienePrivilegios = false
       }
       this.sqlService.selectMarcadorPorIdUsuario(usuario?.idUsuario!).then(res => this.peliculaGuardada = res.some(marcador => marcador.idTitulo === this.pelicula.idTitulo))
     })
+  }
+
+  loadMore(){
+    this.visibleCount += 3;
   }
 
   async cargarResenias() {
