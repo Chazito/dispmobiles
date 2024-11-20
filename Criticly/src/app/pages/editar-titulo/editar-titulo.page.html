@@ -40,7 +40,13 @@
           class="error-message">
           La fecha de estreno es requerida.
         </div>
-
+        <ion-item class="input-container">
+          <ion-label position="stacked">Tipo de título</ion-label>
+          <ion-select formControlName="tipoTitulo" class="rounded-input">
+            <ion-select-option [value]="1">Película</ion-select-option>
+            <ion-select-option [value]="2">Serie</ion-select-option>
+          </ion-select>
+        </ion-item>
         <ion-item class="input-container">
           <ion-label position="stacked">Duración</ion-label>
           <ion-input class="rounded-input" formControlName="duracion"></ion-input>
@@ -53,7 +59,8 @@
           <ion-label><small>Imagen</small></ion-label>
           <ion-button (click)="tomarImagen()"><ion-icon name="camera"></ion-icon></ion-button>
         </ion-item>
-        <div *ngIf="titulo.URLImagen" style="display: flex; align-items: center;justify-content: center;">
+        <div *ngIf="this.editarTituloForm.get('URLImagen')?.value"
+          style="display: flex; align-items: center;justify-content: center;">
           <img [src]="this.editarTituloForm.get('URLImagen')?.value"
             style="width: auto; height: 200px; margin-top: 10px; object-fit: cover; object-position: center;">
         </div>

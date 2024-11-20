@@ -31,6 +31,7 @@ export class BuscarPage implements OnInit {
   seleccionarFiltro(filtro: string) {
     this.filtroSeleccionado = filtro;
     if (!this.textoBusqueda) return
+    this.cargando = true
     this.textoBusqueda$.next();
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { NavController } from '@ionic/angular';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Titulo } from 'src/app/services/titulo';
 
@@ -13,14 +14,15 @@ export class NuevoTituloPage implements OnInit {
   titulo: Titulo = {}
   agregarTituloForm: FormGroup;
 
-  constructor(private sqlService: ServicebdService, private fb: FormBuilder) {
+  constructor(private sqlService: ServicebdService, private fb: FormBuilder, private nav: NavController) {
     this.agregarTituloForm = this.fb.group({
-      titulo: ['', [Validators.required]],
+      nombre: ['', [Validators.required]],
       sinopsis: ['', [Validators.required]],
       fechaEstreno: ['', [Validators.required]],
-      duracion: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      urlImagen: ['', [Validators.required]],
-      urlTrailer: ['', [Validators.required]],
+      duracion: ['', [Validators.required]],
+      idTipoTitulo: [1, [Validators.required]],
+      URLImagen: ['', [Validators.required]],
+      URLTrailer: ['', [Validators.required]],
     });
   }
 
@@ -28,7 +30,9 @@ export class NuevoTituloPage implements OnInit {
   }
 
   agregarTitulo() {
-    this.sqlService.insertarTitulo(this.titulo)
+    this.sqlService.insertarTitulo(this.agregarTituloForm.value as Titulo).then(() => {
+      this.nav.back()
+    })
     this.agregarTituloForm.markAsUntouched()
   }
 

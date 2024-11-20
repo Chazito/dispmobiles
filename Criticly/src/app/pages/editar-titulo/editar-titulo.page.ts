@@ -22,6 +22,7 @@ export class EditarTituloPage implements OnInit {
         sinopsis: [this.titulo.sinopsis, [Validators.required]],
         fechaEstreno: [this.sqlService.formatFechaSQLite(String(this.titulo.fechaEstreno!)), [Validators.required]],
         duracion: [this.titulo.duracion, [Validators.required]],
+        tipoTitulo: [this.titulo.idTipoTitulo, [Validators.required]],
         URLImagen: [this.titulo.URLImagen, [Validators.required]],
         URLTrailer: [this.titulo.URLTrailer, [Validators.required]]
       });

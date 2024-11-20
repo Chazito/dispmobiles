@@ -15,9 +15,9 @@
 
         <ion-item class="input-container">
           <ion-label position="stacked">Título</ion-label>
-          <ion-input class="rounded-input" formControlName="titulo"></ion-input>
+          <ion-input class="rounded-input" formControlName="nombre"></ion-input>
         </ion-item>
-        <div *ngIf="agregarTituloForm.get('titulo')!.invalid && agregarTituloForm.get('titulo')!.touched"
+        <div *ngIf="agregarTituloForm.get('nombre')!.invalid && agregarTituloForm.get('nombre')!.touched"
           class="error-message">
           El título es requerido.
         </div>
@@ -39,7 +39,13 @@
           class="error-message">
           La fecha de estreno es requerida.
         </div>
-
+        <ion-item class="input-container">
+          <ion-label position="stacked">Tipo de título</ion-label>
+          <ion-select formControlName="idTipoTitulo" class="rounded-input">
+            <ion-select-option [value]="1">Película</ion-select-option>
+            <ion-select-option [value]="2">Serie</ion-select-option>
+          </ion-select>
+        </ion-item>
         <ion-item class="input-container">
           <ion-label position="stacked">Duración</ion-label>
           <ion-input class="rounded-input" formControlName="duracion"></ion-input>
@@ -52,16 +58,17 @@
           <ion-label><small>Imagen</small></ion-label>
           <ion-button (click)="tomarImagen()"><ion-icon name="camera"></ion-icon></ion-button>
         </ion-item>
-        <div *ngIf="titulo.URLImagen" style="display: flex; align-items: center;justify-content: center;">
+        <div *ngIf="this.agregarTituloForm.get('URLImagen')?.value"
+          style="display: flex; align-items: center;justify-content: center;">
           <img [src]="this.agregarTituloForm.get('URLImagen')?.value"
             style="width: auto; height: 200px; margin-top: 10px; object-fit: cover; object-position: center;">
         </div>
 
         <ion-item class="input-container">
           <ion-label position="stacked">URL del tráiler</ion-label>
-          <ion-input class="rounded-input" formControlName="urlTrailer"></ion-input>
+          <ion-input class="rounded-input" formControlName="URLTrailer"></ion-input>
         </ion-item>
-        <div *ngIf="agregarTituloForm.get('urlTrailer')!.invalid && agregarTituloForm.get('urlTrailer')!.touched"
+        <div *ngIf="agregarTituloForm.get('URLTrailer')!.invalid && agregarTituloForm.get('URLTrailer')!.touched"
           class="error-message">
           La URL del tráiler es requerida.
         </div>
@@ -71,8 +78,7 @@
     </div>
     <ion-footer class="ion-no-border">
       <ion-toolbar class="ion-no-border">
-        <ion-button (click)="agregarTitulo()"
-          [disabled]="agregarTituloForm.invalid && agregarTituloForm.untouched"
+        <ion-button (click)="agregarTitulo()" [disabled]="agregarTituloForm.invalid && agregarTituloForm.untouched"
           expand="full" id="guardar" color="secondary" shape="round">
           <strong>Guardar</strong>
         </ion-button>
