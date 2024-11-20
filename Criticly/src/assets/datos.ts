@@ -359,17 +359,18 @@ export const marcadores: Marcador[] = [
 const placeholderBase64 = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTcwIiB2aWV3Qm94PSIwIDAgMTAwIDE3MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI0RERERERCIvPjxwYXRoIGZpbGw9IiM5OTk5OTkiIGQ9Ik0yMy4zMiA4OC43N2gxLjgydjEuMjloLTUuNnYtMS4yOWgyLjA1di01LjkxcTAtLjM1LjAyLS43MmwtMS40NSAxLjIycS0uMTMuMS0uMjUuMTItLjEyLjAzLS4yMy4wMS0uMTEtLjAyLS4xOS0uMDgtLjA5LS4wNS0uMTMtLjExbC0uNTUtLjc1IDMuMDktMi42M2gxLjQydjguODVaTTMzLjc5IDg1cTAgMS4zMi0uMjkgMi4zLS4yOC45Ny0uNzggMS42MS0uNS42NC0xLjE4Ljk1LS42OS4zMS0xLjQ4LjMxdC0xLjQ2LS4zMXEtLjY4LS4zMS0xLjE4LS45NS0uNDktLjY0LS43Ny0xLjYxLS4yOC0uOTgtLjI4LTIuMyAwLTEuMzMuMjgtMi4zLjI4LS45OC43Ny0xLjYxLjUtLjY0IDEuMTgtLjk1LjY3LS4zMSAxLjQ2LS4zMS43OSAwIDEuNDguMzEuNjguMzEgMS4xOC45NS41LjYzLjc4IDEuNjEuMjkuOTcuMjkgMi4zWk0zMiA4NXEwLTEuMS0uMTYtMS44MnQtLjQzLTEuMTVxLS4yNy0uNDMtLjYyLS42LS4zNS0uMTctLjczLS4xNy0uMzcgMC0uNzEuMTctLjM1LjE3LS42Mi42LS4yNi40My0uNDIgMS4xNS0uMTYuNzItLjE2IDEuODJ0LjE2IDEuODJxLjE2LjcyLjQyIDEuMTUuMjcuNDIuNjIuNi4zNC4xNy43MS4xNy4zOCAwIC43My0uMTcuMzUtLjE4LjYyLS42LjI3LS40My40My0xLjE1UTMyIDg2LjEgMzIgODVabTkuOTEgMHEwIDEuMzItLjI5IDIuMy0uMjguOTctLjc4IDEuNjEtLjUuNjQtMS4xOC45NS0uNjkuMzEtMS40OC4zMXQtMS40Ni0uMzFxLS42OC0uMzEtMS4xOC0uOTUtLjQ5LS42NC0uNzctMS42MS0uMjgtLjk4LS4yOC0yLjMgMC0xLjMzLjI4LTIuMy4yOC0uOTguNzctMS42MS41LS42NCAxLjE4LS45NS42Ny0uMzEgMS40Ni0uMzEuNzkgMCAxLjQ4LjMxLjY4LjMxIDEuMTguOTUuNS42My43OCAxLjYxLjI5Ljk3LjI5IDIuM1ptLTEuNzkgMHEwLTEuMS0uMTYtMS44MnQtLjQzLTEuMTVxLS4yNy0uNDMtLjYyLS42LS4zNS0uMTctLjczLS4xNy0uMzcgMC0uNzEuMTctLjM1LjE3LS42Mi42LS4yNi40My0uNDIgMS4xNS0uMTYuNzItLjE2IDEuODJ0LjE2IDEuODJxLjE2LjcyLjQyIDEuMTUuMjcuNDIuNjIuNi4zNC4xNy43MS4xNy4zOCAwIC43My0uMTcuMzUtLjE4LjYyLS42LjI3LS40My40My0xLjE1LjE2LS43Mi4xNi0xLjgyWm0xMi45IDIuNzQtLjkxLjkxLTIuMzgtMi4zOC0yLjM5IDIuMzktLjkyLS45IDIuNC0yLjQtMi4yOS0yLjI5LjkxLS45MSAyLjI5IDIuMjkgMi4yNi0yLjI3LjkzLjkxLTIuMjggMi4yNyAyLjM4IDIuMzhabTkuNTkgMS4wM2gxLjgydjEuMjloLTUuNnYtMS4yOWgyLjA1di01LjkxcTAtLjM1LjAyLS43MmwtMS40NiAxLjIycS0uMTIuMS0uMjUuMTItLjEyLjAzLS4yMy4wMS0uMTEtLjAyLS4xOS0uMDgtLjA4LS4wNS0uMTMtLjExbC0uNTQtLjc1IDMuMDktMi42M2gxLjQydjguODVabTMuMzQtOC44M2g3di43NXEwIC4zMy0uMDcuNTQtLjA3LjIxLS4xNC4zNWwtMy44NCA3Ljg5cS0uMTIuMjUtLjM0LjQyLS4yMS4xNy0uNTguMTdoLTEuMjVsMy45MS03Ljc0cS4xNC0uMjMuMjctLjQzLjEyLS4yLjI5LS4zOGgtNC44NXEtLjE2IDAtLjI4LS4xMi0uMTItLjEyLS4xMi0uMjh2LTEuMTdaTTgxLjE5IDg1cTAgMS4zMi0uMjggMi4zLS4yOS45Ny0uNzkgMS42MS0uNS42NC0xLjE4Ljk1LS42OC4zMS0xLjQ3LjMxLS43OSAwLTEuNDctLjMxLS42Ny0uMzEtMS4xNy0uOTUtLjUtLjY0LS43OC0xLjYxLS4yOC0uOTgtLjI4LTIuMyAwLTEuMzMuMjgtMi4zLjI4LS45OC43OC0xLjYxLjUtLjY0IDEuMTctLjk1LjY4LS4zMSAxLjQ3LS4zMS43OSAwIDEuNDcuMzEuNjguMzEgMS4xOC45NS41LjYzLjc5IDEuNjEuMjguOTcuMjggMi4zWm0tMS43OCAwcTAtMS4xLS4xNi0xLjgyLS4xNy0uNzItLjQzLTEuMTUtLjI3LS40My0uNjItLjYtLjM1LS4xNy0uNzMtLjE3LS4zNyAwLS43Mi4xN3QtLjYxLjZxLS4yNy40My0uNDMgMS4xNS0uMTUuNzItLjE1IDEuODJ0LjE1IDEuODJxLjE2LjcyLjQzIDEuMTUuMjYuNDIuNjEuNi4zNS4xNy43Mi4xNy4zOCAwIC43My0uMTcuMzUtLjE4LjYyLS42LjI2LS40My40My0xLjE1LjE2LS43Mi4xNi0xLjgyWiIvPjwvc3ZnPg== "
 
 export const insertRol: string = `INSERT INTO rol (idRol, nombre) VALUES
-('1', 'Usuario'),
-('2', 'Administrador');`
+('1', 'Super Admin'),
+('2', 'Usuario'),
+('3', 'Administrador');`
 
 export const insertTipoTitulo: string = `INSERT INTO tipoTitulo (idTipo, nombre) VALUES
 ('1', 'Películas'),
 ('2', 'Series')`
 
 export const insertUsuario: string = `INSERT INTO usuario (idUsuario, nombre, apellido, correo, clave, fechaNacimiento, telefono, reputacion, id_rol) VALUES
-('1', 'Juan', 'Pérez', 'juan.perez@example.com', 'password123', '1990-05-15',  '123456789', 4.5, 1),
-('2', 'Juan', 'Gómez', '123@123.com', '123', '1985-11-23', '987654321', 5.0, 2),
-('3', 'Franco', 'Nunez', 'fr.nuneza@duocuc.cl', 'Admin@1234', '1998-04-23', '11112222', 5.0, 2);`
+('1', 'Juan', 'Pérez', 'juan.perez@example.com', 'password123', '1990-05-15',  '123456789', 4.5, 2),
+('2', 'Juan', 'Gómez', '123@123.com', '123', '1985-11-23', '987654321', 5.0, 3),
+('3', 'Franco', 'Nunez', 'fr.nuneza@duocuc.cl', 'Admin@1234', '1998-04-23', '11112222', 5.0, 1);`
 
 export const insertTitulo: string = `INSERT INTO titulo (idTitulo, idTipoTitulo, nombre, sinopsis, duracion, URLImagen, URLTrailer, fechaEstreno) VALUES
 ('1', '1', 'Inception', 'Un ladrón que roba secretos corporativos a través del uso de tecnología de sueños compartidos se le da la tarea inversa: plantar una idea en la mente de un CEO.', '148 min', '${placeholderBase64}', 'https://www.youtube.com/watch?v=YoHD9XEInc0', '2010-07-16'),

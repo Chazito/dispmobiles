@@ -13,37 +13,29 @@
       <form>
         <ion-item class="input-container">
           <ion-label position="stacked">Nombre</ion-label>
-          <ion-input placeholder="Nombre" name="nombre" [(ngModel)]="usuario.nombre" class="rounded-input">
+          <ion-input [disabled]="true" placeholder="Nombre" name="nombre" [(ngModel)]="usuario.nombre" class="rounded-input">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
 
         <ion-item class="input-container">
           <ion-label position="stacked">Apellido</ion-label>
-          <ion-input placeholder="Apellido" name="apellido" [(ngModel)]="usuario.apellido" class="rounded-input">
+          <ion-input [disabled]="true" placeholder="Apellido" name="apellido" [(ngModel)]="usuario.apellido" class="rounded-input">
             <ion-icon name="person-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
 
         <ion-item class="input-container">
           <ion-label position="stacked">Correo electrónico</ion-label>
-          <ion-input type="email" name="email" [(ngModel)]="usuario.correo" placeholder="correo@ejemplo.com"
+          <ion-input [disabled]="true" type="email" name="email" [(ngModel)]="usuario.correo" placeholder="correo@ejemplo.com"
             class="rounded-input">
             <ion-icon name="mail-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
 
         <ion-item class="input-container">
-          <ion-label position="stacked">Contraseña</ion-label>
-          <ion-input type="password" name="password" [(ngModel)]="usuario.clave" placeholder="Introduce tu contraseña"
-            class="rounded-input">
-            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-          </ion-input>
-        </ion-item>
-
-        <ion-item class="input-container">
           <ion-label position="stacked">ID Usuario</ion-label>
-          <ion-input placeholder="ID Usuario" name="idUsuario" [(ngModel)]="usuario.idUsuario" disabled
+          <ion-input [disabled]="true" placeholder="ID Usuario" name="idUsuario" [(ngModel)]="usuario.idUsuario" disabled
             class="rounded-input"></ion-input>
         </ion-item>
 
@@ -56,9 +48,10 @@
         <ion-item class="input-container">
           <ion-label position="stacked">Rol</ion-label>
           <ion-select [(ngModel)]="usuario.id_rol" name="rol" class="rounded-input">
-            <ion-select-option [value]="1">Usuario</ion-select-option>
-            <ion-select-option [value]="2">Administrador</ion-select-option>
-          </ion-select>
+            <ion-select-option *ngFor="let rol of roles" [value]="rol.idRol">
+              {{ rol.nombre }}
+            </ion-select-option>
+          </ion-select>          
         </ion-item>
       </form>
 

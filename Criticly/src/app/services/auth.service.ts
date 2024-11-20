@@ -73,7 +73,12 @@ export class AuthService {
 
   async isAdmin() {
     const usuario = await firstValueFrom(this.usuarioObservable)
-    return !!usuario && !!(usuario.id_rol === 2);
+    return !!usuario && !!(usuario.id_rol === 3 || usuario.id_rol === 1);
+  }
+
+  async isSuperAdmin(){
+    const usuario = await firstValueFrom(this.usuarioObservable)
+    return !!usuario && !!(usuario.id_rol === 1);
   }
 
   async isAuthenticated(): Promise<boolean> {

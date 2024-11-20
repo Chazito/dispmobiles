@@ -291,6 +291,10 @@ export class ServicebdService {
   }
 
   eliminarRol(x: string) {
+    if(x == '1' || x == '2' || x == '3'){
+      this.presentAlert("Rol", "No se pueden eliminar los roles basicos");
+      return;
+    }
     return this.database.executeSql("DELETE FROM rol WHERE idRol = ?", [x]).then(res => {
       this.selectRol();
       this.presentAlert("Rol", "Rol eliminado correctamente.");
