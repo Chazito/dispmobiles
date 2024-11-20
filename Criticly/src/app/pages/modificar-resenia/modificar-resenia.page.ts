@@ -25,11 +25,11 @@ export class ModificarReseniaPage implements OnInit {
     });
     this.reseniaForm = this.fb.group({
       titulo: [null, [Validators.required]],
-      resenia: [null, [Validators.required]],
-      rating: [null, [Validators.required]],
-      imagen: [null]
+      comentario: [null, [Validators.required]],
+      calificacion: [null, [Validators.required]],
     });
-    this.reseniaForm.patchValue(this.sqlService.selectResennaPorId(this.idResenia!))
+    const resenia = await this.sqlService.selectResennaPorId(this.idResenia!)
+    this.reseniaForm.patchValue({ titulo: resenia?.titulo, comentario: resenia?.comentario, calificacion: resenia?.calificacion, })
     this.idUsuario = (await firstValueFrom(this.auth.usuarioObservable))?.idUsuario
   }
 
@@ -39,8 +39,8 @@ export class ModificarReseniaPage implements OnInit {
       const datosForm: Resenna = {
         idResenna: this.idResenia,
         titulo: this.reseniaForm.get('titulo')?.value,
-        comentario: this.reseniaForm.get('resenia')?.value,
-        calificacion: this.reseniaForm.get('rating')?.value,
+        comentario: this.reseniaForm.get('comentario')?.value,
+        calificacion: this.reseniaForm.get('calificacion')?.value,
         fechaPublicacion: new Date(),
         esVisible: 1
       };

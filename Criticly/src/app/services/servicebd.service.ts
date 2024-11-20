@@ -291,7 +291,7 @@ export class ServicebdService {
   }
 
   eliminarRol(x: string) {
-    if(x == '1' || x == '2' || x == '3'){
+    if (x == '1' || x == '2' || x == '3') {
       this.presentAlert("Rol", "No se pueden eliminar los roles basicos");
       return;
     }
@@ -921,20 +921,17 @@ export class ServicebdService {
   modificarResennaPorId(resenna: Resenna): Promise<boolean> {
     const query = `
     UPDATE Resenna
-    SET idUsuario = ?, idTitulo = ?, comentario = ?, fechaPublicacion = ?,
+    SET comentario = ?,
         calificacion = ?, esVisible = ?, fechaEliminada = ?,
         motivoEliminacion = ?
     WHERE idResenna = ?;
   `;
     const params = [
-      resenna.idUsuario,
-      resenna.idTitulo,
       resenna.comentario,
-      resenna.fechaPublicacion,
       resenna.calificacion,
-      resenna.esVisible,
+      1,
       resenna.fechaEliminada,
-      resenna.motivoEliminacion,
+      null,
       resenna.idResenna
     ];
 
@@ -945,7 +942,7 @@ export class ServicebdService {
       }
       return res.rowsAffected > 0
     }).catch(error => {
-      this.presentAlert("Error", "Reseña no modificado");
+      this.presentAlert("Error", JSON.stringify(error));
       return false;
     });
   }

@@ -21,26 +21,27 @@
 
       <div class="input-container">
         <ion-label position="stacked">Reseña</ion-label>
-        <ion-textarea style="--padding-bottom: 18px;" formControlName="resenia" auto-grow="true"
+        <ion-textarea style="--padding-bottom: 18px;" formControlName="comentario" auto-grow="true"
           placeholder="Escribe tu reseña aquí" class="rounded-input"></ion-textarea>
       </div>
-      <ion-text color="danger" *ngIf="reseniaForm.get('resenia')!.touched && reseniaForm.get('resenia')!.invalid">
+      <ion-text color="danger" *ngIf="reseniaForm.get('comentario')!.touched && reseniaForm.get('comentario')!.invalid">
         <small>La reseña es obligatoria</small>
       </ion-text>
 
       <div style="flex-direction: column; display: flex; align-items: center;">
         <ion-label>Puntuación</ion-label>
         <div style="width: 100%;">
-          <ion-range formControlName="rating" min="0" max="5" step="0.5" snaps="true" color="secondary">
+          <ion-range formControlName="calificacion" min="0" max="5" step="0.5" snaps="true" color="secondary">
             <ion-label slot="start">0</ion-label>
             <ion-label slot="end">5</ion-label>
           </ion-range>
         </div>
         <ion-label>
-          {{ reseniaForm.get('rating')!.value }}
+          {{ reseniaForm.get('calificacion')!.value }}
         </ion-label>
       </div>
-      <ion-text color="danger" *ngIf="reseniaForm.get('rating')!.touched && reseniaForm.get('rating')!.invalid">
+      <ion-text color="danger"
+        *ngIf="reseniaForm.get('calificacion')!.touched && reseniaForm.get('calificacion')!.invalid">
         <small>La puntuación es obligatoria</small>
       </ion-text>
       <ion-footer class="ion-no-border">

@@ -25,7 +25,7 @@ export class EscribirReseniaPage implements OnInit {
     });
     this.reseniaForm = this.fb.group({
       titulo: ['', [Validators.required]],
-      resenia: ['', [Validators.required]],
+      comentario: ['', [Validators.required]],
       rating: [3, [Validators.required]],
       imagen: [null]
     });
@@ -41,7 +41,6 @@ export class EscribirReseniaPage implements OnInit {
         titulo: this.reseniaForm.get('titulo')?.value,
         comentario: this.reseniaForm.get('resenia')?.value,
         calificacion: this.reseniaForm.get('rating')?.value,
-        URLImagen: "",
         fechaPublicacion: new Date(),
         esVisible: 1
       };
