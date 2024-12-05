@@ -1,0 +1,40 @@
+body,
+:root {
+  background-color: #0A112F;
+  color: white;
+  font-family: 'Spline Sans', sans-serif;
+  --bs-primary: #FFE500
+}
+
+a.btn {
+  background-color: #FFE500;
+  border-color: #FFE500;
+  color: #0A112F;
+  font-weight: 500;
+}
+
+a.btn:hover,
+a.btn:active {
+  background-color: #ffe600e4 !important;
+  color: #0A112F !important;
+}
+
+.card {
+  background-color: #0A112F;
+}
+
+/* :root {
+  --ion-color-primary: #0A112F;
+  --ion-color-secondary: #FFE500;
+  --ion-color-tertiary: #060B1D;
+  --ion-color-danger: #D31212;
+  --ion-color-medium: #979797;
+  --ion-font-family: 'Spline Sans', sans-serif;
+} */
+
+.captura {
+  max-width: 400px;
+  max-height: 600px;
+  object-position: center;
+  object-fit: contain;
+}
