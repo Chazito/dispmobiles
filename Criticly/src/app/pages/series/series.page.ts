@@ -11,16 +11,16 @@ import { Titulo } from 'src/app/services/titulo';
 })
 export class SeriesPage implements OnInit {
 
-  tienePrivilegios: boolean = true;
+  tienePrivilegios: boolean = false;
   destacados: Titulo[] = []
   criticados: Titulo[] = []
   mejores: Titulo[] = []
 
 
-  constructor(private sqlService: ServicebdService, private auth: AuthService) {
-    this.auth.usuarioObservable.subscribe(usuario => {
-      if (usuario && usuario.id_rol === 2) { this.tienePrivilegios = true } else { this.tienePrivilegios = false }
-    })
+  constructor(private sqlService: ServicebdService, private auth: AuthService) { }
+
+  async ngOnInit() {
+    this.tienePrivilegios = await this.auth.isAdmin()
     this.sqlService.selectDestacados()
     this.sqlService.fetchDestacados().subscribe(res => {
       this.destacados = res
@@ -31,9 +31,6 @@ export class SeriesPage implements OnInit {
     this.sqlService.fetchMejor().subscribe(res => {
       this.mejores = res
     })
-  }
-
-  ngOnInit() {
   }
 
   ionViewWillEnter() {

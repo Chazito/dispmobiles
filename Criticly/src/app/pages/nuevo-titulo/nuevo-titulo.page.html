@@ -42,7 +42,7 @@
         <ion-item class="input-container">
           <ion-label position="stacked">Tipo de título</ion-label>
           <ion-select formControlName="idTipoTitulo" class="rounded-input">
-            <ion-select-option [value]="1">Película</ion-select-option>
+            <ion-select-option [value]="1" selected>Película</ion-select-option>
             <ion-select-option [value]="2">Serie</ion-select-option>
           </ion-select>
         </ion-item>
@@ -78,7 +78,7 @@
     </div>
     <ion-footer class="ion-no-border">
       <ion-toolbar class="ion-no-border">
-        <ion-button (click)="agregarTitulo()" [disabled]="agregarTituloForm.invalid && agregarTituloForm.untouched"
+        <ion-button (click)="agregarTitulo()" [disabled]="agregarTituloForm.invalid || agregarTituloForm.untouched"
           expand="full" id="guardar" color="secondary" shape="round">
           <strong>Guardar</strong>
         </ion-button>
