@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Storage } from '@ionic/storage-angular';
 import { Usuario } from './usuario';
 import { ServicebdService } from './servicebd.service';
@@ -13,7 +14,21 @@ export class AuthService {
   usuarioSubject = new BehaviorSubject<Usuario | null>(null);
   usuarioObservable = this.usuarioSubject.asObservable();
 
-  constructor(private storage: Storage, private sqlService: ServicebdService, private toastController: ToastController, private router: Router) {
+  //Cambia automaticamente cuando el usuario es actualizado con metodos de login o logout
+  isAdminObservable = this.usuarioObservable.pipe(
+    map(usuario => !!usuario && !!(usuario.id_rol === 3 || usuario.id_rol === 1))
+  );
+
+  isSuperAdminObservable = this.usuarioObservable.pipe(
+    map(usuario => !!usuario && !!(usuario.id_rol === 1))
+  );
+
+  constructor(
+    private storage: Storage,
+    private sqlService: ServicebdService,
+    private toastController: ToastController,
+    private router: Router
+  ) {
     this.init();
   }
 
@@ -38,12 +53,12 @@ export class AuthService {
       if (usuarioData) {
         this.usuarioSubject.next(usuarioData);
         if (!(await this.storage.get('userID'))) {
-          await this.login()
+          await this.login();
         }
         return usuarioData;
       } else {
         this.usuarioSubject.next(null);
-        this.presentToast("bottom", "Credenciales inválidas", 4000);
+        this.presentToast('bottom', 'Credenciales inválidas', 4000);
         return null;
       }
     } catch (error) {
@@ -54,30 +69,30 @@ export class AuthService {
   }
 
   async login() {
-    const usuario = await firstValueFrom(this.usuarioObservable)
+    const usuario = await firstValueFrom(this.usuarioObservable);
     if (!usuario || !usuario.idUsuario) {
-      return false
+      return false;
     }
-    await this.storage.set('userID', usuario.idUsuario)
-    this.presentToast("bottom", "Sesión iniciada correctamente", 2500);
+    await this.storage.set('userID', usuario.idUsuario);
+    this.presentToast('bottom', 'Sesión iniciada correctamente', 2500);
     this.router.navigate(['/home']);
-    return true
+    return true;
   }
 
   async logout() {
     this.router.navigate(['../home']);
     await this.storage.set('userID', null);
     this.usuarioSubject.next(null);
-    this.presentToast("bottom", "Sesión finalizada", 4000);
+    this.presentToast('bottom', 'Sesión finalizada', 4000);
   }
 
   async isAdmin() {
-    const usuario = await firstValueFrom(this.usuarioObservable)
+    const usuario = await firstValueFrom(this.usuarioObservable);
     return !!usuario && !!(usuario.id_rol === 3 || usuario.id_rol === 1);
   }
 
-  async isSuperAdmin(){
-    const usuario = await firstValueFrom(this.usuarioObservable)
+  async isSuperAdmin() {
+    const usuario = await firstValueFrom(this.usuarioObservable);
     return !!usuario && !!(usuario.id_rol === 1);
   }
 
