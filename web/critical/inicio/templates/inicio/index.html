@@ -19,23 +19,23 @@
     <div class="pt-5 container-lg d-flex justify-content-center align-items-center">
         <img src="{% static 'assets/logo.svg' %}" width="100%" style="max-width: 30vw; min-width: 300px;">
     </div>
-    <div class="py-5 my-md-5 row m-0">
-        <div class="col-md-6 d-flex flex-column justify-content-center text-center text-md-start">
-            <h2 class="mb-4" style="max-width: 492px;">Únete a la mejor comunidad para reseñar y descubrir <span
+    <div class="py-4 py-lg-5 my-4 my-lg-5 row m-0">
+        <div class="col-md-6 d-flex flex-column justify-content-center text-center">
+            <h2 class="mb-4 mx-lg-3">Únete a la mejor comunidad para reseñar y descubrir <span
                     style="color: #FFE500">cine</span>
             </h2>
             {% if is_mobile %}
-            <div class="text-center text-md-start">
+            <div class="text-center">
                 <a class="btn btn-lg">Descarga la app aquí<i class="bi-download fw-bolder ps-2"></i></a>
             </div>
             {% else %}
-            <div>
-                <p class="fs-5">Escanea el código QR para descargar la app</p>
+            <div class="d-flex flex-column justify-content-center align-items-center">
                 <img src="{% static 'assets/150x150.png' %}" width="150" height="150">
+                <p class="fs-5 m-3">Escanea el código QR para descargar la app</p>
             </div>
             {% endif %}
         </div>
-        <div class="col-md-6 d-flex justify-content-center align-items-center mt-4 mt-md-0">
+        <div class="col-md-6 d-flex justify-content-center align-items-center mt-4 mt-md-0 px-md- px-5 pt-4 pt-md-0">
             <div>
                 <img src="{% static 'assets/device.svg' %}" width="100%">
             </div>
@@ -112,8 +112,8 @@
             </div>
             {% else %}
             <div>
-                <p class="fs-5">Escanea el código QR para descargar la app</p>
                 <img src="{% static 'assets/150x150.png' %}" width="150" height="150">
+                <p class="fs-5 m-3">Escanea el código QR para descargar la app</p>
             </div>
             {% endif %}
         </div>
