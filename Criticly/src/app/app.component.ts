@@ -28,13 +28,15 @@ export class AppComponent {
           || e.url.includes('/editar') || e.url.includes('roles/') || e.url.includes('tipos/') || e.url.includes('usuarios/') || e.url.includes('resennas/') || e.url.includes('titulo/') || e.url.includes('modificar-resenia'))
       }
     })
+    this.auth.isAdminObservable.subscribe(isAdmin=>{
+      this.tienePrivilegios = isAdmin;
+    })
     this.auth.usuarioObservable.subscribe(async usuario => {
       if (!usuario) {
         this.nombreApellido = null;
         this.usuario = {}
         return
       }
-      this.tienePrivilegios = await this.auth.isAdmin();
       this.usuario = usuario;
       this.nombreApellido = `${this.usuario?.nombre} ${this.usuario?.apellido}`
     });

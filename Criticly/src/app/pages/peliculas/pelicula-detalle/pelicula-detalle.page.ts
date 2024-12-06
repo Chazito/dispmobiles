@@ -43,9 +43,11 @@ export class PeliculaDetallePage implements OnInit {
         }).catch();
       }
     });
-    this.auth.usuarioObservable.subscribe(async usuario => {
+    this.auth.isAdminObservable.subscribe(isAdmin =>{
+      this.tienePrivilegios = isAdmin;
+    })
+    this.auth.usuarioObservable.subscribe(usuario => {
       this.usuario = usuario!;
-      this.tienePrivilegios = await this.auth.isAdmin();
       if (usuario) {
         this.isAuth = !!(usuario && usuario.idUsuario)
       }

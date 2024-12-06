@@ -17,12 +17,12 @@ export class UsuariosPage implements OnInit {
 
   ngOnInit() {
     // Obtenemos los roles del usuario actual
-    this.auth.usuarioObservable.subscribe(async usuario => {
-      [this.superAdmin, this.admin] = await Promise.all([
-        this.auth.isSuperAdmin(),
-        this.auth.isAdmin()
-      ]);
-    });
+    this.auth.isAdminObservable.subscribe(isAdmin =>{
+      this.admin = isAdmin;
+    })
+    this.auth.isSuperAdminObservable.subscribe(isSuper =>{
+      this.superAdmin = isSuper;
+    })
 
     // Escuchamos los cambios en la base de datos y actualizamos los usuarios
     this.bd.dbState().subscribe(res => {
@@ -46,20 +46,19 @@ export class UsuariosPage implements OnInit {
 
   // Verificar si se puede editar un usuario
   canEditUser(idUsuario: string): boolean {
-    const currentUser = this.auth.usuarioSubject.value; // Usuario actual
     const otherUser = this.usuarios.find(x => x.idUsuario == idUsuario); // Usuario objetivo
 
-    if (!otherUser || !currentUser) return false;
+    if (!otherUser) return false;
 
-    const isSuperAdmin = currentUser.id_rol === 1; // Rol 1 = Super admin
-    const isAdmin = currentUser.id_rol === 3; // Rol 3 = Admin
-
-    if (isSuperAdmin && otherUser.id_rol === 1) {
+    if (this.superAdmin && otherUser.id_rol === 1) {
       // Superadmins no editan a otros superadmins
       return false;
     }
-
-    if (isAdmin && (otherUser.id_rol === 1 || otherUser.id_rol === 3)) {
+    else if (this.superAdmin && (otherUser.id_rol != "1")){
+      //Super admin puede editar al resto
+      return true;
+    }
+    else if (this.admin && (otherUser.id_rol === 1 || otherUser.id_rol === 3)) {
       // Admins no editan superadmins ni otros admins
       return false;
     }

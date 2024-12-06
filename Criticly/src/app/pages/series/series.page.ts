@@ -20,7 +20,9 @@ export class SeriesPage implements OnInit {
   constructor(private sqlService: ServicebdService, private auth: AuthService) { }
 
   async ngOnInit() {
-    this.tienePrivilegios = await this.auth.isAdmin()
+    this.auth.isAdminObservable.subscribe(isAdmin =>{
+      this.tienePrivilegios = isAdmin;
+    })
     this.sqlService.selectDestacados()
     this.sqlService.fetchDestacados().subscribe(res => {
       this.destacados = res

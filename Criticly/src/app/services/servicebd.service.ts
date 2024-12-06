@@ -751,10 +751,7 @@ export class ServicebdService {
 
   insertarUsuario(newUser: Usuario) {
     let insertSql = "INSERT INTO usuario(nombre, apellido, correo, clave, fechaNacimiento, avatar, telefono, reputacion, id_rol) values(?,?,?,?,?,?,?,?,?)";
-    if (newUser.correo == "fr.nuneza@duocuc.cl") {
-      newUser.id_rol = 2;
-    }
-    return this.database.executeSql(insertSql, [newUser.nombre, newUser.apellido, newUser.correo, newUser.clave, newUser.fechaNacimiento, newUser.avatar, newUser.telefono, newUser.reputacion, newUser.id_rol || 1]).then(res => {
+    return this.database.executeSql(insertSql, [newUser.nombre, newUser.apellido, newUser.correo, newUser.clave, newUser.fechaNacimiento, newUser.avatar, newUser.telefono, newUser.reputacion, newUser.id_rol || 2]).then(res => {
       //this.presentAlert("Registro", "Nuevo usuario creado con éxito.");
       this.selectUsuario();
     }).catch(err => {
