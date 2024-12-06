@@ -20,14 +20,13 @@ export class EscribirReseniaPage implements OnInit {
   constructor(private fb: FormBuilder, private sqlService: ServicebdService, private route: ActivatedRoute, private auth: AuthService, private navController: NavController) { }
 
   async ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.idTitulo = params.get('id')!;
-    });
     this.reseniaForm = this.fb.group({
       titulo: ['', [Validators.required]],
       comentario: ['', [Validators.required]],
       rating: [3, [Validators.required]],
-      imagen: [null]
+    });
+    this.route.paramMap.subscribe(params => {
+      this.idTitulo = params.get('id')!;
     });
     this.idUsuario = (await firstValueFrom(this.auth.usuarioObservable))?.idUsuario
   }
@@ -39,7 +38,7 @@ export class EscribirReseniaPage implements OnInit {
         idTitulo: this.idTitulo,
         idUsuario: this.idUsuario,
         titulo: this.reseniaForm.get('titulo')?.value,
-        comentario: this.reseniaForm.get('resenia')?.value,
+        comentario: this.reseniaForm.get('comentario')?.value,
         calificacion: this.reseniaForm.get('rating')?.value,
         fechaPublicacion: new Date(),
         esVisible: 1

@@ -21,10 +21,10 @@
 
       <div class="input-container">
         <ion-label position="stacked">Reseña</ion-label>
-        <ion-textarea style="--padding-bottom: 18px;" formControlName="resenia" auto-grow="true"
+        <ion-textarea style="--padding-bottom: 18px;" formControlName="comentario" auto-grow="true"
           placeholder="Escribe tu reseña aquí" class="rounded-input"></ion-textarea>
       </div>
-      <ion-text color="danger" *ngIf="reseniaForm.get('resenia')!.touched && reseniaForm.get('resenia')!.invalid">
+      <ion-text color="danger" *ngIf="reseniaForm.get('comentario')!.touched && reseniaForm.get('comentario')!.invalid">
         <small>La reseña es obligatoria</small>
       </ion-text>
 
