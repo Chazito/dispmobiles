@@ -58,6 +58,13 @@
           </ul>
         </small>
         <ion-item class="input-container">
+          <ion-label position="stacked">Contraseña actual</ion-label>
+          <ion-input type="password" placeholder="Introduce tu contraseña" name="passwordActual"
+            [(ngModel)]="passwordActual" class="rounded-input">
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
+        <ion-item class="input-container">
           <ion-label position="stacked">Nueva contraseña</ion-label>
           <ion-input type="password" placeholder="Introduce tu contraseña" name="password" [(ngModel)]="password"
             class="rounded-input">

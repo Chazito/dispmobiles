@@ -18,11 +18,10 @@ export class PerfilInicioPage implements OnInit {
   user: Usuario = {};
   password: string = "";
   password2: string = "";
-
+  passwordActual: string = ""
   constructor(private bd: ServicebdService, private auth: AuthService, private alertController: AlertController) { }
 
   ngOnInit() {
-    console.warn(this.auth.usuarioObservable)
     this.auth.usuarioObservable.subscribe(usuario => {
       if (!usuario) return
       this.user = usuario;
@@ -59,7 +58,9 @@ export class PerfilInicioPage implements OnInit {
       this.user.clave = this.password;
       let success = await this.bd.modificarUsuario(this.user);
       if (success) {
-        this.presentAlert("Cambio Contraseña", "Contraseña cambiada correctamente.");
+        this.password = "";
+        this.password2 = "";
+        this.passwordActual = ""
       }
       else {
         this.presentAlert("Cambio Contraseña", "Error al cambiar la contraseña.");
@@ -71,7 +72,7 @@ export class PerfilInicioPage implements OnInit {
   }
 
   passwordsMatch(): boolean {
-    return this.password === this.password2;
+    return this.password === this.password2 && this.passwordActual === this.user.clave;
   }
 
   isValidName(name: string): boolean {
