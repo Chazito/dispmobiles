@@ -12,6 +12,7 @@ export class UsuariosPage implements OnInit {
   usuarios: Usuario[] = [];
   superAdmin: boolean = false;
   admin: boolean = false;
+  idUsuario : string = "";
 
   constructor(private bd: ServicebdService, private auth: AuthService) { }
 
@@ -22,6 +23,9 @@ export class UsuariosPage implements OnInit {
     })
     this.auth.isSuperAdminObservable.subscribe(isSuper =>{
       this.superAdmin = isSuper;
+    })
+    this.auth.usuarioObservable.subscribe(user =>{
+      this.idUsuario = user?.idUsuario!;
     })
 
     // Escuchamos los cambios en la base de datos y actualizamos los usuarios
@@ -37,7 +41,7 @@ export class UsuariosPage implements OnInit {
 
   // Eliminar un usuario
   eliminar(idUsuario: string) {
-    if (!this.canDeleteUser()) {
+    if (!this.canDeleteUser(idUsuario)) {
       console.warn('No tienes permiso para eliminar usuarios.');
       return;
     }
@@ -49,7 +53,10 @@ export class UsuariosPage implements OnInit {
     const otherUser = this.usuarios.find(x => x.idUsuario == idUsuario); // Usuario objetivo
 
     if (!otherUser) return false;
-
+    if(idUsuario == this.idUsuario){
+      //Editar a mi mismo
+      return true;
+    }
     if (this.superAdmin && otherUser.id_rol === 1) {
       // Superadmins no editan a otros superadmins
       return false;
@@ -67,7 +74,11 @@ export class UsuariosPage implements OnInit {
   }
 
   // Verificar si se puede eliminar usuarios
-  canDeleteUser(): boolean {
+  canDeleteUser(idUsuario: string): boolean {
+    const otherUser = this.usuarios.find(x => x.idUsuario == idUsuario); // Usuario objetivo
+
+    if (!otherUser) return false; 
+    if(otherUser.id_rol == "1") return false;
     return this.superAdmin; // Solo superadmins pueden eliminar
   }
 
