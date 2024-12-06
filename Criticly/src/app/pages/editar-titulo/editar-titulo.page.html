@@ -42,7 +42,8 @@
         </div>
         <ion-item class="input-container">
           <ion-label position="stacked">Tipo de título</ion-label>
-          <ion-select formControlName="tipoTitulo" class="rounded-input">
+          <ion-select formControlName="tipoTitulo" [value]="editarTituloForm.get('fechaEstreno')!.value"
+            class="rounded-input">
             <ion-select-option [value]="1">Película</ion-select-option>
             <ion-select-option [value]="2">Serie</ion-select-option>
           </ion-select>

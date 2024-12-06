@@ -45,5 +45,6 @@ export class NuevoTituloPage implements OnInit {
 
     const base64Image = `data:image/${image.format};base64,${image.base64String}`;
     this.agregarTituloForm.get('URLImagen')?.setValue(base64Image);
+    this.agregarTituloForm.markAsTouched()
   }
 }
